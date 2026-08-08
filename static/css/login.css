@@ -17,20 +17,38 @@
     padding: 1vw;
 }
 
+.slider-bg {
+    position: absolute;
+    top: 1vw;
+    bottom: 1vw;
+    left: 7.5%;
+    width: 35%;
+    background: #d9e1e3aa;
+    border-radius: 0.5vw;
+    transition: left 0.5s ease;
+    z-index: 0;
+}
+
 .form-div {
     width: 50%;
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 1;
 }
 
 .sign_up_box, .login_box {
-    background: #d9e1e3aa;
+    background: transparent;
     width: 70%;
     padding: 1vw;
     border-radius: 0.5vw;
 }
 
-#name, #username, .email, .password {
+#login_signup-box:has(.login_box:focus-within) .slider-bg{
+    left: 57.5%
+}
+
+#nameofuser, #usernamec, .email, .password {
     display: flex;
     flex-direction: column;
 }
