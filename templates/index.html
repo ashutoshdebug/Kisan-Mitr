@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
+    />
+
+    {% block styles %}{% endblock %}
+    
+    <title>
+      Kisan Mitr | {% block subtitle %} Your own farming buddy! {% endblock%}
+    </title>
+  </head>
+  <style></style>
+
+  <body>
+    <div id="body-div" data-scroll-container>
+      {% block navbar %}
+        <header>
+        <nav>
+          <div id="floating-nav">
+            <div id="navbar">
+              <div id="nav-left">
+                <span><a href="#">Kisan Mitra</a></span>
+              </div>
+              <div id="nav-right">
+                <ul>
+                  <li><a href="#">Our Motive</a></li>
+                  <li><a href="{{ url_for('login_page')}}">User</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+      {% endblock %}
+      <main>
+        {% block content%}
+        <section id="hero-section" data-scroll-section>
+          <div class="heading">
+            <div>
+              <span data-scroll data-scroll-speed="0.5">K</span
+              ><span data-scroll data-scroll-speed="0.51">i</span
+              ><span data-scroll data-scroll-speed="0.52">s</span
+              ><span data-scroll data-scroll-speed="0.8">a</span
+              ><span data-scroll data-scroll-speed="0.54">n</span
+              ><span data-scroll data-scroll-speed="0.55">&nbsp;</span
+              ><span data-scroll data-scroll-speed="0.56">M</span
+              ><span data-scroll data-scroll-speed="0.57">i</span
+              ><span data-scroll data-scroll-speed="0.5">t</span
+              ><span data-scroll data-scroll-speed="0.58">r</span
+              ><span data-scroll data-scroll-speed="0.8">a</span>
+            </div>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima
+              unde maiores ut dolor accusantium explicabo ipsa officiis odit
+              fuga facere?
+            </p>
+          </div>
+        </section>
+        {% endblock %}
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
+    <script>
+      const scroll = new LocomotiveScroll({
+        el: document.querySelector("[data-scroll-container]"),
+        smooth: true,
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+{% extends 'index.html' %} {% block subtitle %} Login {% endblock %} {% block
+styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/login.css') }}"
+/>
+{% endblock %} 
+{% block navbar%} {% endblock %} {# Don't add anything in this#} 
+{% block content %}
+<div id="body-div">
+  <div id="login_signup-box" class="glass-card">
+    <form action="" method="post" class="form-div">
+      <div class="sign_up_box">
+        <div class="heading">
+            Sign-Up
+        </div>
+        <div id="name" class="padding-bottom">
+          <label for="name" class="label-text">Name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            class="input-field"
+            placeholder="Enter your full name"
+          />
+        </div>
+        <div id="username" class="padding-bottom">
+          <label for="username" class="label-text">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            class="input-field"
+            placeholder="Choose a username"
+          />
+        </div>
+        <div class="email padding-bottom">
+          <label for="email" class="label-text">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="input-field"
+            placeholder="Enter your email"
+          />
+        </div>
+        <div class="password padding-bottom">
+          <label for="password" class="label-text">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="input-field"
+            placeholder="Choose a password"
+          />
+        </div>
+        <button type="submit" class="submit-form">Sign Up</button>
+      </div>
+    </form>
+    <form action="" method="get" class="form-div">
+      <div class="login_box">
+        <div class="heading">
+            Log-in
+        </div>
+        <div class="email padding-bottom">
+          <label for="email" class="label-text">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="input-field"
+            placeholder="Enter your email"
+          />
+        </div>
+        <div class="password padding-bottom">
+          <label for="password" class="label-text">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="input-field"
+            placeholder="Enter your password"
+          />
+        </div>
+        <button type="submit" class="submit-form">Log In</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
