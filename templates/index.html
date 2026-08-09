@@ -1,91 +1,229 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/index.css') }}"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisan Mitra | AI Crop Health</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
 
-    {% block styles %}{% endblock %}
-    
-    <title>
-      Kisan Mitr | {% block subtitle %} Your own farming buddy! {% endblock%}
-    </title>
-  </head>
-  <style></style>
+<div class="cursor-glow"></div>
 
-  <body>
-    <div id="body-div" data-scroll-container>
-      {% block navbar %}
-        <header>
-        <nav>
-          <div id="floating-nav">
-            <div id="navbar">
-              <div id="nav-left">
-                <span><a href="#">Kisan Mitra</a></span>
-              </div>
-              <div id="nav-right">
-                <ul>
-                  <li><a href="#">Our Motive</a></li>
-                  <li><a href="{{ url_for('login_page')}}">User</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
-      {% endblock %}
-      <main>
-        {% block content%}
-        <section id="hero-section" data-scroll-section>
-          <div class="heading">
-            <div>
-              <span data-scroll data-scroll-speed="0.5">K</span
-              ><span data-scroll data-scroll-speed="0.51">i</span
-              ><span data-scroll data-scroll-speed="0.52">s</span
-              ><span data-scroll data-scroll-speed="0.8">a</span
-              ><span data-scroll data-scroll-speed="0.54">n</span
-              ><span data-scroll data-scroll-speed="0.55">&nbsp;</span
-              ><span data-scroll data-scroll-speed="0.56">M</span
-              ><span data-scroll data-scroll-speed="0.57">i</span
-              ><span data-scroll data-scroll-speed="0.5">t</span
-              ><span data-scroll data-scroll-speed="0.58">r</span
-              ><span data-scroll data-scroll-speed="0.8">a</span>
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima
-              unde maiores ut dolor accusantium explicabo ipsa officiis odit
-              fuga facere?
-            </p>
-          </div>
-        </section>
-        {% endblock %}
-      </main>
+<header class="navbar">
+    <a href="{{ url_for('landingPage') }}" class="brand">
+        <img class="brand-icon" src="{{ url_for('static', filename='uploads/images/kisan-logo.png') }}" alt="Kisan Mitra logo">
+        <span><b>Kisan Mitra</b><small>AI CROP HEALTH</small></span>
+    </a>
+
+    <nav>
+        <a href="#home" data-i18n="home">Home</a>
+        <a href="#process" data-i18n="howItWorks">HOW IT WORKS</a>
+        <a href="#about" data-i18n="about">About</a>
+    </nav>
+
+    <div class="nav-actions">
+        <button id="languageToggle" class="language-btn lang-switch-modern" type="button">हिंदी</button>
+        <a href="{{ url_for('login_page') }}" class="login-btn" data-i18n="loginBtn">Login <span>↗</span></a>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
-    <script>
-      const scroll = new LocomotiveScroll({
-        el: document.querySelector("[data-scroll-container]"),
-        smooth: true,
-      });
-    </script>
-  </body>
+</header>
+
+<main>
+
+<section id="home" class="hero">
+    <div class="hero-bg"></div>
+
+    <div class="hero-content reveal">
+        <div class="status-pill">
+            <i></i> <span data-i18n="mlOnline">MACHINE LEARNING • ONLINE</span>
+        </div>
+
+        <h1 data-i18n="heroTitle">Know your crop.<br><em>Grow with confidence.</em></h1>
+
+        <p>
+            <span data-i18n="heroDesc">Upload a leaf image and let our AI-powered system<br>identify possible crop diseases in seconds.</span>
+        </p>
+
+        <div class="actions">
+            <a href="{{ url_for('login_page') }}" class="primary" data-i18n="startDetection">Start Detection <b>↗</b></a>
+            <a href="#process" class="secondary" data-i18n="explore">Explore <b>↓</b></a>
+        </div>
+
+        <div class="stats">
+            <div><strong>01</strong><span data-i18n="upload">Upload</span></div>
+            <div><strong>02</strong><span data-i18n="detect">Detect</span></div>
+            <div><strong>03</strong><span data-i18n="learn">Learn</span></div>
+        </div>
+    </div>
+
+    <div class="visual reveal delay">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+
+        <div class="scan-card">
+            <div class="scan-header">
+                <span data-i18n="leafScanner">LEAF SCANNER</span>
+                <span class="live"><i></i> <span data-i18n="live">LIVE</span></span>
+            </div>
+
+            <div class="leaf">
+                <div class="leaf-body"></div>
+                <div class="stem"></div>
+                <span class="v v1"></span>
+                <span class="v v2"></span>
+                <span class="v v3"></span>
+                <span class="v v4"></span>
+                <span class="v v5"></span>
+            </div>
+
+            <div class="scanner-line"></div>
+
+            <div class="scan-result">
+                <div class="check">✓</div>
+                <div>
+                    <small data-i18n="modelStatus">MODEL STATUS</small>
+                    <strong data-i18n="readyAnalyze">Ready to analyze</strong>
+                </div>
+                <b>AI</b>
+            </div>
+        </div>
+
+        <div class="float-card one">
+            <small data-i18n="scanAccuracy">SCAN ACCURACY</small>
+            <strong>98.4%</strong>
+        </div>
+
+        <div class="float-card two">
+            <small data-i18n="nextStep">NEXT STEP</small>
+            <strong data-i18n="uploadLeaf">Upload a leaf ↗</strong>
+        </div>
+    </div>
+
+    <div class="scroll">SCROLL TO EXPLORE <span>↓</span></div>
+</section>
+
+<section id="process" class="process">
+    <div class="heading reveal">
+        <span data-i18n="processKicker">01 — HOW IT WORKS</span>
+        <h2 data-i18n="processTitle">From leaf to<br><em>insight.</em></h2>
+    </div>
+
+    <div class="steps">
+        <article class="step reveal">
+            <div class="step-top"><span>01</span><i>↗</i></div>
+            <div class="icon">◉</div>
+            <h3 data-i18n="stepUploadTitle">Upload</h3>
+            <p data-i18n="stepUploadDesc">Choose a clear image of the affected crop leaf.</p>
+        </article>
+
+        <article class="step reveal">
+            <div class="step-top"><span>02</span><i>↗</i></div>
+            <div class="icon">⌁</div>
+            <h3 data-i18n="stepAnalyzeTitle">Analyze</h3>
+            <p data-i18n="stepAnalyzeDesc">The trained machine learning model studies the image.</p>
+        </article>
+
+        <article class="step reveal">
+            <div class="step-top"><span>03</span><i>↗</i></div>
+            <div class="icon">✓</div>
+            <h3 data-i18n="stepUnderstandTitle">Understand</h3>
+            <p data-i18n="stepUnderstandDesc">See the predicted disease and useful crop information.</p>
+        </article>
+    </div>
+</section>
+
+<section id="about" class="about">
+    <div class="about-image reveal">
+        <img src="{{ url_for('static', filename='uploads/images/about-vegetables.png') }}" alt="Fresh farm vegetables">
+    </div>
+
+    <div class="about-content reveal">
+        <span data-i18n="aboutKicker">02 — ABOUT US</span>
+        <h2 data-i18n="aboutTitle">Helping farmers<br>protect their <em>crops.</em></h2>
+        <p>
+            <span data-i18n="aboutDesc">Kisan Mitra is a crop disease detection project that uses Machine<br>Learning to identify possible diseases from crop leaf images.</span>
+        </p>
+        <a href="login.html" data-i18n="tryDetection">TRY DETECTION <b>↗</b></a>
+    </div>
+</section>
+
+<section class="cta reveal">
+    <div>
+        <span data-i18n="readyCheck">READY TO CHECK?</span>
+        <h2 data-i18n="ctaTitle">Give your crop<br><em>a health check.</em></h2>
+    </div>
+    <a href="{{ url_for('login_page') }}" class="primary light" data-i18n="startNow">Start Now <b>↗</b></a>
+</section>
+
+</main>
+
+<footer>
+    <span data-i18n="copyright">© 2026 Kisan Mitra</span>
+    <span data-i18n="footerText">Crop Disease Detection • Machine Learning</span>
+</footer>
+
+<script>
+const glow = document.querySelector('.cursor-glow');
+
+document.addEventListener('mousemove', e => {
+    if (glow) glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+});
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const translations = {
+    hi: {
+        home:'होम', howItWorks:'कैसे काम करता है', about:'हमारे बारे में', loginBtn:'लॉगिन <span>↗</span>',
+        mlOnline:'मशीन लर्निंग • ऑनलाइन', heroTitle:'अपनी फसल को जानें।<br><em>आत्मविश्वास के साथ उगाएँ।</em>',
+        heroDesc:'पत्ते की तस्वीर अपलोड करें और हमारा AI सिस्टम कुछ ही सेकंड में<br>फसल की संभावित बीमारी पहचानने में मदद करेगा।',
+        startDetection:'जाँच शुरू करें <b>↗</b>', explore:'देखें <b>↓</b>', upload:'अपलोड', detect:'जाँच', learn:'जानें',
+        leafScanner:'पत्ती स्कैनर', live:'लाइव', modelStatus:'मॉडल स्थिति', readyAnalyze:'विश्लेषण के लिए तैयार',
+        scanAccuracy:'स्कैन सटीकता', nextStep:'अगला चरण', uploadLeaf:'पत्ती अपलोड करें ↗',
+        processKicker:'01 — कैसे काम करता है', processTitle:'पत्ती से<br><em>जानकारी तक।</em>',
+        stepUploadTitle:'अपलोड', stepUploadDesc:'प्रभावित फसल की साफ तस्वीर चुनें।',
+        stepAnalyzeTitle:'विश्लेषण', stepAnalyzeDesc:'प्रशिक्षित मशीन लर्निंग मॉडल तस्वीर का अध्ययन करता है।',
+        stepUnderstandTitle:'समझें', stepUnderstandDesc:'अनुमानित बीमारी और फसल की उपयोगी जानकारी देखें।',
+        aboutKicker:'02 — हमारे बारे में', aboutTitle:'किसानों की मदद करें<br>उनकी <em>फसल बचाने में।</em>',
+        aboutDesc:'किसान मित्र एक फसल रोग पहचान परियोजना है जो मशीन लर्निंग का उपयोग करके<br>फसल के पत्तों की तस्वीरों से संभावित बीमारियों की पहचान करती है।',
+        tryDetection:'जाँच करें <b>↗</b>', readyCheck:'जाँच के लिए तैयार?', ctaTitle:'अपनी फसल की<br><em>सेहत जाँचें।</em>',
+        startNow:'अभी शुरू करें <b>↗</b>', copyright:'© 2026 किसान मित्र', footerText:'फसल रोग पहचान • मशीन लर्निंग'
+    }
+};
+
+function applyLanguage(lang){
+    const isHindi = lang === 'hi';
+    document.documentElement.lang = isHindi ? 'hi' : 'en';
+    document.body.classList.toggle('hindi', isHindi);
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key=el.dataset.i18n;
+        if(isHindi && translations.hi[key]) el.innerHTML=translations.hi[key];
+    });
+    if(!isHindi){ location.reload(); return; }
+    const btn=document.getElementById('languageToggle');
+    if(btn) btn.textContent='English';
+    localStorage.setItem('kmLanguage', lang);
+}
+
+function restoreLanguage(){
+    if(localStorage.getItem('kmLanguage')==='hi') applyLanguage('hi');
+}
+
+const languageToggle=document.getElementById('languageToggle');
+if(languageToggle){
+    languageToggle.addEventListener('click',()=>{
+        const current=localStorage.getItem('kmLanguage')==='hi'?'en':'hi';
+        if(current==='en'){localStorage.removeItem('kmLanguage');location.reload();}
+        else applyLanguage('hi');
+    });
+}
+restoreLanguage();
+</script>
+
+</body>
 </html>

@@ -17,3 +17,10 @@ def login_page():
     if request.method == "POST":
         pass
     return render_template('login.html')
+
+@app.route("/upload")
+def upload_page():
+    return render_template('upload.html')
+
+if __name__ == "__main__":
+    app.run(debug=True)
