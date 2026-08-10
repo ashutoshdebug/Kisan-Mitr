@@ -18,7 +18,7 @@
           <label for="nameofuser" class="label-text">Name</label>
           <input
             type="text"
-            name="name"
+            name="signup_name"
             id="nameofuser"
             class="input-field"
             placeholder="Enter your full name"
@@ -29,7 +29,7 @@
           <label for="usernamec" class="label-text">Username</label>
           <input
             type="text"
-            name="username"
+            name="signup_username"
             id="usernamec"
             class="input-field"
             placeholder="Choose a username"
@@ -40,7 +40,7 @@
           <label for="signup-email" class="label-text">Email</label>
           <input
             type="email"
-            name="email"
+            name="signup_email"
             id="signup-email"
             class="input-field"
             placeholder="Enter your email"
@@ -51,16 +51,16 @@
           <label for="signup-password" class="label-text">Password</label>
           <input
             type="password"
-            name="password"
+            name="signup_password"
             id="signup-password"
             class="input-field"
             placeholder="Choose a password"
           />
         </div>
-        <button type="submit" class="submit-form">Sign Up</button>
+        <button type="submit" id="signUpSubmit" class="submit-form" name="form_type" value="signup_form">Sign Up</button>
       </div>
     </form>
-    <form action="" method="get" class="form-div">
+    <form action="" method="post" class="form-div">
       <div class="login_box">
         <div class="heading">
             Log-in
@@ -69,7 +69,7 @@
           <label for="login-email" class="label-text">Email</label>
           <input
             type="email"
-            name="email"
+            name="login_email"
             id="login-email"
             class="input-field"
             placeholder="Enter your email"
@@ -80,18 +80,35 @@
           <label for="login-password" class="label-text">Password</label>
           <input
             type="password"
-            name="password"
+            name="login_password"
             id="login-password"
             class="input-field"
             placeholder="Enter your password"
           />
         </div>
-        <button type="submit" class="submit-form">Log In</button>
+        <button type="submit" class="submit-form" name="form_type" value="login_form">Log In</button>
       </div>
     </form>
   </div>
 </div>
 {% endblock %}
 {% block jsscript %} 
-
+<!-- <script>
+  // Click event of submit for sign up
+  const signUpSubmit = document.querySelector('#signUpSubmit');
+  const signUpName = document.querySelector('#nameofuser')
+  const signUpUsername = document.querySelector('#usernamec')
+  const signUpEmail = document.querySelector('#signup-email')
+  const signUpPassword = document.querySelector('#signup-password')
+  if (signUpSubmit){
+    signUpSubmit.addEventListener('click', (event) => {
+      event.preventDefault();
+      console.log(signUpName.value);
+      console.log(signUpUsername.value);
+      console.log(signUpEmail.value);
+      console.log(signUpPassword.value)
+      console.log('Sign Up Submit btn clicked');
+    })
+  }
+</script> -->
 {% endblock %}
