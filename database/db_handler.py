@@ -1,11 +1,14 @@
 import mysql.connector as sql
 from mysql.connector import errorcode
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # Connecting to the server
 try:
     con = sql.connect(
-        host='',
-        user='',
-        password='',
+        host = os.getenv("host"),
+        user = os.getenv("user"),
+        password = os.getenv("password"),
     )
     print("Connected successfully!")
 
