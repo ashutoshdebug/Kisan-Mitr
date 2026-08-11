@@ -20,9 +20,6 @@ databaseHandler = dbHandler()
 def landingPage():
     return render_template('index.html')
 
-@app.route("/upload")
-def upload():
-    return render_template('upload.html')
 
 @app.route("/login", methods = ["GET", "POST"])
 def account_page():
@@ -55,3 +52,11 @@ def account_page():
                 return redirect(url_for('upload'))
 
     return render_template('login.html')
+
+@app.route("/upload", methods=["GET", "POST"])
+def upload():
+    if not databaseHandler.login_successful:
+        return redirect(url_for('account_page'))
+
+    return render_template('upload.html')
+

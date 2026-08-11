@@ -14,6 +14,7 @@ class dbHandler:
         self.user = os.getenv("user")
         self.password = os.getenv("password")
         self.database = os.getenv("database")
+        self.login_successful = False
         # print("Init database:", self.database)
         self.password_hash = PasswordHash()
 
@@ -66,7 +67,6 @@ class dbHandler:
             con.close()
 
     def verifyUser(self, password, email):
-        self.login_successful = False
         con = self.connection()
         if not con:
             return False
