@@ -1,6 +1,7 @@
 import mysql.connector as sql
 from mysql.connector import errorcode
 import os
+from pathlib import Path
 import bcrypt
 from utils.password_hash import PasswordHash
 from dotenv import load_dotenv
@@ -73,21 +74,23 @@ class dbHandler:
 
         try:
             cursor = con.cursor()
-            cursor.execute("SELECT password FROM ACCOUNT WHERE email = %s", (email,))
+            cursor.execute("SELECT username, password FROM ACCOUNT WHERE email = %s", (email,))
             data = cursor.fetchone()
 
-            db_password_hash = data[0]
+            db_password_hash = data[1]
 
             if isinstance(db_password_hash, str):
                 db_password_hash = db_password_hash.encode("utf-8")
 
             is_match = bcrypt.checkpw(password.encode('utf-8'), db_password_hash)
             if is_match:
+                self.username_folder = data[0]
+                self.createFolder(self.username_folder)
                 print("User exist!")
-                print("Data:", data[0])
+                print("Data:", data[1])
                 self.login_successful = True
             else:
-                print("Data:", data[0])
+                print("Data:", data[1])
                 print("User doesn't exist")
             # return db_password_hash
 
@@ -97,22 +100,41 @@ class dbHandler:
         finally:
             cursor.close()
             con.close()
+            
 
-    # def getUser(self, email):
-    #     con = self.connection()
-    #     if not con:
-    #         return False
+    def createFolder(self, username):
+        # print("Create folder login:", self.login_successful)
+        # return self.login_successful
+        exist = False
+        con = self.connection()
+        if not con:
+            return False
 
-    #     # query = 'SELECT password FROM ACCOUNT WHERE email = %s'
-    #     try:
-    #         cursor = con.cursor()
-    #         cursor.execute("SELECT password FROM ACCOUNT WHERE email = %s", (email,))
-    #         # con.commit()
-    #         data = cursor.fetchall()
-    #         self.db_password = data[0][0]
-    #         # print(type(data))
-    #         print(data[0][0])
-    #         print("User found")
+        folder_name = username
+        sanitize_name = os.path.basename(folder_name)
+        BASE_DIR = Path(__file__).resolve().parent.parent
+        print("Base dir:", BASE_DIR)
+        path = BASE_DIR/ "static" / "uploads" / "database" / sanitize_name
+        try:
+            print("Create folder username:", sanitize_name)
 
-    #     except sql.Error as err:
-    #         print("Error:", err)
+            if path.exists():
+                exist = True
+                print("Folder exist:", exist)
+
+            else:
+                path.mkdir(parents=True, exist_ok=True)
+                exist = False
+                print("Folder doesn't exist:", exist)
+        
+        except sql.Error as err:
+            print("Create folder error:", err)
+
+        except OSError as err:
+            print("Create folder filesystem error:", err)
+
+        except Exception as err:
+            print("Unexpected error:", err)
+
+        finally:
+            con.close()
