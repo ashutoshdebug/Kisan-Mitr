@@ -27,12 +27,12 @@ class dbHandler:
                 password = self.password,
                 database = self.database,
             )
-            cursor = con.cursor()
+            # cursor = con.cursor()
             # print("Connection databse", self.database)
-            query = f'USE {self.database}'
-            cursor.execute(query)
-            con.commit()
-            print("Connected successfully!")
+            # query = f'USE {self.database}'
+            # cursor.execute(query)
+            # con.commit()
+            # print("Connected successfully!")
             return con
 
         except sql.Error as err:
@@ -46,6 +46,10 @@ class dbHandler:
             return None
 
     def userRegistration(self, name, username, email, password):
+        if not (name and username and email and password):
+            print("No sufficient data is provided to register user")
+            return False
+
         con = self.connection()
         if not con:
             return False
@@ -68,6 +72,10 @@ class dbHandler:
             con.close()
 
     def verifyUser(self, password, email):
+        if not (password and email):
+            print("No email and password are provided to verify the user")
+            return False
+        
         con = self.connection()
         if not con:
             return False
@@ -76,6 +84,11 @@ class dbHandler:
             cursor = con.cursor()
             cursor.execute("SELECT username, password FROM ACCOUNT WHERE email = %s", (email,))
             data = cursor.fetchone()
+
+            if not data:
+                print("User doesn't exist")
+                self.login_successful = False
+                return False
 
             db_password_hash = data[1]
 
@@ -103,38 +116,33 @@ class dbHandler:
             
 
     def createFolder(self, username):
-        # print("Create folder login:", self.login_successful)
-        # return self.login_successful
-        exist = False
-        con = self.connection()
-        if not con:
+        # exist = False
+        if not username:
+            print("Folder creation failed: No username supplied")
             return False
-
+        
         folder_name = username
         sanitize_name = os.path.basename(folder_name)
         BASE_DIR = Path(__file__).resolve().parent.parent
-        print("Base dir:", BASE_DIR)
+        # print("Base dir:", BASE_DIR)
         path = BASE_DIR/ "static" / "uploads" / "database" / sanitize_name
+
         try:
             print("Create folder username:", sanitize_name)
 
             if path.exists():
-                exist = True
-                print("Folder exist:", exist)
+                return True
+                # exist = True
+                # print("Folder exist:", exist)
 
             else:
                 path.mkdir(parents=True, exist_ok=True)
-                exist = False
-                print("Folder doesn't exist:", exist)
+                return True
+                # exist = False
+                # print("Folder doesn't exist:", exist)
         
-        except sql.Error as err:
-            print("Create folder error:", err)
-
         except OSError as err:
             print("Create folder filesystem error:", err)
 
         except Exception as err:
             print("Unexpected error:", err)
-
-        finally:
-            con.close()
