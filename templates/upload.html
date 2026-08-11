@@ -1,0 +1,186 @@
+{% extends "index.html" %}
+
+{% block subtitle %}
+  Upload Image 
+{% endblock subtitle %}
+
+{% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/upload.css') }}"
+/>
+{% endblock %}
+
+{% block navbar %}{% endblock %} {# Don't add anything in this #}
+
+{% block content %}
+
+<div id="body-div">
+
+  <div class="upload-wrapper">
+
+    <div class="drop-zone" id="dropZone">
+
+      <strong>Drop your image here</strong>
+      <span>PNG, JPG, JPEG or WEBP</span>
+
+      <label class="browse" for="fileInput">
+        Browse file
+      </label>
+
+      <input
+        id="fileInput"
+        type="file"
+        accept="image/png, image/jpeg, image/webp"
+      />
+
+    </div>
+
+
+    <div class="file-info" id="fileInfo">
+
+      <span class="file-name" id="fileName"></span>
+
+      <button
+        type="button"
+        class="remove-file"
+        id="removeFile"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      class="upload-btn"
+      id="uploadBtn"
+    >
+      Upload
+    </button>
+
+  </div>
+
+</div>
+
+
+{% block jsscript %}
+
+<script>
+  const dropZone = document.getElementById("dropZone");
+  const fileInput = document.getElementById("fileInput");
+
+  const fileInfo = document.getElementById("fileInfo");
+  const fileName = document.getElementById("fileName");
+  const removeFile = document.getElementById("removeFile");
+
+  const uploadBtn = document.getElementById("uploadBtn");
+
+
+  // File selected
+  fileInput.addEventListener("change", () => {
+
+    if (fileInput.files.length > 0) {
+      showFile(fileInput.files[0]);
+    }
+
+  });
+
+
+  // Drag over
+  dropZone.addEventListener("dragover", (e) => {
+
+    e.preventDefault();
+
+    dropZone.classList.add("dragover");
+
+  });
+
+
+  // Drag leave
+  dropZone.addEventListener("dragleave", () => {
+
+    dropZone.classList.remove("dragover");
+
+  });
+
+
+  // File dropped
+  dropZone.addEventListener("drop", (e) => {
+
+    e.preventDefault();
+
+    dropZone.classList.remove("dragover");
+
+    const file = e.dataTransfer.files[0];
+
+    if (file && file.type.startsWith("image/")) {
+
+      // Put dropped file into input
+      const dataTransfer = new DataTransfer();
+
+      dataTransfer.items.add(file);
+
+      fileInput.files = dataTransfer.files;
+
+      showFile(file);
+    }
+
+  });
+
+
+  // Display selected file
+  function showFile(file) {
+
+    fileName.textContent = file.name;
+
+    // Show filename row
+    fileInfo.style.display = "flex";
+
+    // Show cross
+    removeFile.style.display = "block";
+
+    // Show upload button
+    uploadBtn.style.display = "block";
+  }
+
+
+  // Remove file
+  removeFile.addEventListener("click", () => {
+
+    // Clear actual file input
+    fileInput.value = "";
+
+    // Clear filename
+    fileName.textContent = "";
+
+    // Hide filename row
+    fileInfo.style.display = "none";
+
+    // Hide cross
+    removeFile.style.display = "none";
+
+    // Hide upload button
+    uploadBtn.style.display = "none";
+  });
+
+
+  // Upload button
+  uploadBtn.addEventListener("click", () => {
+
+    if (fileInput.files.length === 0) {
+      return;
+    }
+
+    const file = fileInput.files[0];
+
+    console.log("Uploading:", file.name);
+
+    // Add your actual upload logic here
+  });
+
+</script>
+
+{% endblock jsscript %}
+
+{% endblock content %}

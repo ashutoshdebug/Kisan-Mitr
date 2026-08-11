@@ -66,6 +66,7 @@ class dbHandler:
             con.close()
 
     def verifyUser(self, password, email):
+        self.login_successful = False
         con = self.connection()
         if not con:
             return False
@@ -83,8 +84,10 @@ class dbHandler:
             is_match = bcrypt.checkpw(password.encode('utf-8'), db_password_hash)
             if is_match:
                 print("User exist!")
-                print("Data:", data[0][0])
+                print("Data:", data[0])
+                self.login_successful = True
             else:
+                print("Data:", data[0])
                 print("User doesn't exist")
             # return db_password_hash
 
