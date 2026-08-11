@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_livereload import LiveReload
 from database.db_handler import dbHandler
 from dotenv import load_dotenv
@@ -36,6 +36,7 @@ def account_page():
             print('Signup password', signup_password)
 
             databaseHandler.userRegistration(signup_name, signup_username, signup_email, signup_password)
+            return redirect(url_for('account_page'))
 
         elif form_type == 'login_form':
             login_email = request.form.get('login_email')
