@@ -1,12 +1,20 @@
+import os
 from flask import Flask, render_template, request
 from flask_livereload import LiveReload
+from database.db_handler import dbHandler
+from dotenv import load_dotenv
+
+load_dotenv() # To load env secrets
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # Do not use this in production
 livereload = LiveReload(app)
+
+databaseHandler = dbHandler()
 
 @app.route("/")
 def landingPage():
@@ -26,6 +34,8 @@ def account_page():
             print('Signup username:', signup_username)
             print('Signup email:', signup_email)
             print('Signup password', signup_password)
+
+            databaseHandler.userRegistration(signup_name, signup_username, signup_email, signup_password)
 
         elif form_type == 'login_form':
             login_email = request.form.get('login_email')
