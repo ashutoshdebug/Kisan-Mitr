@@ -2,7 +2,10 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
 # Custom folder
+# Ignore all child subdirectories inside database
 /static/uploads/database/*/
+
+# Keep .gitkeep (optional if you want to ensure the folder is tracked)
 !/static/uploads/database/.gitkeep
 
 ### Python ###
