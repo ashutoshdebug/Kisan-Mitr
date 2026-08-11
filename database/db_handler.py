@@ -54,11 +54,13 @@ class dbHandler:
         if not con:
             return False
 
+        lowerCaseEmail = str(email).lower()
+        # print(lowerCaseEmail)
         encrypted_pass = self.password_hash.userPassword(password)
         query = 'INSERT INTO ACCOUNT (name, username, email, password) VALUES (%s, %s, %s, %s)'
         try:
             cursor = con.cursor()
-            cursor.execute(query, (name, username, email, encrypted_pass))
+            cursor.execute(query, (name, username, lowerCaseEmail, encrypted_pass))
             con.commit()
             print("Commited successfully")
             return True
@@ -81,8 +83,10 @@ class dbHandler:
             return False
 
         try:
+            lowerCaseEmail = str(email).lower()
+            print(lowerCaseEmail)
             cursor = con.cursor()
-            cursor.execute("SELECT username, password FROM ACCOUNT WHERE email = %s", (email,))
+            cursor.execute("SELECT username, password FROM ACCOUNT WHERE email = %s", (lowerCaseEmail,))
             data = cursor.fetchone()
 
             if not data:
