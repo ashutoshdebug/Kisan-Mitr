@@ -1,6 +1,7 @@
 import mysql.connector as sql
 from mysql.connector import errorcode
 import os
+import bcrypt
 from utils.password_hash import PasswordHash
 from dotenv import load_dotenv
 load_dotenv()
@@ -63,3 +64,52 @@ class dbHandler:
         finally:
             cursor.close()
             con.close()
+
+    def verifyUser(self, password, email):
+        con = self.connection()
+        if not con:
+            return False
+
+        try:
+            cursor = con.cursor()
+            cursor.execute("SELECT password FROM ACCOUNT WHERE email = %s", (email,))
+            data = cursor.fetchone()
+
+            db_password_hash = data[0]
+
+            if isinstance(db_password_hash, str):
+                db_password_hash = db_password_hash.encode("utf-8")
+
+            is_match = bcrypt.checkpw(password.encode('utf-8'), db_password_hash)
+            if is_match:
+                print("User exist!")
+                print("Data:", data[0][0])
+            else:
+                print("User doesn't exist")
+            # return db_password_hash
+
+        except sql.Error as err:
+            print("Error:", err)
+
+        finally:
+            cursor.close()
+            con.close()
+
+    # def getUser(self, email):
+    #     con = self.connection()
+    #     if not con:
+    #         return False
+
+    #     # query = 'SELECT password FROM ACCOUNT WHERE email = %s'
+    #     try:
+    #         cursor = con.cursor()
+    #         cursor.execute("SELECT password FROM ACCOUNT WHERE email = %s", (email,))
+    #         # con.commit()
+    #         data = cursor.fetchall()
+    #         self.db_password = data[0][0]
+    #         # print(type(data))
+    #         print(data[0][0])
+    #         print("User found")
+
+    #     except sql.Error as err:
+    #         print("Error:", err)

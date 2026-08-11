@@ -44,4 +44,8 @@ def account_page():
 
             print('Login email:', login_email)
             print('Login password:', login_password)
+
+            databaseHandler.verifyUser(login_password, login_email)
+            return redirect(url_for('account_page'))
+
     return render_template('login.html')

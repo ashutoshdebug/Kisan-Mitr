@@ -1,4 +1,5 @@
 import bcrypt
+# from database.db_handler import dbHandler
 
 class PasswordHash:
 
