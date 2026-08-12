@@ -1,186 +1,104 @@
-{% extends "index.html" %}
-
-{% block subtitle %}
-  Upload Image 
-{% endblock subtitle %}
+{% extends "index.html" %} 
+{% block subtitle %} Upload Image {% endblock subtitle %} 
 
 {% block styles %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/upload.css') }}"
 />
-{% endblock %}
-
-{% block navbar %}{% endblock %} {# Don't add anything in this #}
+{% endblock %} 
 
 {% block content %}
-
-<div id="body-div">
-
-  <div class="upload-wrapper">
-
-    <div class="drop-zone" id="dropZone">
-
-      <strong>Drop your image here</strong>
-      <span>PNG, JPG, JPEG or WEBP</span>
-
-      <label class="browse" for="fileInput">
-        Browse file
+<form action="" id="uploadForm" enctype="multipart/form-data" method="post">
+  <div id="drag_n_drop_container">
+    <div id="dragNdrop">
+      <label for="fileInput" id="fileInputBox" style="cursor: pointer;">
+        <div id="dndHeader">
+          Drag and Drop your files here
+          <p>or click to browse your files</p>
+          <input 
+            type="file" 
+            name="fileInput" 
+            id="fileInput" 
+            accept="image/png, image/jpg, image/jpeg, image/webp" 
+            style="display: none;"
+          >
+          <span id="filename">Selected File: None</span>
+        </div> 
+        <div id="filetype">
+          <p>Supported file type: PNG, JPG, JPEG or WEBP</p>
+          <span id="warning">Please select a file first</span>
+        </div>
       </label>
-
-      <input
-        id="fileInput"
-        type="file"
-        accept="image/png, image/jpeg, image/webp"
-      />
-
     </div>
-
-
-    <div class="file-info" id="fileInfo">
-
-      <span class="file-name" id="fileName"></span>
-
-      <button
-        type="button"
-        class="remove-file"
-        id="removeFile"
-      >
-        ×
-      </button>
-
+    <div id="upload">
+      <button type="submit" id="uploadBtn">Submit</button>
+      <button type="reset" id="clear">Clear</button>
     </div>
-
-    <button
-      type="button"
-      class="upload-btn"
-      id="uploadBtn"
-    >
-      Upload
-    </button>
-
   </div>
+</form>
+{% endblock content %} 
 
-</div>
-
-
-{% block jsscript %}
-
+{% block jsscript %} 
 <script>
-  const dropZone = document.getElementById("dropZone");
-  const fileInput = document.getElementById("fileInput");
+  const fileInput = document.getElementById('fileInput');
+  const uploadForm = document.getElementById('uploadForm');
+  const fileNameSpan = document.getElementById('filename');
+  const dragNdrop = document.getElementById('dragNdrop');
+  const warning = document.getElementById('warning');
 
-  const fileInfo = document.getElementById("fileInfo");
-  const fileName = document.getElementById("fileName");
-  const removeFile = document.getElementById("removeFile");
+  let selectedFile = null;
 
-  const uploadBtn = document.getElementById("uploadBtn");
-
-
-  // File selected
-  fileInput.addEventListener("change", () => {
-
-    if (fileInput.files.length > 0) {
-      showFile(fileInput.files[0]);
+  function updateFileInfo(file) {
+    if (file) {
+      selectedFile = file;
+      warning.classList.remove('display_block');
+      fileNameSpan.textContent = `Selected File: ${file.name}`;
+      console.log(file.name);
     }
-
-  });
-
-
-  // Drag over
-  dropZone.addEventListener("dragover", (e) => {
-
-    e.preventDefault();
-
-    dropZone.classList.add("dragover");
-
-  });
-
-
-  // Drag leave
-  dropZone.addEventListener("dragleave", () => {
-
-    dropZone.classList.remove("dragover");
-
-  });
-
-
-  // File dropped
-  dropZone.addEventListener("drop", (e) => {
-
-    e.preventDefault();
-
-    dropZone.classList.remove("dragover");
-
-    const file = e.dataTransfer.files[0];
-
-    if (file && file.type.startsWith("image/")) {
-
-      // Put dropped file into input
-      const dataTransfer = new DataTransfer();
-
-      dataTransfer.items.add(file);
-
-      fileInput.files = dataTransfer.files;
-
-      showFile(file);
-    }
-
-  });
-
-
-  // Display selected file
-  function showFile(file) {
-
-    fileName.textContent = file.name;
-
-    // Show filename row
-    fileInfo.style.display = "flex";
-
-    // Show cross
-    removeFile.style.display = "block";
-
-    // Show upload button
-    uploadBtn.style.display = "block";
   }
 
-
-  // Remove file
-  removeFile.addEventListener("click", () => {
-
-    // Clear actual file input
-    fileInput.value = "";
-
-    // Clear filename
-    fileName.textContent = "";
-
-    // Hide filename row
-    fileInfo.style.display = "none";
-
-    // Hide cross
-    removeFile.style.display = "none";
-
-    // Hide upload button
-    uploadBtn.style.display = "none";
-  });
-
-
-  // Upload button
-  uploadBtn.addEventListener("click", () => {
-
-    if (fileInput.files.length === 0) {
-      return;
+  uploadForm.addEventListener('submit', (e) => {
+    if (!selectedFile) {
+      e.preventDefault();
+      warning.classList.add('display_block');
+      console.log("Select a file first then submit");
     }
-
-    const file = fileInput.files[0];
-
-    console.log("Uploading:", file.name);
-
-    // Add your actual upload logic here
   });
-
+  
+  fileInput.addEventListener('change', (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      updateFileInfo(event.target.files[0]);
+    }
+  });
+  
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dragNdrop.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, false);
+  });
+  
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dragNdrop.addEventListener(eventName, () => dragNdrop.classList.add('highlight'), false);
+  });
+  
+  ['dragleave', 'drop'].forEach(eventName => {
+    dragNdrop.addEventListener(eventName, () => dragNdrop.classList.remove('highlight'), false);
+  });
+  
+  dragNdrop.addEventListener('drop', (e) => {
+    const droppedFiles = e.dataTransfer.files;
+    if (droppedFiles && droppedFiles.length > 0) {
+      fileInput.files = droppedFiles; 
+      updateFileInfo(droppedFiles[0]);
+    }
+  });
+  
+  uploadForm.addEventListener('reset', () => {
+    selectedFile = null;
+    fileNameSpan.textContent = 'Selected File: None';
+    warning.classList.remove('display_block');
+  });
 </script>
-
 {% endblock jsscript %}
-
-{% endblock content %}

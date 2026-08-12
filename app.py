@@ -1,4 +1,5 @@
 import os
+from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for
 from flask_livereload import LiveReload
 from database.db_handler import dbHandler
@@ -57,6 +58,22 @@ def account_page():
 def upload():
     if not databaseHandler.login_successful:
         return redirect(url_for('account_page'))
+
+    if request.method == "POST":
+        file = request.files['fileInput']
+
+        if file.filename == "":
+            print("No selected file")
+            return redirect(request.url)
+
+        if file:
+            filename = secure_filename(file.filename)
+            # filename = secure_filename(file.filename)
+            print("Path:", databaseHandler.path)
+            file_path = os.path.join(databaseHandler.path, filename)
+            file.save(file_path)
+            print("File name:", file)
+
 
     return render_template('upload.html')
 

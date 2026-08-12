@@ -130,21 +130,21 @@ class dbHandler:
         self.sanitize_name = os.path.basename(folder_name)
         BASE_DIR = Path(__file__).resolve().parent.parent
         # print("Base dir:", BASE_DIR)
-        path = BASE_DIR/ "static" / "uploads" / "database" / self.sanitize_name
+        self.path = BASE_DIR/ "static" / "uploads" / "database" / self.sanitize_name
 
         try:
             print("Create folder username:", self.sanitize_name)
 
-            if path.exists():
-                self.addFolderPath(self.sanitize_name, str(path))
+            if self.path.exists():
+                self.addFolderPath(self.sanitize_name, str(self.path))
                 return True
                 # exist = True
                 # print("Folder exist:", exist)
 
             else:
-                path.mkdir(parents=True, exist_ok=True)
+                self.path.mkdir(parents=True, exist_ok=True)
                 # print(str(path))
-                self.addFolderPath(self.sanitize_name, str(path))
+                self.addFolderPath(self.sanitize_name, str(self.path))
                 return True
                 # exist = False
                 # print("Folder doesn't exist:", exist)
@@ -154,6 +154,7 @@ class dbHandler:
 
         except Exception as err:
             print("Unexpected error:", err)
+            
 
     def addFolderPath(self, username, path):
         if not path and username:
