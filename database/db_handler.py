@@ -120,27 +120,31 @@ class dbHandler:
             
 
     def createFolder(self, username):
+        self.folder_path = None
         # exist = False
         if not username:
             print("Folder creation failed: No username supplied")
             return False
         
         folder_name = username
-        sanitize_name = os.path.basename(folder_name)
+        self.sanitize_name = os.path.basename(folder_name)
         BASE_DIR = Path(__file__).resolve().parent.parent
         # print("Base dir:", BASE_DIR)
-        path = BASE_DIR/ "static" / "uploads" / "database" / sanitize_name
+        path = BASE_DIR/ "static" / "uploads" / "database" / self.sanitize_name
 
         try:
-            print("Create folder username:", sanitize_name)
+            print("Create folder username:", self.sanitize_name)
 
             if path.exists():
+                self.addFolderPath(self.sanitize_name, str(path))
                 return True
                 # exist = True
                 # print("Folder exist:", exist)
 
             else:
                 path.mkdir(parents=True, exist_ok=True)
+                # print(str(path))
+                self.addFolderPath(self.sanitize_name, str(path))
                 return True
                 # exist = False
                 # print("Folder doesn't exist:", exist)
@@ -150,3 +154,26 @@ class dbHandler:
 
         except Exception as err:
             print("Unexpected error:", err)
+
+    def addFolderPath(self, username, path):
+        if not path and username:
+            print("No path or username found!")
+            return False
+
+        con = self.connection()
+        if not con:
+            return False
+
+        try:
+            query = "INSERT INTO FILE_PATH (username, file_path) VALUES (%s, %s)"
+            cursor = con.cursor()
+            cursor.execute(query, (username, path,))
+            con.commit()
+            print("File path commited")
+
+        except sql.Error as err:
+            print("File path database error:", err)
+
+        finally:
+            cursor.close()
+            con.close()
