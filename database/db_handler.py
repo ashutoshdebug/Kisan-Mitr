@@ -136,8 +136,8 @@ class dbHandler:
             print("Create folder username:", self.sanitize_name)
 
             if self.path.exists():
-                self.addFolderPath(self.sanitize_name, str(self.path))
-                return True
+                pass
+                # self.addFolderPath(self.sanitize_name, str(self.path))
                 # exist = True
                 # print("Folder exist:", exist)
 
