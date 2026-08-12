@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Hammersmith+One&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/motive.css') }}"
+    >
+
+    <title>Kisan Mitra | Our Motive</title>
+</head>
+
+<body>
+
+<div class="motive-page">
+
+    <!-- NAVBAR -->
+    <header class="motive-nav">
+        <div class="brand">
+            <span class="brand-mark">KM</span>
+
+            <div>
+                <h3>Kisan Mitra</h3>
+                <small>AI CROP HEALTH</small>
+            </div>
+        </div>
+
+        <nav>
+            <a href="{{ url_for('landingPage') }}">Home</a>
+            <a href="#objective">Objectives</a>
+            <a href="{{ url_for('account_page') }}" class="login-btn">
+                Login ↗
+            </a>
+        </nav>
+    </header>
+
+
+    <!-- HERO -->
+    <main>
+
+        <section class="motive-hero">
+
+            <div class="hero-content">
+
+                <span class="eyebrow">
+                    01 — OUR MOTIVE
+                </span>
+
+                <h1>
+                    Technology that
+                    <span>stands with farmers.</span>
+                </h1>
+
+                <p>
+                    Kisan Mitra aims to make crop disease detection
+                    simple, accessible and understandable for every farmer.
+                </p>
+
+                <a
+                    href="#objective"
+                    class="explore-btn"
+                >
+                    Explore our objective
+                    <span>↓</span>
+                </a>
+
+            </div>
+
+            <div class="hero-visual">
+
+                <div class="visual-card">
+                    <div class="leaf-icon">🌱</div>
+
+                    <div class="visual-text">
+                        <small>CROP HEALTH</small>
+                        <strong>Smart detection.</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- OBJECTIVES -->
+        <section id="objective" class="objective-section">
+
+            <div class="section-heading">
+
+                <span class="eyebrow">
+                    02 — OUR OBJECTIVES
+                </span>
+
+                <h2>
+                    Simple tools.
+                    <span>Better decisions.</span>
+                </h2>
+
+            </div>
+
+
+            <div class="objective-grid">
+
+                <article class="objective-card">
+
+                    <span class="number">01</span>
+
+                    <div class="objective-icon">
+                        ◉
+                    </div>
+
+                    <h3>
+                        Early Detection
+                    </h3>
+
+                    <p>
+                        Help farmers identify possible crop diseases
+                        at an early stage through AI-powered image analysis.
+                    </p>
+
+                </article>
+
+
+                <article class="objective-card">
+
+                    <span class="number">02</span>
+
+                    <div class="objective-icon">
+                        ◇
+                    </div>
+
+                    <h3>
+                        Easy to Understand
+                    </h3>
+
+                    <p>
+                        Present crop-health information in a simple way
+                        so that technical knowledge is not required.
+                    </p>
+
+                </article>
+
+
+                <article class="objective-card">
+
+                    <span class="number">03</span>
+
+                    <div class="objective-icon">
+                        ✦
+                    </div>
+
+                    <h3>
+                        Accessible Technology
+                    </h3>
+
+                    <p>
+                        Bring useful machine-learning technology closer
+                        to farmers through a simple and user-friendly interface.
+                    </p>
+
+                </article>
+
+
+                <article class="objective-card">
+
+                    <span class="number">04</span>
+
+                    <div class="objective-icon">
+                        +
+                    </div>
+
+                    <h3>
+                        Better Crop Health
+                    </h3>
+
+                    <p>
+                        Support farmers in making informed decisions
+                        that can help protect their crops and improve awareness.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- CLOSING -->
+        <section class="closing-section">
+
+            <span class="eyebrow">
+                KISAN MITRA
+            </span>
+
+            <h2>
+                Know your crop.
+                <span>Grow with confidence.</span>
+            </h2>
+
+            <a
+                href="{{ url_for('landingPage') }}"
+                class="back-btn"
+            >
+                ← Back to home
+            </a>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

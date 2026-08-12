@@ -21,6 +21,9 @@ databaseHandler = dbHandler()
 def landingPage():
     return render_template('index.html')
 
+@app.route("/motive")
+def motivePage():
+    return render_template("motive.html")
 
 @app.route("/login", methods = ["GET", "POST"])
 def account_page():

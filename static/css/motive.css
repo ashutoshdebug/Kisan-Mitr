@@ -1,0 +1,508 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f1f2e8;
+    color: #102d20;
+    font-family: "Open Sans", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.motive-page {
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+
+/* =========================
+   NAVBAR
+   ========================= */
+
+.motive-nav {
+    width: 88%;
+    margin: 20px auto;
+    padding: 10px 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid rgba(20, 55, 35, 0.12);
+    border-radius: 50px;
+
+    background: rgba(244, 246, 237, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    position: relative;
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-mark {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #102d20;
+    color: #c5e86c;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.brand h3 {
+    font-size: 15px;
+    line-height: 1;
+}
+
+.brand small {
+    display: block;
+    margin-top: 4px;
+
+    font-size: 7px;
+    letter-spacing: 0.18em;
+    color: #718174;
+}
+
+.motive-nav nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.motive-nav nav > a {
+    font-size: 11px;
+    font-weight: 600;
+    color: #294535;
+
+    transition: 0.2s ease;
+}
+
+.motive-nav nav > a:hover {
+    color: #6d9844;
+}
+
+.login-btn {
+    padding: 10px 17px;
+    border: 1px solid rgba(20, 55, 35, 0.2);
+    border-radius: 30px;
+}
+
+
+/* =========================
+   HERO
+   ========================= */
+
+.motive-hero {
+    width: 88%;
+    min-height: 620px;
+
+    margin: 30px auto 80px;
+
+    padding: 70px;
+
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    align-items: center;
+
+    border-radius: 30px;
+
+    background:
+        radial-gradient(
+            circle at 75% 50%,
+            rgba(190, 225, 110, 0.22),
+            transparent 35%
+        ),
+        #e4ead8;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.motive-hero::after {
+    content: "";
+
+    width: 380px;
+    height: 380px;
+
+    position: absolute;
+    right: -100px;
+    top: -120px;
+
+    border-radius: 50%;
+    border: 1px solid rgba(65, 105, 67, 0.13);
+}
+
+.eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+
+    color: #63854e;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    max-width: 700px;
+
+    margin-top: 20px;
+
+    font-family: "Hammersmith One", sans-serif;
+    font-size: clamp(55px, 6vw, 90px);
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+}
+
+.hero-content h1 span {
+    display: block;
+
+    color: #5f894d;
+
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.hero-content p {
+    max-width: 520px;
+
+    margin-top: 30px;
+
+    color: #657568;
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 25px;
+
+    margin-top: 32px;
+    padding: 14px 18px;
+
+    border-radius: 8px;
+
+    background: #102d20;
+    color: white;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    transition: 0.25s ease;
+}
+
+.explore-btn span {
+    color: #c5e86c;
+    font-size: 16px;
+}
+
+.explore-btn:hover {
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   VISUAL
+   ========================= */
+
+.hero-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visual-card {
+    width: 280px;
+    height: 360px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 28px;
+
+    background: #143b29;
+
+    box-shadow:
+        0 30px 60px rgba(25, 55, 35, 0.22);
+
+    transform: rotate(5deg);
+}
+
+.leaf-icon {
+    font-size: 100px;
+
+    filter: drop-shadow(
+        0 15px 25px rgba(160, 220, 70, 0.2)
+    );
+}
+
+.visual-text {
+    margin-top: 35px;
+    text-align: center;
+}
+
+.visual-text small {
+    display: block;
+
+    color: #94a99a;
+
+    font-size: 8px;
+    letter-spacing: 0.18em;
+}
+
+.visual-text strong {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #d5e99a;
+
+    font-size: 17px;
+}
+
+
+/* =========================
+   OBJECTIVES
+   ========================= */
+
+.objective-section {
+    width: 88%;
+    margin: 0 auto 100px;
+}
+
+.section-heading {
+    margin-bottom: 40px;
+}
+
+.section-heading h2 {
+    max-width: 650px;
+
+    margin-top: 16px;
+
+    font-family: "Hammersmith One", sans-serif;
+    font-size: clamp(42px, 5vw, 70px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+}
+
+.section-heading h2 span {
+    display: block;
+
+    color: #668e51;
+
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.objective-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.objective-card {
+    min-height: 270px;
+
+    padding: 28px;
+
+    border-radius: 20px;
+
+    background: #e2e8d8;
+
+    border: 1px solid rgba(40, 75, 50, 0.08);
+
+    position: relative;
+
+    transition: 0.25s ease;
+}
+
+.objective-card:hover {
+    transform: translateY(-5px);
+
+    background: #dce5d2;
+}
+
+.number {
+    font-size: 10px;
+    color: #77906e;
+}
+
+.objective-icon {
+    margin-top: 45px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #173b28;
+    color: #c5e86c;
+
+    font-size: 18px;
+}
+
+.objective-card h3 {
+    margin-top: 22px;
+
+    font-size: 18px;
+}
+
+.objective-card p {
+    margin-top: 12px;
+
+    color: #69796c;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   CLOSING
+   ========================= */
+
+.closing-section {
+    width: 88%;
+
+    margin: 0 auto 50px;
+    padding: 80px 60px;
+
+    text-align: center;
+
+    border-radius: 30px;
+
+    background: #143b29;
+}
+
+.closing-section h2 {
+    margin-top: 18px;
+
+    color: white;
+
+    font-family: "Hammersmith One", sans-serif;
+    font-size: clamp(42px, 5vw, 70px);
+    line-height: 0.95;
+}
+
+.closing-section h2 span {
+    display: block;
+
+    color: #c5e86c;
+
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.back-btn {
+    display: inline-block;
+
+    margin-top: 35px;
+    padding: 12px 20px;
+
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 30px;
+
+    color: white;
+
+    font-size: 11px;
+
+    transition: 0.2s ease;
+}
+
+.back-btn:hover {
+    background: white;
+    color: #143b29;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .motive-hero {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        padding: 45px;
+    }
+
+    .hero-visual {
+        display: none;
+    }
+
+    .objective-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .motive-nav {
+        width: 92%;
+    }
+
+    .motive-nav nav {
+        gap: 10px;
+    }
+
+    .motive-nav nav > a:not(.login-btn) {
+        display: none;
+    }
+
+    .motive-hero,
+    .objective-section,
+    .closing-section {
+        width: 92%;
+    }
+
+    .motive-hero {
+        padding: 35px 25px;
+        min-height: 500px;
+    }
+
+    .objective-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .closing-section {
+        padding: 60px 25px;
+    }
+}
