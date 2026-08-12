@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for
 from flask_livereload import LiveReload
 from database.db_handler import dbHandler
+from utils.filenFolderPath import fileFolderPath
 from dotenv import load_dotenv
 
 load_dotenv() # To load env secrets
@@ -16,6 +17,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 livereload = LiveReload(app)
 
 databaseHandler = dbHandler()
+folderHandler = fileFolderPath()
 
 @app.route("/")
 def landingPage():
@@ -53,6 +55,7 @@ def account_page():
             databaseHandler.verifyUser(login_password, login_email)
 
             if databaseHandler.login_successful:
+                folderHandler.createFolder(databaseHandler.username_folder)
                 return redirect(url_for('upload'))
 
     return render_template('login.html')
@@ -72,8 +75,8 @@ def upload():
         if file:
             filename = secure_filename(file.filename)
             # filename = secure_filename(file.filename)
-            print("Path:", databaseHandler.path)
-            file_path = os.path.join(databaseHandler.path, filename)
+            # print("Path:", databaseHandler.path)
+            file_path = os.path.join(folderHandler.path, filename)
             file.save(file_path)
             print("File name:", file)
 

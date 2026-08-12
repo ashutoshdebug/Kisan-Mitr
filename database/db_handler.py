@@ -18,6 +18,7 @@ class dbHandler:
         self.login_successful = False
         # print("Init database:", self.database)
         self.password_hash = PasswordHash()
+        
 
     def connection(self):
         try:
@@ -44,6 +45,7 @@ class dbHandler:
                 print("Error", err)
 
             return None
+        
 
     def userRegistration(self, name, username, email, password):
         if not (name and username and email and password):
@@ -72,6 +74,7 @@ class dbHandler:
         finally:
             cursor.close()
             con.close()
+
 
     def verifyUser(self, password, email):
         if not (password and email):
@@ -102,7 +105,7 @@ class dbHandler:
             is_match = bcrypt.checkpw(password.encode('utf-8'), db_password_hash)
             if is_match:
                 self.username_folder = data[0]
-                self.createFolder(self.username_folder)
+                # self.createFolder(self.username_folder)
                 print("User exist!")
                 print("Data:", data[1])
                 self.login_successful = True
@@ -117,44 +120,7 @@ class dbHandler:
         finally:
             cursor.close()
             con.close()
-            
 
-    def createFolder(self, username):
-        self.folder_path = None
-        # exist = False
-        if not username:
-            print("Folder creation failed: No username supplied")
-            return False
-        
-        folder_name = username
-        self.sanitize_name = os.path.basename(folder_name)
-        BASE_DIR = Path(__file__).resolve().parent.parent
-        # print("Base dir:", BASE_DIR)
-        self.path = BASE_DIR/ "static" / "uploads" / "database" / self.sanitize_name
-
-        try:
-            print("Create folder username:", self.sanitize_name)
-
-            if self.path.exists():
-                pass
-                # self.addFolderPath(self.sanitize_name, str(self.path))
-                # exist = True
-                # print("Folder exist:", exist)
-
-            else:
-                self.path.mkdir(parents=True, exist_ok=True)
-                # print(str(path))
-                self.addFolderPath(self.sanitize_name, str(self.path))
-                return True
-                # exist = False
-                # print("Folder doesn't exist:", exist)
-        
-        except OSError as err:
-            print("Create folder filesystem error:", err)
-
-        except Exception as err:
-            print("Unexpected error:", err)
-            
 
     def addFolderPath(self, username, path):
         if not path and username:
