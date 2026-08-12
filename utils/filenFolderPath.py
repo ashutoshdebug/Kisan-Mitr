@@ -1,8 +1,14 @@
 import os
 from pathlib import Path
+from datetime import datetime
 from database.db_handler import dbHandler
 
 class fileFolderPath:
+    def __init__(self):
+        self.formatted_string = None
+        self.folder_path = None
+        self.path = None
+
     def createFolder(self, username):
             self.folder_path = None
             # exist = False
@@ -38,4 +44,8 @@ class fileFolderPath:
     
             except Exception as err:
                 print("Unexpected error:", err)
-        
+
+    def dateTimeStamp(self):
+        now = datetime.now()
+        self.formatted_string = now.strftime("%Y-%m-%d_%H-%M-%S")
+        return self.formatted_string

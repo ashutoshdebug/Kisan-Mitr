@@ -73,10 +73,13 @@ def upload():
             return redirect(request.url)
 
         if file:
+            folderHandler.dateTimeStamp()
             filename = secure_filename(file.filename)
+            name, extension = os.path.splitext(filename)
+            new_name = (f"{name}_{folderHandler.formatted_string}{extension}")
             # filename = secure_filename(file.filename)
             # print("Path:", databaseHandler.path)
-            file_path = os.path.join(folderHandler.path, filename)
+            file_path = os.path.join(folderHandler.path, new_name)
             file.save(file_path)
             print("File name:", file)
 
