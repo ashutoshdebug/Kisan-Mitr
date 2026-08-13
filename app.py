@@ -81,6 +81,7 @@ def upload():
             # print("Path:", databaseHandler.path)
             file_path = os.path.join(folderHandler.path, new_name)
             file.save(file_path)
+            databaseHandler.addImageName(databaseHandler.username_folder, new_name)
             print("File name:", file)
 
 

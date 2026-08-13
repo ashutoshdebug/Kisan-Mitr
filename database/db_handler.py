@@ -144,3 +144,24 @@ class dbHandler:
         finally:
             cursor.close()
             con.close()
+
+    def addImageName(self, username, imageName):
+        if not username and imageName:
+            return False
+
+        con = self.connection()
+        if not con:
+            return False
+
+        try:
+            query = "INSERT INTO IMAGE_NAME (username, image_name) VALUES (%s, %s)"
+            cursor = con.cursor()
+            cursor.execute(query, (username, imageName))
+            con.commit()
+
+        except sql.Error as err:
+            print("Add image SQL error:", err)
+
+        finally:
+            cursor.close()
+            con.close()

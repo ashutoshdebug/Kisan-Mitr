@@ -34,7 +34,7 @@ class fileFolderPath:
                 else:
                     self.path.mkdir(parents=True, exist_ok=True)
                     # print(str(path))
-                    dbHandler.addFolderPath(self.sanitize_name, str(self.path))
+                    dbHandler.addFolderPath(username = self.sanitize_name, path = self.path)
                     return True
                     # exist = False
                     # print("Folder doesn't exist:", exist)
