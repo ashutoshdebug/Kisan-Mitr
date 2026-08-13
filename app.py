@@ -28,9 +28,13 @@ visionModel = visionModel()
 def landingPage():
     return render_template('index.html')
 
+
+
 @app.route("/motive")
 def motivePage():
     return render_template("motive.html")
+
+
 
 @app.route("/login", methods = ["GET", "POST"])
 def account_page():
@@ -65,6 +69,17 @@ def account_page():
 
     return render_template('login.html')
 
+
+
+@app.route("/result")
+def results():
+    if not databaseHandler.login_successful:
+        return redirect(url_for('account_page'))
+
+    return render_template('result.html')
+
+
+
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
     if not databaseHandler.login_successful:
@@ -95,7 +110,5 @@ def upload():
             time.sleep(1.5)
             print(visionModel.engine(image_path))
             
-
-
     return render_template('upload.html')
 
