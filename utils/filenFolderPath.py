@@ -3,6 +3,8 @@ from pathlib import Path
 from datetime import datetime
 from database.db_handler import dbHandler
 
+databaseHandler = dbHandler()
+
 class fileFolderPath:
     def __init__(self):
         self.formatted_string = None
@@ -34,7 +36,7 @@ class fileFolderPath:
                 else:
                     self.path.mkdir(parents=True, exist_ok=True)
                     # print(str(path))
-                    dbHandler.addFolderPath(username = self.sanitize_name, path = self.path)
+                    databaseHandler.addFolderPath(username = self.sanitize_name, path = str(self.path))
                     return True
                     # exist = False
                     # print("Folder doesn't exist:", exist)

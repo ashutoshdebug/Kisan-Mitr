@@ -123,7 +123,7 @@ class dbHandler:
 
 
     def addFolderPath(self, username, path):
-        if not path and username:
+        if not path or not username:
             print("No path or username found!")
             return False
 
