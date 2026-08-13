@@ -132,11 +132,11 @@ class dbHandler:
             return False
 
         try:
-            query = "INSERT INTO FILE_PATH (username, file_path) VALUES (%s, %s)"
+            query = "INSERT INTO FILE_PATH (username, file_path) VALUES (%s, %s) ON DUPLICATE KEY UPDATE file_path = VALUES(file_path)"
             cursor = con.cursor()
             cursor.execute(query, (username, path,))
             con.commit()
-            print("File path commited")
+            print("File path committed")
 
         except sql.Error as err:
             print("File path database error:", err)
