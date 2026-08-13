@@ -55,6 +55,13 @@ class fileFolderPath:
         return self.formatted_string
 
     def filSave(self, file):
+        fileSavePath = Path(self.path)
+        for item in fileSavePath.iterdir():
+            # fileSavePath.unlink(missing_ok = True)
+            if item.is_file():
+                print("File exists")
+                item.unlink()
+                
         filename = secure_filename(file.filename)
         name, extension = os.path.splitext(filename)
         self.new_name = (f"{name}_{self.dateTimeStamp()}{extension}")

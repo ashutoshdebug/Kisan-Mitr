@@ -155,7 +155,7 @@ class dbHandler:
             return False
 
         try:
-            query = "INSERT INTO IMAGE_NAME (username, image_name) VALUES (%s, %s)"
+            query = "INSERT INTO IMAGE_NAME (username, image_name) VALUES (%s, %s) ON DUPLICATE KEY UPDATE image_name = VALUES(image_name)"
             cursor = con.cursor()
             cursor.execute(query, (username, imageName))
             con.commit()
