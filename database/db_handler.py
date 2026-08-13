@@ -48,7 +48,7 @@ class dbHandler:
         
 
     def userRegistration(self, name, username, email, password):
-        if not (name and username and email and password):
+        if not name or not username or not email or not password:
             print("No sufficient data is provided to register user")
             return False
 
@@ -77,7 +77,7 @@ class dbHandler:
 
 
     def verifyUser(self, password, email):
-        if not (password and email):
+        if not password or not email:
             print("No email and password are provided to verify the user")
             return False
         
@@ -146,7 +146,7 @@ class dbHandler:
             con.close()
 
     def addImageName(self, username, imageName):
-        if not username and imageName:
+        if not username or not imageName:
             return False
 
         con = self.connection()
