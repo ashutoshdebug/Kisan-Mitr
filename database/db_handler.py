@@ -16,6 +16,7 @@ class dbHandler:
         self.password = os.getenv("password")
         self.database = os.getenv("database")
         self.login_successful = False
+        self.username_folder = None
         # print("Init database:", self.database)
         self.password_hash = PasswordHash()
         
@@ -158,6 +159,7 @@ class dbHandler:
             cursor = con.cursor()
             cursor.execute(query, (username, imageName))
             con.commit()
+            print("Image name committed")
 
         except sql.Error as err:
             print("Add image SQL error:", err)

@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from datetime import datetime
+from werkzeug.utils import secure_filename
 from database.db_handler import dbHandler
 
 databaseHandler = dbHandler()
@@ -10,6 +11,7 @@ class fileFolderPath:
         self.formatted_string = None
         self.folder_path = None
         self.path = None
+        self.new_name = None
 
     def createFolder(self, username):
             self.folder_path = None
@@ -51,3 +53,12 @@ class fileFolderPath:
         now = datetime.now()
         self.formatted_string = now.strftime("%Y-%m-%d_%H-%M-%S")
         return self.formatted_string
+
+    def filSave(self, file):
+        filename = secure_filename(file.filename)
+        name, extension = os.path.splitext(filename)
+        self.new_name = (f"{name}_{self.dateTimeStamp()}{extension}")
+        file_path = os.path.join(self.path, self.new_name)
+        file.save(file_path)
+        print("File name:", file)
+        # databaseHandler.addImageName(databaseHandler.username_folder, new_name)

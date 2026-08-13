@@ -73,16 +73,17 @@ def upload():
             return redirect(request.url)
 
         if file:
-            folderHandler.dateTimeStamp()
-            filename = secure_filename(file.filename)
-            name, extension = os.path.splitext(filename)
-            new_name = (f"{name}_{folderHandler.formatted_string}{extension}")
+            # folderHandler.dateTimeStamp()
             # filename = secure_filename(file.filename)
-            # print("Path:", databaseHandler.path)
-            file_path = os.path.join(folderHandler.path, new_name)
-            file.save(file_path)
-            databaseHandler.addImageName(databaseHandler.username_folder, new_name)
-            print("File name:", file)
+            # name, extension = os.path.splitext(filename)
+            # new_name = (f"{name}_{folderHandler.formatted_string}{extension}")
+            # # filename = secure_filename(file.filename)
+            # # print("Path:", databaseHandler.path)
+            # file_path = os.path.join(folderHandler.path, new_name)
+            # file.save(file_path)
+            folderHandler.filSave(file)
+            print("File path committed")
+            databaseHandler.addImageName(databaseHandler.username_folder, folderHandler.new_name)
 
 
     return render_template('upload.html')
