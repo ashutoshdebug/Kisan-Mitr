@@ -104,11 +104,13 @@ def upload():
             folderHandler.filSave(file)
             # print("File path committed")
             databaseHandler.addImageName(databaseHandler.username, folderHandler.new_name)
+
+            # Result processing and AI enabler
             # databaseHandler.getImagePath(databaseHandler.username)
             image_path = databaseHandler.getImagePath(databaseHandler.username)
             # print("Image path in app:", image_path)
-            time.sleep(1.5)
-            print(visionModel.engine(image_path))
+            # time.sleep(1.5)
+            # print(visionModel.engine(image_path))
             
     return render_template('upload.html')
 
