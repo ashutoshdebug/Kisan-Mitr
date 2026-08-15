@@ -16,7 +16,8 @@ class dbHandler:
         self.password = os.getenv("password")
         self.database = os.getenv("database")
         self.login_successful = False
-        self.username_folder = None
+        self.username = None
+        # self.username_folder = None
         # print("Init database:", self.database)
         self.password_hash = PasswordHash()
         
@@ -105,7 +106,8 @@ class dbHandler:
 
             is_match = bcrypt.checkpw(password.encode('utf-8'), db_password_hash)
             if is_match:
-                self.username_folder = data[0]
+                # self.username_folder = data[0]
+                self.username = data[0]
                 # self.createFolder(self.username_folder)
                 print("User exist!")
                 print("Data:", data[1])
@@ -155,7 +157,7 @@ class dbHandler:
             return False
 
         try:
-            query = "INSERT INTO IMAGE_NAME (username, image_name) VALUES (%s, %s)"
+            query = "INSERT INTO IMAGE_NAME (username, image_name) VALUES (%s, %s) ON DUPLICATE KEY UPDATE image_name = VALUES(image_name)"
             cursor = con.cursor()
             cursor.execute(query, (username, imageName))
             con.commit()
@@ -163,6 +165,40 @@ class dbHandler:
 
         except sql.Error as err:
             print("Add image SQL error:", err)
+
+        finally:
+            cursor.close()
+            con.close()
+
+
+    def getImagePath(self, username):
+        if not username:
+            return None
+
+        con = self.connection()
+        if not con:
+            return None
+
+        try:
+            query = 'SELECT file_path.file_path, image_name.image_name FROM file_path JOIN image_name ON file_path.username = image_name.username WHERE file_path.username = %s'
+            cursor = con.cursor()
+            cursor.execute(query, (username,))
+            data = cursor.fetchone()
+
+            print("GetImagePath username:", username)
+            print("GetImagePath Database data:", data)
+
+            if not data:
+                print("No image record found for this user")
+                return None
+
+            imagePath = os.path.join(data[0], data[1])
+            
+            print("Image Path:", imagePath)
+            return imagePath
+
+        except sql.Error as err:
+            print("getImagePath SQL error:", err)
 
         finally:
             cursor.close()

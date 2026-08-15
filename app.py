@@ -5,6 +5,10 @@ from flask_livereload import LiveReload
 from database.db_handler import dbHandler
 from utils.filenFolderPath import fileFolderPath
 from dotenv import load_dotenv
+# Temporary
+from engine.vision_model import visionModel
+import time
+# -------------------------------------------
 
 load_dotenv() # To load env secrets
 
@@ -18,14 +22,19 @@ livereload = LiveReload(app)
 
 databaseHandler = dbHandler()
 folderHandler = fileFolderPath()
+visionModel = visionModel()
 
 @app.route("/")
 def landingPage():
     return render_template('index.html')
 
+
+
 @app.route("/motive")
 def motivePage():
     return render_template("motive.html")
+
+
 
 @app.route("/login", methods = ["GET", "POST"])
 def account_page():
@@ -55,10 +64,21 @@ def account_page():
             databaseHandler.verifyUser(login_password, login_email)
 
             if databaseHandler.login_successful:
-                folderHandler.createFolder(databaseHandler.username_folder)
+                folderHandler.createFolder(databaseHandler.username)
                 return redirect(url_for('upload'))
 
     return render_template('login.html')
+
+
+
+@app.route("/result")
+def results():
+    if not databaseHandler.login_successful:
+        return redirect(url_for('account_page'))
+
+    return render_template('result.html')
+
+
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
@@ -82,9 +102,13 @@ def upload():
             # file_path = os.path.join(folderHandler.path, new_name)
             # file.save(file_path)
             folderHandler.filSave(file)
-            print("File path committed")
-            databaseHandler.addImageName(databaseHandler.username_folder, folderHandler.new_name)
-
-
+            # print("File path committed")
+            databaseHandler.addImageName(databaseHandler.username, folderHandler.new_name)
+            # databaseHandler.getImagePath(databaseHandler.username)
+            image_path = databaseHandler.getImagePath(databaseHandler.username)
+            # print("Image path in app:", image_path)
+            time.sleep(1.5)
+            print(visionModel.engine(image_path))
+            
     return render_template('upload.html')
 
