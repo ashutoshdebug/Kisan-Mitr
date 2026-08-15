@@ -1,4 +1,5 @@
 import os
+import requests
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for
 from flask_livereload import LiveReload
@@ -80,6 +81,38 @@ def results():
 
 
 
+@app.route('/getCurrentPosition', methods=["POST"])
+def get_current_position():
+    data = request.get_json()
+
+    latitude = data.get("latitude")
+    longitude = data.get("longitude")
+
+    print("Latitude:", latitude)
+    print("Longitude:", longitude)
+
+    response = requests.get(
+        "https://nominatim.openstreetmap.org/reverse",
+        params={
+            "lat": latitude,
+            "lon": longitude,
+            "format": "json"
+        },
+        headers={
+            "User-Agent": "MyFlaskApp/1.0"
+        }
+    )
+
+    location_data = response.json()
+
+    print("Location:", location_data.get("display_name"))
+
+    return {
+        "latitude": latitude,
+        "longitude": longitude
+    }
+
+
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
     if not databaseHandler.login_successful:
@@ -93,14 +126,6 @@ def upload():
             return redirect(request.url)
 
         if file:
-            # folderHandler.dateTimeStamp()
-            # filename = secure_filename(file.filename)
-            # name, extension = os.path.splitext(filename)
-            # new_name = (f"{name}_{folderHandler.formatted_string}{extension}")
-            # # filename = secure_filename(file.filename)
-            # # print("Path:", databaseHandler.path)
-            # file_path = os.path.join(folderHandler.path, new_name)
-            # file.save(file_path)
             folderHandler.filSave(file)
             # print("File path committed")
             databaseHandler.addImageName(databaseHandler.username, folderHandler.new_name)
