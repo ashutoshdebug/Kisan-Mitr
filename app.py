@@ -80,6 +80,14 @@ def results():
     return render_template('result.html')
 
 
+@app.route("/acquire")
+def acquire():
+    if not databaseHandler.login_successful:
+        return redirect(url_for('account_page'))
+
+    return render_template('acquireInfo.html')
+
+
 
 @app.route('/getCurrentPosition', methods=["POST"])
 def get_current_position():
