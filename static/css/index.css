@@ -51,6 +51,7 @@
     padding: 1vw;
     border-radius: 0.5vw;
     position: fixed;
+    z-index: 9999;
   }
 
   #navbar {
