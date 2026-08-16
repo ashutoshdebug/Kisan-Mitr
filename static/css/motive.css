@@ -8,10 +8,19 @@ html {
     scroll-behavior: smooth;
 }
 
+html,
 body {
-    background: #f1f2e8;
-    color: #102d20;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
     font-family: "Open Sans", sans-serif;
+    background:
+        linear-gradient(rgba(10, 28, 18, 0.42), rgba(10, 28, 18, 0.42)),
+        url("../uploads/frontend/kisan_bg.jpg") center top / cover no-repeat fixed;
 }
 
 a {
@@ -19,401 +28,327 @@ a {
     color: inherit;
 }
 
+#body-div,
 .motive-page {
     min-height: 100vh;
+    background: transparent !important;
+}
+
+.motive-page {
     overflow: hidden;
 }
 
 
-/* =========================
-   NAVBAR
-   ========================= */
-
-.motive-nav {
-    width: 88%;
-    margin: 20px auto;
-    padding: 10px 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border: 1px solid rgba(20, 55, 35, 0.12);
-    border-radius: 50px;
-
-    background: rgba(244, 246, 237, 0.82);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-
-    position: relative;
-    z-index: 10;
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.brand-mark {
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 11px;
-
-    background: #102d20;
-    color: #c5e86c;
-
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.brand h3 {
-    font-size: 15px;
-    line-height: 1;
-}
-
-.brand small {
-    display: block;
-    margin-top: 4px;
-
-    font-size: 7px;
-    letter-spacing: 0.18em;
-    color: #718174;
-}
-
-.motive-nav nav {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-}
-
-.motive-nav nav > a {
-    font-size: 11px;
-    font-weight: 600;
-    color: #294535;
-
-    transition: 0.2s ease;
-}
-
-.motive-nav nav > a:hover {
-    color: #6d9844;
-}
-
-.login-btn {
-    padding: 10px 17px;
-    border: 1px solid rgba(20, 55, 35, 0.2);
-    border-radius: 30px;
-}
-
-
-/* =========================
-   HERO
-   ========================= */
+/* Hero */
 
 .motive-hero {
     width: 88%;
-    min-height: 620px;
-
+    min-height: 520px;
     margin: 30px auto 80px;
-
-    padding: 70px;
-
-    display: grid;
-    grid-template-columns: 1fr 0.8fr;
+    padding: 70px 40px;
+    display: flex;
     align-items: center;
-
-    border-radius: 30px;
-
-    background:
-        radial-gradient(
-            circle at 75% 50%,
-            rgba(190, 225, 110, 0.22),
-            transparent 35%
-        ),
-        #e4ead8;
-
     position: relative;
     overflow: hidden;
-}
-
-.motive-hero::after {
-    content: "";
-
-    width: 380px;
-    height: 380px;
-
-    position: absolute;
-    right: -100px;
-    top: -120px;
-
-    border-radius: 50%;
-    border: 1px solid rgba(65, 105, 67, 0.13);
-}
-
-.eyebrow {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-
-    color: #63854e;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
+    max-width: 900px;
+}
+
+.eyebrow {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #91aa6d;
 }
 
 .hero-content h1 {
-    max-width: 700px;
-
-    margin-top: 20px;
-
-    font-family: "Hammersmith One", sans-serif;
-    font-size: clamp(55px, 6vw, 90px);
-    line-height: 0.94;
-    letter-spacing: -0.045em;
+    max-width: 900px;
+    margin-top: 16px;
+    color: #f5f4ed;
+    font-family: Georgia, serif;
+    font-size: clamp(48px, 5vw, 72px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    font-weight: 700;
 }
 
 .hero-content h1 span {
-    display: block;
-
-    color: #5f894d;
-
+    color: #7fa65b;
     font-family: Georgia, serif;
     font-style: italic;
     font-weight: 400;
 }
 
 .hero-content p {
-    max-width: 520px;
-
-    margin-top: 30px;
-
-    color: #657568;
-
+    max-width: 470px;
+    margin-top: 25px;
+    color: rgba(245, 244, 237, 0.82);
     font-size: 14px;
-    line-height: 1.8;
+    line-height: 1.7;
 }
 
 .explore-btn {
     display: inline-flex;
     align-items: center;
-    gap: 25px;
-
-    margin-top: 32px;
-    padding: 14px 18px;
-
-    border-radius: 8px;
-
-    background: #102d20;
-    color: white;
-
+    gap: 22px;
+    margin-top: 25px;
+    padding: 12px 17px;
+    border: 1px solid #789b58;
+    border-radius: 5px;
+    background: transparent;
+    color: #f5f4ed;
     font-size: 11px;
     font-weight: 700;
-
     transition: 0.25s ease;
 }
 
 .explore-btn span {
-    color: #c5e86c;
-    font-size: 16px;
+    color: #a4c56b;
+    font-size: 14px;
 }
 
 .explore-btn:hover {
     transform: translateY(-2px);
+    background: rgba(127, 166, 91, 0.12);
 }
 
 
-/* =========================
-   VISUAL
-   ========================= */
+/* How it works */
 
-.hero-visual {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.visual-card {
-    width: 280px;
-    height: 360px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    border-radius: 28px;
-
-    background: #143b29;
-
-    box-shadow:
-        0 30px 60px rgba(25, 55, 35, 0.22);
-
-    transform: rotate(5deg);
-}
-
-.leaf-icon {
-    font-size: 100px;
-
-    filter: drop-shadow(
-        0 15px 25px rgba(160, 220, 70, 0.2)
-    );
-}
-
-.visual-text {
-    margin-top: 35px;
-    text-align: center;
-}
-
-.visual-text small {
-    display: block;
-
-    color: #94a99a;
-
-    font-size: 8px;
-    letter-spacing: 0.18em;
-}
-
-.visual-text strong {
-    display: block;
-
-    margin-top: 8px;
-
-    color: #d5e99a;
-
-    font-size: 17px;
-}
-
-
-/* =========================
-   OBJECTIVES
-   ========================= */
-
-.objective-section {
+.how-it-works {
     width: 88%;
     margin: 0 auto 100px;
+    padding: 70px 0;
 }
 
-.section-heading {
-    margin-bottom: 40px;
+.how-header {
+    max-width: 720px;
+    margin-bottom: 45px;
 }
 
-.section-heading h2 {
-    max-width: 650px;
-
+.how-header h2 {
     margin-top: 16px;
-
+    color: #f1f2e8;
     font-family: "Hammersmith One", sans-serif;
-    font-size: clamp(42px, 5vw, 70px);
+    font-size: clamp(48px, 5vw, 70px);
     line-height: 0.95;
     letter-spacing: -0.04em;
 }
 
-.section-heading h2 span {
+.how-header h2 span {
     display: block;
-
-    color: #668e51;
-
+    color: #c5e86c;
     font-family: Georgia, serif;
     font-style: italic;
     font-weight: 400;
 }
 
-.objective-grid {
+.how-header p {
+    max-width: 570px;
+    margin-top: 22px;
+    color: rgba(245, 244, 237, 0.72);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* Step cards */
+
+.steps-wrapper {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
 }
 
-.objective-card {
-    min-height: 270px;
-
+.work-step {
+    min-height: 300px;
     padding: 28px;
-
+    display: flex;
+    flex-direction: column;
     border-radius: 20px;
-
-    background: #e2e8d8;
-
-    border: 1px solid rgba(40, 75, 50, 0.08);
-
-    position: relative;
-
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: transparent;
     transition: 0.25s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.objective-card:hover {
+.work-step::after {
+    content: "";
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    right: -65px;
+    bottom: -70px;
+    border-radius: 50%;
+    border: 1px solid rgba(23, 59, 40, 0.08);
+    pointer-events: none;
+}
+
+.work-step:hover {
     transform: translateY(-5px);
-
-    background: #dce5d2;
+    background: rgba(235, 239, 225, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-.number {
-    font-size: 10px;
-    color: #77906e;
+.step-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.objective-icon {
-    margin-top: 45px;
+.step-number {
+    color: rgba(245, 244, 237, 0.65);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+}
 
-    width: 40px;
-    height: 40px;
+.step-arrow {
+    color: #7a9b59;
+    font-size: 17px;
+}
 
+.step-icon {
+    width: 48px;
+    height: 48px;
+    margin-top: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: #173b28;
     color: #c5e86c;
-
-    font-size: 18px;
+    font-size: 20px;
+    position: relative;
+    z-index: 1;
 }
 
-.objective-card h3 {
+.work-step h3 {
     margin-top: 22px;
-
-    font-size: 18px;
+    color: #f5f4ed;
+    font-size: 25px;
+    font-weight: 700;
 }
 
-.objective-card p {
+.work-step p {
+    max-width: 330px;
     margin-top: 12px;
-
-    color: #69796c;
-
-    font-size: 12px;
-    line-height: 1.7;
+    color: rgba(245, 244, 237, 0.82);
+    font-size: 15px;
+    line-height: 1.75;
 }
 
 
-/* =========================
-   CLOSING
-   ========================= */
+/* Mission */
+
+.mission-section {
+    width: 1200px;
+    max-width: calc(100% - 40px);
+    height: 494px;
+    margin: 0 auto 70px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    border-radius: 24px;
+    background: transparent;
+}
+
+.mission-image {
+    width: 100%;
+    height: 494px;
+}
+
+.mission-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.mission-content {
+    padding: 70px 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mission-eyebrow {
+    margin-bottom: 20px;
+    color: #c5e86c;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+
+.mission-content h2 {
+    margin: 0;
+    color: #f4f5ed;
+    font-family: "Hammersmith One", sans-serif;
+    font-size: clamp(42px, 4vw, 62px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+}
+
+.mission-content h2 span {
+    color: #c5e86c;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.mission-content p {
+    max-width: 500px;
+    margin-top: 28px;
+    color: rgba(244, 245, 237, 0.82);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.mission-btn {
+    width: 100%;
+    margin-top: 28px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #668657;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    transition: 0.25s ease;
+}
+
+.mission-btn span {
+    color: #d4ed7c;
+    font-size: 15px;
+}
+
+.mission-btn:hover {
+    background: #789a68;
+}
+
+
+/* Closing */
 
 .closing-section {
     width: 88%;
-
     margin: 0 auto 50px;
-    padding: 80px 60px;
-
+    padding: 75px 60px;
     text-align: center;
-
-    border-radius: 30px;
-
+    border-radius: 24px;
     background: #143b29;
 }
 
 .closing-section h2 {
     margin-top: 18px;
-
     color: white;
-
     font-family: "Hammersmith One", sans-serif;
     font-size: clamp(42px, 5vw, 70px);
     line-height: 0.95;
@@ -421,9 +356,7 @@ a {
 
 .closing-section h2 span {
     display: block;
-
     color: #c5e86c;
-
     font-family: Georgia, serif;
     font-style: italic;
     font-weight: 400;
@@ -431,17 +364,12 @@ a {
 
 .back-btn {
     display: inline-block;
-
     margin-top: 35px;
     padding: 12px 20px;
-
-    border: 1px solid rgba(255,255,255,0.25);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 30px;
-
     color: white;
-
     font-size: 11px;
-
     transition: 0.2s ease;
 }
 
@@ -451,58 +379,79 @@ a {
 }
 
 
-/* =========================
-   RESPONSIVE
-   ========================= */
+/* Responsive */
 
 @media (max-width: 900px) {
-
     .motive-hero {
-        grid-template-columns: 1fr;
-        gap: 60px;
-        padding: 45px;
+        width: 92%;
+        min-height: 500px;
+        padding: 55px 30px;
     }
 
-    .hero-visual {
-        display: none;
-    }
-
-    .objective-grid {
+    .steps-wrapper {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mission-section {
+        width: 92%;
     }
 }
 
+@media (max-width: 800px) {
+    .mission-section {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .mission-image {
+        height: 320px;
+        min-height: 320px;
+    }
+
+    .mission-content {
+        padding: 50px 30px;
+    }
+}
 
 @media (max-width: 600px) {
-
-    .motive-nav {
-        width: 92%;
-    }
-
-    .motive-nav nav {
-        gap: 10px;
-    }
-
-    .motive-nav nav > a:not(.login-btn) {
-        display: none;
-    }
-
     .motive-hero,
-    .objective-section,
-    .closing-section {
+    .closing-section,
+    .how-it-works {
         width: 92%;
     }
 
     .motive-hero {
-        padding: 35px 25px;
+        padding: 40px 10px;
         min-height: 500px;
     }
 
-    .objective-grid {
+    .hero-content h1 {
+        font-size: 48px;
+    }
+
+    .hero-content p {
+        max-width: 390px;
+    }
+
+    .steps-wrapper {
         grid-template-columns: 1fr;
     }
 
     .closing-section {
-        padding: 60px 25px;
+        padding: 55px 25px;
+    }
+
+    .mission-section {
+        max-width: calc(100% - 30px);
+        border-radius: 18px;
+    }
+
+    .mission-image {
+        height: 280px;
+        min-height: 280px;
+    }
+
+    .mission-content {
+        padding: 45px 25px;
     }
 }
