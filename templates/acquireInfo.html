@@ -11,19 +11,53 @@ Enter your information
 {% block content %}
 <div id="main-container">
     <div id="post-main-container">
-        <div id="left-container">
-            <div class="container-head">
-                Account
-            </div>
-            <div id="hello-head">
-                Hi {{ user }}!
-            </div>
+        <div class="heading">
+            Dashboard
         </div>
-        <div id="right-container">
-            <div class="container-head">
-                Dashboard
-            </div>
+        <div id="account">
+            Hi {{user}}!
         </div>
+        <div id="image-container">
+            Your image:
+            <img src="{{url_for('static', filename=user_image)}}" alt="User Image">
+        </div>
+        <form action="" method="post" id="parameter-form">
+            <label for="location">Location:</label>
+            <input type="text" name="location" id="location" required>
+            <label for="season">Crop Season</label>
+            <select name="season" id="season" required>
+                <option value="select">select value</option>
+                <option value="kharif">Kharif</option>
+                <option value="rabi">Rabi</option>
+                <option value="zaid">Zaid / Summer</option>
+                <option value="wholeyear">Whole Year / Perennial</option>
+            </select>
+            <label for="temperature">Avg Temperature:</label>
+            <input type="text" name="temperature" id="temperature" readonly>
+            <label for="humidity">Avg Humidity:</label>
+            <input type="text" name="humidity" id="humidity" readonly>
+            <label for="rainfall">Avg Rainfall:</label>
+            <input type="text" name="rainfall" id="rainfall" readonly>
+            <label for="windspeed">Avg Windspeed:</label>
+            <input type="text" name="windspeed" id="windspeed" readonly>
+            <label for="variety">Crop Variety:</label>
+            <input type="text" name="variety" id="variety">
+            <label for="irrigation">Irrigation Type:</label>
+            <select name="irrigation" id="irrigation">
+                <option value="select">select value</option>
+                <option value="drip">Drip Irrigation</option>
+                <option value="sprinkler">Sprinkler Irrigation</option>
+                <option value="rainfed">Rainfed Irrigation</option>
+            </select>
+            <label for="soil">Soil Type:</label>
+            <input type="text" name="soil" id="soil">
+            <label for="symptoms">Symptoms (Optional):</label>
+            <textarea name="symptoms" id="symptoms"></textarea>
+            <button type="submit">Submit</button>
+        </form>
     </div>
 </div>
 {% endblock content %}
+{% block jsscript %}
+<script src="{{ url_for('static', filename='js/acquireInfo.js')}}"></script>
+{% endblock jsscript %}
