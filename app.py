@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_livereload import LiveReload
 from database.db_handler import dbHandler
+from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
 from dotenv import load_dotenv
 # Temporary
@@ -24,6 +25,7 @@ livereload = LiveReload(app)
 databaseHandler = dbHandler()
 folderHandler = fileFolderPath()
 visionModel = visionModel()
+dataAcquire = dataAcquision()
 
 @app.route("/")
 def landingPage():
@@ -106,6 +108,14 @@ def acquire():
         irrigation = request.form.get('irrigation')
         soil = request.form.get('soil')
         symptoms = request.form.get('symptoms')
+        prompt = dataAcquire.allFields(location, crop_season, temperature, humidity, rainfall, windspeed, variety,
+                               irrigation, soil, symptoms)
+
+        # Result processing and AI enabler
+        image_path = databaseHandler.getImagePath(databaseHandler.username)
+        print("Image path in app:", image_path)
+        # time.sleep(1.5)
+        print(visionModel.engine(image_path, prompt))
 
         print(location)
         print(crop_season)
@@ -172,11 +182,6 @@ def upload():
             databaseHandler.addImageName(databaseHandler.username, folderHandler.new_name)
             databaseHandler.getImagePath(databaseHandler.username)
             return redirect(url_for('acquire'))
-            # Result processing and AI enabler
-            image_path = databaseHandler.getImagePath(databaseHandler.username)
-            # print("Image path in app:", image_path)
-            # time.sleep(1.5)
-            # print(visionModel.engine(image_path))
             
     return render_template('upload.html')
 
