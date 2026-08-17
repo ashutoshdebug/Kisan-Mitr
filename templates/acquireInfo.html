@@ -2,3 +2,28 @@
 {% block subtitle %}
 Enter your information
 {% endblock %}
+{% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/acquireInfo.css') }}"
+/>
+{% endblock %} 
+{% block content %}
+<div id="main-container">
+    <div id="post-main-container">
+        <div id="left-container">
+            <div class="container-head">
+                Account
+            </div>
+            <div id="hello-head">
+                Hi {{ user }}!
+            </div>
+        </div>
+        <div id="right-container">
+            <div class="container-head">
+                Dashboard
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

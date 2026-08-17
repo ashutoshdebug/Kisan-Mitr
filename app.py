@@ -1,7 +1,7 @@
 import os
 import requests
 from werkzeug.utils import secure_filename
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_livereload import LiveReload
 from database.db_handler import dbHandler
 from utils.filenFolderPath import fileFolderPath
@@ -85,7 +85,11 @@ def acquire():
     if not databaseHandler.login_successful:
         return redirect(url_for('account_page'))
 
-    return render_template('acquireInfo.html')
+    session["username"] = databaseHandler.username
+
+    user = session["username"]
+
+    return render_template('acquireInfo.html', user = user)
 
 
 
