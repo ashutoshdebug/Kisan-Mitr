@@ -7,10 +7,7 @@ from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
 from dotenv import load_dotenv
-# Temporary
 from engine.vision_model import visionModel
-import time
-# -------------------------------------------
 
 load_dotenv() # To load env secrets
 
@@ -115,58 +112,24 @@ def acquire():
         soil = request.form.get('soil')
         symptoms = request.form.get('symptoms')
 
-        # Generate expert pathology prompt
-        prompt = dataAcquire.allFields(
-            location,
-            crop_season,
-            temperature,
-            humidity,
-            rainfall,
-            windspeed,
-            variety,
-            irrigation,
-            soil,
-            symptoms
-        )
+        prompt = dataAcquire.allFields(location, crop_season, temperature, humidity, rainfall, windspeed, variety, irrigation, soil, symptoms)
 
-        # Get user's uploaded image
-        image_path = databaseHandler.getImagePath(
-            databaseHandler.username
-        )
+        image_path = databaseHandler.getImagePath(databaseHandler.username)
 
-        print("Image path in app:", image_path)
+        # print("Image path in app:", image_path)
 
-        # Run multimodal AI model
-        result = visionModel.engine(
-            image_path,
-            prompt
-        )
+        result = visionModel.engine(image_path, prompt)
 
         print("AI Result:")
         print(result)
 
-        # If Gemini failed to return valid JSON
+        
         if result is None:
-            return render_template(
-                'acquireInfo.html',
-                user=user,
-                user_image=user_image,
-                error="Unable to generate a valid diagnosis."
-            )
+            return render_template('acquireInfo.html', user=user, user_image=user_image, error="Unable to generate a valid diagnosis.")
 
-        # Send result to diagnosis page
-        return render_template(
-            'result.html',
-            user=user,
-            user_image=user_image,
-            result=result
-        )
+        return render_template('result.html', user=user, user_image=user_image, result=result)
 
-    return render_template(
-        'acquireInfo.html',
-        user=user,
-        user_image=user_image
-    )
+    return render_template('acquireInfo.html', user=user, user_image=user_image)
 
 
 # @app.route('/getCurrentPosition', methods=["POST"])
