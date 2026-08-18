@@ -22,14 +22,18 @@ class dataAcquision:
             - Symptoms       : Farmer-reported visual abnormalities (lesions, wilting, curling).
             - Image Asset    : Macro/canopy photograph processed by the visual detection model.
 
-            ================================================================================
-            EXPERT PATHOLOGIST PROMPT TEMPLATE
-            ================================================================================
-            You are an expert plant pathologist and precision agronomist. Analyze the following 
-            crop details, field environment data, and visual diagnostic inference to prescribe 
-            a comprehensive Integrated Pest Management (IPM) solution.
+            =================================================================
+            CROP PATHOLOGY CONTEXT & FIELD PARAMETER SCHEMA
+            =================================================================
+
+            You are an expert plant pathologist and precision agronomist.
+
+            Analyze the following crop details, environmental data, and
+            observed symptoms to determine the most likely crop disease and
+            formulate an actionable Integrated Pest Management (IPM) plan.
 
             ### INPUT DATA:
+
             - Location: {location}
             - Crop Season: {crop_season}
             - Temperature: {temperature}
@@ -41,35 +45,120 @@ class dataAcquision:
             - Soil Type: {soil}
             - Observed Symptoms: {symptoms}
 
-            ---
 
-            ### INSTRUCTIONS:
-            Generate a clear, actionable prescription containing:
+            =================================================================
+            REQUIRED ANALYSIS
+            =================================================================
 
-            1. PRIMARY DIAGNOSIS:
-            - Pathogen Name (Common and Scientific name).
-            - Disease Classification (Fungal, Bacterial, Viral, or Abiotic Stress).
-            - Environmental Trigger (How current temperature, humidity, rainfall, and irrigation exacerbated this disease).
+            1. PRIMARY DIAGNOSIS
 
-            2. CHEMICAL CONTROL (CURATIVE):
-            - Recommended Active Ingredients & Formulations (e.g., Azoxystrobin + Difenoconazole, Mancozeb, Copper Oxychloride).
-            - Standard Commercial/Trade Names.
-            - Exact Dosage & Dilution Rate (e.g., ml/g per liter of water and per acre).
-            - Spray Guidelines (Foliar coverage, best time of day, safety gear, and Pre-Harvest Interval / PHI).
+            Determine:
+            - Pathogen common name
+            - Pathogen scientific name
+            - Disease classification
+            - Environmental trigger
 
-            3. BIOLOGICAL & ORGANIC ALTERNATIVES:
-            - Bio-control Agents (e.g., Trichoderma viride, Bacillus subtilis, Pseudomonas fluorescens).
-            - Organic Sprays & Dosages (e.g., Cold-pressed Neem oil 10,000 PPM @ 3ml/L).
-            - Application frequency and soil/foliar application steps.
 
-            4. CULTURAL & FIELD REMEDIATION:
-            - Irrigation Adjustments (Modifications to watering schedule or switching from overhead to root-zone).
-            - Field Sanitation (Pruning, destroying infected foliage, sterilizing farm tools).
-            - Aeration & Soil Drainage (Spacing adjustments, weeding, improving soil percolation).
+            2. CHEMICAL CONTROL
 
-            5. RECOVERY & FOLLOW-UP (14-30 DAYS):
-            - Foliar Nutrition & Micronutrients to build systemic resistance (e.g., Potassium phosphite, Zinc, Boron).
-            - Monitoring milestones to assess whether a secondary treatment is required.
+            Determine:
+            - Recommended active ingredients
+            - Commercial/trade names where appropriate
+            - Dosage and dilution rate
+            - Spray/application guidelines
+            - Pre-harvest interval if known
+
+
+            3. BIOLOGICAL & ORGANIC ALTERNATIVES
+
+            Determine:
+            - Biological control agents
+            - Organic spray options
+            - Dosage
+            - Application frequency
+            - Soil/foliar application procedure
+
+
+            4. CULTURAL & FIELD REMEDIATION
+
+            Determine:
+            - Irrigation adjustments
+            - Field sanitation
+            - Pruning/removal of infected material
+            - Soil drainage and aeration
+            - Other relevant cultural practices
+
+
+            5. RECOVERY & FOLLOW-UP
+
+            Determine:
+            - Recommended foliar nutrition
+            - Relevant micronutrients
+            - Monitoring milestones
+            - Expected follow-up period
+            - Conditions requiring secondary treatment
+
+
+            =================================================================
+            OUTPUT REQUIREMENTS
+            =================================================================
+
+            Return the result ONLY as valid JSON.
+
+            Do NOT include:
+            - Markdown
+            - Code fences
+            - ```json
+            - Explanations outside the JSON
+            - Introductory text
+            - Conclusions outside the JSON
+
+            The JSON must follow EXACTLY this structure:
+
+            {{
+                "primary_diagnosis": {{
+                    "pathogen_common_name": "",
+                    "pathogen_scientific_name": "",
+                    "disease_classification": "",
+                    "environmental_trigger": ""
+                }},
+
+                "chemical_control": {{
+                    "active_ingredients": [],
+                    "trade_names": [],
+                    "dosage": "",
+                    "spray_guidelines": "",
+                    "pre_harvest_interval": ""
+                }},
+
+                "biological_control": {{
+                    "bio_control_agents": [],
+                    "organic_sprays": [],
+                    "application_frequency": "",
+                    "application_procedure": ""
+                }},
+
+                "cultural_remediation": {{
+                    "irrigation_adjustments": "",
+                    "field_sanitation": "",
+                    "soil_drainage_and_aeration": ""
+                }},
+
+                "recovery_followup": {{
+                    "foliar_nutrition": [],
+                    "micronutrients": [],
+                    "monitoring_milestones": "",
+                    "followup_period": "",
+                    "secondary_treatment_conditions": ""
+                }}
+            }}
+
+            IMPORTANT:
+            - Return ONLY valid JSON.
+            - Do not add Markdown formatting.
+            - Do not add comments.
+            - Do not change the JSON keys.
+            - If information is unavailable, use an empty string or empty array.
         """
         print(self.prompt)
 

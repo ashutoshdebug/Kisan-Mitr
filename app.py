@@ -84,6 +84,7 @@ def results():
 
 @app.route("/acquire", methods=["GET", "POST"])
 def acquire():
+
     if not databaseHandler.login_successful:
         return redirect(url_for('account_page'))
 
@@ -94,10 +95,15 @@ def acquire():
     user_image = session["user-image"]
 
     static_path = os.path.join(app.root_path, "static")
-    user_image = os.path.relpath(user_image, static_path).replace("\\", "/")
+    user_image = os.path.relpath(
+        user_image,
+        static_path
+    ).replace("\\", "/")
+
     print("User image path:", user_image)
 
     if request.method == "POST":
+
         location = request.form.get('location')
         crop_season = request.form.get('season')
         temperature = request.form.get('temperature')
@@ -108,28 +114,59 @@ def acquire():
         irrigation = request.form.get('irrigation')
         soil = request.form.get('soil')
         symptoms = request.form.get('symptoms')
-        prompt = dataAcquire.allFields(location, crop_season, temperature, humidity, rainfall, windspeed, variety,
-                               irrigation, soil, symptoms)
 
-        # Result processing and AI enabler
-        image_path = databaseHandler.getImagePath(databaseHandler.username)
+        # Generate expert pathology prompt
+        prompt = dataAcquire.allFields(
+            location,
+            crop_season,
+            temperature,
+            humidity,
+            rainfall,
+            windspeed,
+            variety,
+            irrigation,
+            soil,
+            symptoms
+        )
+
+        # Get user's uploaded image
+        image_path = databaseHandler.getImagePath(
+            databaseHandler.username
+        )
+
         print("Image path in app:", image_path)
-        # time.sleep(1.5)
-        print(visionModel.engine(image_path, prompt))
 
-        print(location)
-        print(crop_season)
-        print(temperature)
-        print(humidity)
-        print(rainfall)
-        print(windspeed)
-        print(variety)
-        print(irrigation)
-        print(soil)
-        print(symptoms)
+        # Run multimodal AI model
+        result = visionModel.engine(
+            image_path,
+            prompt
+        )
 
-    return render_template('acquireInfo.html', user = user, user_image = user_image)
+        print("AI Result:")
+        print(result)
 
+        # If Gemini failed to return valid JSON
+        if result is None:
+            return render_template(
+                'acquireInfo.html',
+                user=user,
+                user_image=user_image,
+                error="Unable to generate a valid diagnosis."
+            )
+
+        # Send result to diagnosis page
+        return render_template(
+            'result.html',
+            user=user,
+            user_image=user_image,
+            result=result
+        )
+
+    return render_template(
+        'acquireInfo.html',
+        user=user,
+        user_image=user_image
+    )
 
 
 # @app.route('/getCurrentPosition', methods=["POST"])
