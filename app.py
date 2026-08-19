@@ -29,6 +29,10 @@ def landingPage():
     return render_template('index.html')
 
 
+@app.errorhandler(404)
+def pageNotFound(error):
+    return render_template('pageNotFound.html'), 404
+
 
 @app.route("/motive")
 def motivePage():
