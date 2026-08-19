@@ -76,6 +76,9 @@ def results():
     if not databaseHandler.login_successful:
         return redirect(url_for('account_page'))
 
+    if not visionModel.result_generated:
+        return redirect(url_for('upload'))
+
     return render_template('result.html')
 
 
@@ -87,6 +90,9 @@ def acquire():
 
     session["username"] = databaseHandler.username
     session["user-image"] = databaseHandler.imagePath
+
+    if session["username"] is None or session["user-image"] is None:
+        return redirect(url_for('upload'))
 
     user = session["username"]
     user_image = session["user-image"]

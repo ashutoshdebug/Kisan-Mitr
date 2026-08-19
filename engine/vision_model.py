@@ -16,6 +16,9 @@ keys = [os.getenv('GEMINI_API_KEY_1'), os.getenv('GEMINI_API_KEY_2'), os.getenv(
 key_cycle = itertools.cycle(keys)
 class visionModel:
 
+    def __init__(self):
+        self.result_generated = False
+
     def engine(self, image, prompt):
         api_key = next(key_cycle)
         client = genai.Client(
@@ -52,6 +55,7 @@ class visionModel:
 
         try:
             result = json.loads(response_text)
+            self.result_generated = True
 
         except json.JSONDecodeError:
             print("Invalid JSON returned by Gemini.")
