@@ -17,6 +17,7 @@ class dbHandler:
         self.database = os.getenv("database")
         self.login_successful = False
         self.username = None
+        self.imagePath = None
         # self.username_folder = None
         # print("Init database:", self.database)
         self.password_hash = PasswordHash()
@@ -192,10 +193,10 @@ class dbHandler:
                 print("No image record found for this user")
                 return None
 
-            imagePath = os.path.join(data[0], data[1])
+            self.imagePath = os.path.join(data[0], data[1])
             
-            print("Image Path:", imagePath)
-            return imagePath
+            print("Image Path:", self.imagePath)
+            return self.imagePath
 
         except sql.Error as err:
             print("getImagePath SQL error:", err)

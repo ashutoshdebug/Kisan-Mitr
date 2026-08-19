@@ -4,12 +4,10 @@ from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_livereload import LiveReload
 from database.db_handler import dbHandler
+from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
 from dotenv import load_dotenv
-# Temporary
 from engine.vision_model import visionModel
-import time
-# -------------------------------------------
 
 load_dotenv() # To load env secrets
 
@@ -24,6 +22,7 @@ livereload = LiveReload(app)
 databaseHandler = dbHandler()
 folderHandler = fileFolderPath()
 visionModel = visionModel()
+dataAcquire = dataAcquision()
 
 @app.route("/")
 def landingPage():
@@ -80,49 +79,89 @@ def results():
     return render_template('result.html')
 
 
-@app.route("/acquire")
+@app.route("/acquire", methods=["GET", "POST"])
 def acquire():
+
     if not databaseHandler.login_successful:
         return redirect(url_for('account_page'))
 
     session["username"] = databaseHandler.username
+    session["user-image"] = databaseHandler.imagePath
 
     user = session["username"]
+    user_image = session["user-image"]
 
-    return render_template('acquireInfo.html', user = user)
+    static_path = os.path.join(app.root_path, "static")
+    user_image = os.path.relpath(
+        user_image,
+        static_path
+    ).replace("\\", "/")
+
+    print("User image path:", user_image)
+
+    if request.method == "POST":
+
+        location = request.form.get('location')
+        crop_season = request.form.get('season')
+        temperature = request.form.get('temperature')
+        humidity = request.form.get('humidity')
+        rainfall = request.form.get('rainfall')
+        windspeed = request.form.get('windspeed')
+        variety = request.form.get('variety')
+        irrigation = request.form.get('irrigation')
+        soil = request.form.get('soil')
+        symptoms = request.form.get('symptoms')
+
+        prompt = dataAcquire.allFields(location, crop_season, temperature, humidity, rainfall, windspeed, variety, irrigation, soil, symptoms)
+
+        image_path = databaseHandler.getImagePath(databaseHandler.username)
+
+        # print("Image path in app:", image_path)
+
+        result = visionModel.engine(image_path, prompt)
+
+        print("AI Result:")
+        print(result)
+
+        
+        if result is None:
+            return render_template('acquireInfo.html', user=user, user_image=user_image, error="Unable to generate a valid diagnosis.")
+
+        return render_template('result.html', user=user, user_image=user_image, result=result)
+
+    return render_template('acquireInfo.html', user=user, user_image=user_image)
 
 
+# @app.route('/getCurrentPosition', methods=["POST"])
+# def get_current_position():
+#     data = request.get_json()
 
-@app.route('/getCurrentPosition', methods=["POST"])
-def get_current_position():
-    data = request.get_json()
+#     latitude = data.get("latitude")
+#     longitude = data.get("longitude")
 
-    latitude = data.get("latitude")
-    longitude = data.get("longitude")
+#     print("Latitude:", latitude)
+#     print("Longitude:", longitude)
 
-    print("Latitude:", latitude)
-    print("Longitude:", longitude)
+#     response = requests.get(
+#         "https://nominatim.openstreetmap.org/reverse",
+#         params={
+#             "lat": latitude,
+#             "lon": longitude,
+#             "format": "json"
+#         },
+#         headers={
+#             "User-Agent": "MyFlaskApp/1.0"
+#         }
+#     )
 
-    response = requests.get(
-        "https://nominatim.openstreetmap.org/reverse",
-        params={
-            "lat": latitude,
-            "lon": longitude,
-            "format": "json"
-        },
-        headers={
-            "User-Agent": "MyFlaskApp/1.0"
-        }
-    )
+#     location_data = response.json()
 
-    location_data = response.json()
+#     print("Location:", location_data.get("display_name"))
 
-    print("Location:", location_data.get("display_name"))
-
-    return {
-        "latitude": latitude,
-        "longitude": longitude
-    }
+#     return {
+#         "latitude": latitude,
+#         "longitude": longitude
+#     }
 
 
 @app.route("/upload", methods=["GET", "POST"])
@@ -141,13 +180,8 @@ def upload():
             folderHandler.filSave(file)
             # print("File path committed")
             databaseHandler.addImageName(databaseHandler.username, folderHandler.new_name)
-
-            # Result processing and AI enabler
-            # databaseHandler.getImagePath(databaseHandler.username)
-            image_path = databaseHandler.getImagePath(databaseHandler.username)
-            # print("Image path in app:", image_path)
-            # time.sleep(1.5)
-            # print(visionModel.engine(image_path))
+            databaseHandler.getImagePath(databaseHandler.username)
+            return redirect(url_for('acquire'))
             
     return render_template('upload.html')
 

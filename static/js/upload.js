@@ -72,21 +72,21 @@ uploadForm.addEventListener("reset", () => {
 
 
 
-if ("geolocation" in navigator) {
-  navigator.geolocation.getCurrentPosition((position) => {
-    const { latitude, longitude } = position.coords;
+// if ("geolocation" in navigator) {
+//   navigator.geolocation.getCurrentPosition((position) => {
+//     const { latitude, longitude } = position.coords;
 
-    fetch("/getCurrentPosition", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        latitude: latitude,
-        longitude: longitude,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  });
-}
+//     fetch("/getCurrentPosition", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         latitude: latitude,
+//         longitude: longitude,
+//       }),
+//     })
+//       .then((response) => response.json())
+//       .then((data) => console.log(data));
+//   });
+// }
