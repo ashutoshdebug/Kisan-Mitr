@@ -1,130 +1,125 @@
 {% extends 'index.html' %}
-
-{% block subtitle %}Our Motive{% endblock %}
-
+{% block subtitle %}Our Motive{% endblock %} 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/motive.css') }}">
-{% endblock %}
-
-{% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/motive.css') }}"
+/>
+{% endblock %} {% block content %}
 <div class="motive-page">
+  <section class="motive-hero">
+    <div class="hero-content">
+      <span class="eyebrow">01 — OUR MOTIVE</span>
 
-    <section class="motive-hero">
-        <div class="hero-content">
-            <span class="eyebrow">01 — OUR MOTIVE</span>
+      <h1>
+        Built for farmers.<br />
+        Guided by <span>purpose.</span>
+      </h1>
 
-            <h1>
-                Built for farmers.<br>
-                Guided by <span>purpose.</span>
-            </h1>
+      <p>
+        Kisan Mitra aims to make crop disease detection simple, accessible and
+        understandable for every farmer.
+      </p>
 
-            <p>
-                Kisan Mitra aims to make crop disease detection
-                simple, accessible and understandable for every farmer.
-            </p>
+      <a href="#objective" class="explore-btn">
+        Explore our objective <span>↓</span>
+      </a>
+    </div>
+  </section>
 
-            <a href="#objective" class="explore-btn">
-                Explore our objective <span>↓</span>
-            </a>
+  <section id="objective" class="how-it-works">
+    <div class="how-header">
+      <span class="eyebrow">02 — HOW IT WORKS</span>
+
+      <h2>
+        Simple steps.
+        <span>Clear answers.</span>
+      </h2>
+
+      <p>
+        From a single leaf image to useful crop-health information, Kisan Mitra
+        keeps the process simple.
+      </p>
+    </div>
+
+    <div class="steps-wrapper">
+      <article class="work-step">
+        <div class="step-top">
+          <span class="step-number">01</span>
+          <span class="step-arrow">↗</span>
         </div>
-    </section>
+        <div class="step-icon">↑</div>
+        <h3>Upload</h3>
+        <p>
+          Choose a clear photo of the affected crop leaf and upload it to Kisan
+          Mitra.
+        </p>
+      </article>
 
-    <section id="objective" class="how-it-works">
-        <div class="how-header">
-            <span class="eyebrow">02 — HOW IT WORKS</span>
-
-            <h2>
-                Simple steps.
-                <span>Clear answers.</span>
-            </h2>
-
-            <p>
-                From a single leaf image to useful crop-health information,
-                Kisan Mitra keeps the process simple.
-            </p>
+      <article class="work-step">
+        <div class="step-top">
+          <span class="step-number">02</span>
+          <span class="step-arrow">↗</span>
         </div>
+        <div class="step-icon">◇</div>
+        <h3>Analyze</h3>
+        <p>
+          Our trained machine-learning model studies the uploaded image to
+          identify possible diseases.
+        </p>
+      </article>
 
-        <div class="steps-wrapper">
-            <article class="work-step">
-                <div class="step-top">
-                    <span class="step-number">01</span>
-                    <span class="step-arrow">↗</span>
-                </div>
-                <div class="step-icon">↑</div>
-                <h3>Upload</h3>
-                <p>
-                    Choose a clear photo of the affected crop leaf
-                    and upload it to Kisan Mitra.
-                </p>
-            </article>
-
-            <article class="work-step">
-                <div class="step-top">
-                    <span class="step-number">02</span>
-                    <span class="step-arrow">↗</span>
-                </div>
-                <div class="step-icon">◇</div>
-                <h3>Analyze</h3>
-                <p>
-                    Our trained machine-learning model studies
-                    the uploaded image to identify possible diseases.
-                </p>
-            </article>
-
-            <article class="work-step">
-                <div class="step-top">
-                    <span class="step-number">03</span>
-                    <span class="step-arrow">↗</span>
-                </div>
-                <div class="step-icon">✦</div>
-                <h3>Understand</h3>
-                <p>
-                    Get the predicted crop disease along with
-                    useful information to understand your crop better.
-                </p>
-            </article>
+      <article class="work-step">
+        <div class="step-top">
+          <span class="step-number">03</span>
+          <span class="step-arrow">↗</span>
         </div>
-    </section>
+        <div class="step-icon">✦</div>
+        <h3>Understand</h3>
+        <p>
+          Get the predicted crop disease along with useful information to
+          understand your crop better.
+        </p>
+      </article>
+    </div>
+  </section>
 
-    <section class="mission-section">
-        <div class="mission-image">
-            <img
-                src="{{ url_for('static', filename='uploads/frontend/vegetables.jpg') }}"
-                alt="Fresh crops and vegetables"
-            >
-        </div>
+  <section class="mission-section">
+    <div class="mission-image">
+      <img
+        src="{{ url_for('static', filename='uploads/frontend/vegetables.jpg') }}"
+        alt="Fresh crops and vegetables"
+      />
+    </div>
 
-        <div class="mission-content">
-            <span class="mission-eyebrow">03 — Our Objective</span>
+    <div class="mission-content">
+      <span class="mission-eyebrow">03 — Our Objective</span>
 
-            <h2>
-                Helping farmers<br>
-                protect their <span>crops.</span>
-            </h2>
+      <h2>
+        Helping farmers<br />
+        protect their <span>crops.</span>
+      </h2>
 
-            <p>
-                Kisan Mitra is a crop disease detection project that uses
-                Machine Learning to identify possible diseases from crop leaf images.
-            </p>
+      <p>
+        Kisan Mitra is a crop disease detection project that uses Machine
+        Learning to identify possible diseases from crop leaf images.
+      </p>
 
-            <a href="{{ url_for('upload') }}" class="mission-btn">
-                TRY DETECTION <span>↗</span>
-            </a>
-        </div>
-    </section>
+      <a href="{{ url_for('upload') }}" class="mission-btn">
+        TRY DETECTION <span>↗</span>
+      </a>
+    </div>
+  </section>
 
-    <section class="closing-section">
-        <span class="eyebrow">KISAN MITRA</span>
+  <section class="closing-section">
+    <span class="eyebrow">KISAN MITRA</span>
 
-        <h2>
-            Know your crop.
-            <span>Grow with confidence.</span>
-        </h2>
+    <h2>
+      Know your crop.
+      <span>Grow with confidence.</span>
+    </h2>
 
-        <a href="{{ url_for('landingPage') }}" class="back-btn">
-            ← Back to home
-        </a>
-    </section>
-
+    <a href="{{ url_for('landingPage') }}" class="back-btn"> ← Back to home </a>
+  </section>
 </div>
 {% endblock %}

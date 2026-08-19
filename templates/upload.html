@@ -1,13 +1,11 @@
 {% extends "index.html" %} 
 {% block subtitle %} Upload Image {% endblock subtitle %} 
-
 {% block styles %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/upload.css') }}"
 />
 {% endblock %} 
-
 {% block content %}
 <form action="" id="uploadForm" enctype="multipart/form-data" method="post">
   <div id="drag_n_drop_container">
@@ -40,6 +38,5 @@
 {% endblock content %} 
 
 {% block jsscript %} 
-<script></script>
 <script src="{{ url_for('static', filename='js/upload.js')}}"></script>
 {% endblock jsscript %}
