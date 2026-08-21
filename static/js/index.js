@@ -1,4 +1,3 @@
-// Locomotive scroll
 const scroll = new LocomotiveScroll({
   el: document.querySelector("[data-scroll-container]"),
   smooth: true,
@@ -7,12 +6,21 @@ const scroll = new LocomotiveScroll({
 const accountMenu = document.querySelector("#account-menu");
 const dropDown = document.querySelector(".logout-dropdown");
 
-accountMenu.addEventListener("mouseenter", () => {
-  // console.log('ENTER');
-  dropDown.classList.add("logout-dropdown-show");
-});
+let hideTimeout;
 
-accountMenu.addEventListener("mouseleave", () => {
-  // console.log('LEAVE');
-  dropDown.classList.remove("logout-dropdown-show");
-});
+const showDropdown = () => {
+  clearTimeout(hideTimeout);
+  dropDown.classList.add("logout-dropdown-show");
+};
+
+const hideDropdown = () => {
+  hideTimeout = setTimeout(() => {
+    dropDown.classList.remove("logout-dropdown-show");
+  }, 200);
+};
+
+accountMenu.addEventListener("mouseenter", showDropdown);
+accountMenu.addEventListener("mouseleave", hideDropdown);
+
+dropDown.addEventListener("mouseenter", showDropdown);
+dropDown.addEventListener("mouseleave", hideDropdown);
