@@ -22,7 +22,9 @@
   }
 
   #body-div {
-    background-image: url("../uploads/frontend/kisan_bg.jpg");
+    background:
+        linear-gradient(rgba(10, 28, 18, 0.42), rgba(10, 28, 18, 0.42)),
+        url("../uploads/frontend/kisan_bg.jpg") center top / cover no-repeat fixed;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -56,7 +58,7 @@
   }
 
   #navbar {
-    background: #9ad64c;
+    background:  #8fca3f;
     font-weight: bold;
   }
 
@@ -105,6 +107,7 @@
 
   .heading p {
     color: white;
+    font-size: 1vw;
     /* text-shadow: -1px -1px 0 #000,
       1px -1px 0 #000,
       -1px 1px 0 #000,
