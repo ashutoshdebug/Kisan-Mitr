@@ -26,6 +26,8 @@ dataAcquire = dataAcquision()
 
 @app.route("/")
 def landingPage():
+    if databaseHandler.login_successful:
+        return render_template('index.html', user_var = databaseHandler.username)
     return render_template('index.html')
 
 

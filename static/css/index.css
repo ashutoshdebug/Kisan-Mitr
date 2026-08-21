@@ -97,6 +97,24 @@ nav {
   justify-content: center;
 }
 
+#account-menu {
+  position: relative;
+}
+
+.logout-dropdown {
+  position: absolute;
+  bottom: -4vh;
+  background: white;
+  width: inherit;
+  display: none;
+  /* justify-content: center; */
+}
+
+.logout-dropdown-show {
+  display: flex;
+  justify-content: center;
+}
+
 main {
   min-height: 100vh;
   height: 100vh;

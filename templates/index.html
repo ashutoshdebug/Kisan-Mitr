@@ -45,7 +45,14 @@
               <div id="nav-right">
                 <ul>
                   <li><a href="{{url_for('motivePage')}}">Our Motive</a></li>
-                  <li><a href="{{ url_for('account_page')}}">{{user_var | default('Sign up/Log In')}}</a></li>
+                  <li id="account-menu">
+                    <a href="{{ url_for('account_page')}}" id="user_name">{{user_var | default('Sign up/Log In')}}</a>
+                    {% if user_var %}
+                    <div class="logout-dropdown">
+                      <a href="#">Logout</a>
+                    </div>
+                    {% endif %}
+                  </li>
                 </ul>
               </div>
             </div>
