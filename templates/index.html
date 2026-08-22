@@ -46,10 +46,10 @@
                 <ul>
                   <li><a href="{{url_for('motivePage')}}">Our Motive</a></li>
                   <li id="account-menu">
-                    <a href="{{ url_for('account_page')}}" id="user_name">{{user_var | default('Sign up/Log In')}}</a>
+                    <a href="{{ url_for(account_or_upload)}}" id="user_name">{{user_var | default('Sign up/Log In')}}</a>
                     {% if user_var %}
                     <div class="logout-dropdown">
-                      <a href="#">Logout</a>
+                      <a href="{{url_for('landingPage')}}">Logout</a>
                     </div>
                     {% endif %}
                   </li>

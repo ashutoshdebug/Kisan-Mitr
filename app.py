@@ -1,7 +1,7 @@
 import os
 import requests
 from werkzeug.utils import secure_filename
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_livereload import LiveReload
 from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
@@ -28,8 +28,25 @@ dataAcquire = dataAcquision()
 def landingPage():
     if databaseHandler.login_successful:
         msg = f"Hi {databaseHandler.username}!"
-        return render_template('index.html', user_var = msg)
-    return render_template('index.html')
+        return render_template('index.html', user_var = msg, account_or_upload = "upload")
+    return render_template('index.html', account_or_upload = "account_page")
+
+
+@app.route("/logout", methods = ["GET", "POST"])
+def logout():
+    data = request.get_json()
+    # print(data)
+    logout = data.get("logout")
+
+    # print("Logout value:", logout)
+
+    if logout == True:
+        databaseHandler.login_successful = False
+
+    response = {
+        "status": "success"
+    }
+    return jsonify(response), 200
 
 
 @app.errorhandler(404)
@@ -196,5 +213,5 @@ def upload():
             databaseHandler.getImagePath(databaseHandler.username)
             return redirect(url_for('acquire'))
             
-    return render_template('upload.html')
+    return render_template('upload.html', account_or_upload = "account_page")
 
