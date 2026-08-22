@@ -218,7 +218,7 @@ class dbHandler:
             return False
 
         try:
-            query = "INSERT INTO CROP_PROPERTIES (username, location, crop_season, temperature, humidity, rainfall, windspeed, crop_variety, irrigation, soil, symptoms) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            query = "INSERT INTO CROP_PROPERTIES (username, location, crop_season, temperature, humidity, rainfall, windspeed, crop_variety, irrigation, soil, symptoms) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE location = VALUES(location), crop_season = VALUES(crop_season), temperature = VALUES(temperature), humidity = VALUES(humidity), rainfall = VALUES(rainfall), windspeed = VALUES(windspeed), crop_variety = VALUES(crop_variety), irrigation = VALUES(irrigation), soil = VALUES(soil), symptoms = VALUES(symptoms)"
             cursor = con.cursor()
             cursor.execute(query, (username, location, crop_season, temperature, humidity, rainfall, windspeed, crop_variety, irrigation, soil, symptoms,))
             con.commit()
