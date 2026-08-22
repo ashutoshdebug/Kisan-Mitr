@@ -5,8 +5,10 @@ from pathlib import Path
 import bcrypt
 from utils.password_hash import PasswordHash
 from dotenv import load_dotenv
+
 load_dotenv()
 # Connecting to the server
+
 
 class dbHandler:
     def __init__(self):
@@ -21,15 +23,14 @@ class dbHandler:
         # self.username_folder = None
         # print("Init database:", self.database)
         self.password_hash = PasswordHash()
-        
 
     def connection(self):
         try:
             con = sql.connect(
-                host = self.host,
-                user = self.user,
-                password = self.password,
-                database = self.database,
+                host=self.host,
+                user=self.user,
+                password=self.password,
+                database=self.database,
             )
             # cursor = con.cursor()
             # print("Connection databse", self.database)
@@ -43,12 +44,11 @@ class dbHandler:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your user name or password")
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                    print("Database does not exist")
+                print("Database does not exist")
             else:
                 print("Error", err)
 
             return None
-        
 
     def userRegistration(self, name, username, email, password):
         if not name or not username or not email or not password:
@@ -62,7 +62,7 @@ class dbHandler:
         lowerCaseEmail = str(email).lower()
         # print(lowerCaseEmail)
         encrypted_pass = self.password_hash.userPassword(password)
-        query = 'INSERT INTO ACCOUNT (name, username, email, password) VALUES (%s, %s, %s, %s)'
+        query = "INSERT INTO ACCOUNT (name, username, email, password) VALUES (%s, %s, %s, %s)"
         try:
             cursor = con.cursor()
             cursor.execute(query, (name, username, lowerCaseEmail, encrypted_pass))
@@ -78,12 +78,11 @@ class dbHandler:
             cursor.close()
             con.close()
 
-
     def verifyUser(self, password, email):
         if not password or not email:
             print("No email and password are provided to verify the user")
             return False
-        
+
         con = self.connection()
         if not con:
             return False
@@ -92,7 +91,10 @@ class dbHandler:
             lowerCaseEmail = str(email).lower()
             print(lowerCaseEmail)
             cursor = con.cursor()
-            cursor.execute("SELECT username, password FROM ACCOUNT WHERE email = %s", (lowerCaseEmail,))
+            cursor.execute(
+                "SELECT username, password FROM ACCOUNT WHERE email = %s",
+                (lowerCaseEmail,),
+            )
             data = cursor.fetchone()
 
             if not data:
@@ -105,7 +107,7 @@ class dbHandler:
             if isinstance(db_password_hash, str):
                 db_password_hash = db_password_hash.encode("utf-8")
 
-            is_match = bcrypt.checkpw(password.encode('utf-8'), db_password_hash)
+            is_match = bcrypt.checkpw(password.encode("utf-8"), db_password_hash)
             if is_match:
                 # self.username_folder = data[0]
                 self.username = data[0]
@@ -125,7 +127,6 @@ class dbHandler:
             cursor.close()
             con.close()
 
-
     def addFolderPath(self, username, path):
         if not path or not username:
             print("No path or username found!")
@@ -138,7 +139,13 @@ class dbHandler:
         try:
             query = "INSERT INTO FILE_PATH (username, file_path) VALUES (%s, %s) ON DUPLICATE KEY UPDATE file_path = VALUES(file_path)"
             cursor = con.cursor()
-            cursor.execute(query, (username, path,))
+            cursor.execute(
+                query,
+                (
+                    username,
+                    path,
+                ),
+            )
             con.commit()
             print("File path committed")
 
@@ -171,7 +178,6 @@ class dbHandler:
             cursor.close()
             con.close()
 
-
     def getImagePath(self, username):
         if not username:
             return None
@@ -181,7 +187,7 @@ class dbHandler:
             return None
 
         try:
-            query = 'SELECT file_path.file_path, image_name.image_name FROM file_path JOIN image_name ON file_path.username = image_name.username WHERE file_path.username = %s'
+            query = "SELECT file_path.file_path, image_name.image_name FROM file_path JOIN image_name ON file_path.username = image_name.username WHERE file_path.username = %s"
             cursor = con.cursor()
             cursor.execute(query, (username,))
             data = cursor.fetchone()
@@ -194,7 +200,7 @@ class dbHandler:
                 return None
 
             self.imagePath = os.path.join(data[0], data[1])
-            
+
             print("Image Path:", self.imagePath)
             return self.imagePath
 
