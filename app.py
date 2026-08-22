@@ -56,7 +56,10 @@ def pageNotFound(error):
 
 @app.route("/motive")
 def motivePage():
-    return render_template("motive.html")
+    if databaseHandler.login_successful:
+        msg = f"Hi {databaseHandler.username}!"
+        return render_template("motive.html", user_var = msg, account_or_upload = "upload")
+    return render_template("motive.html", account_or_upload = "account_page")
 
 
 
@@ -100,10 +103,12 @@ def results():
     if not databaseHandler.login_successful:
         return redirect(url_for('account_page'))
 
+    msg = f"Hi {databaseHandler.username}!"
+
     if not visionModel.result_generated:
         return redirect(url_for('upload'))
 
-    return render_template('result.html')
+    return render_template('result.html', account_or_upload = "upload", user_var = msg)
 
 
 @app.route("/acquire", methods=["GET", "POST"])
@@ -112,6 +117,8 @@ def acquire():
     if not databaseHandler.login_successful:
         return redirect(url_for('account_page'))
 
+    msg = f"Hi {databaseHandler.username}!"
+    
     session["username"] = databaseHandler.username
     session["user-image"] = databaseHandler.imagePath
 
@@ -155,11 +162,11 @@ def acquire():
 
         
         if result is None:
-            return render_template('acquireInfo.html', user=user, user_image=user_image, error="Unable to generate a valid diagnosis.")
+            return render_template('acquireInfo.html', user=user, user_image=user_image, user_var = msg, error="Unable to generate a valid diagnosis.", account_or_upload = "upload")
 
         return render_template('result.html', user=user, user_image=user_image, result=result)
 
-    return render_template('acquireInfo.html', user=user, user_image=user_image)
+    return render_template('acquireInfo.html', user=user, user_image=user_image, user_var = msg, account_or_upload = "upload")
 
 
 # @app.route('/getCurrentPosition', methods=["POST"])
@@ -199,6 +206,10 @@ def upload():
     if not databaseHandler.login_successful:
         return redirect(url_for('account_page'))
 
+    # if databaseHandler.login_successful:
+    msg = f"Hi {databaseHandler.username}!"
+    # return render_template("upload.html", user_var = msg, account_or_upload = "upload")
+
     if request.method == "POST":
         file = request.files['fileInput']
 
@@ -213,5 +224,5 @@ def upload():
             databaseHandler.getImagePath(databaseHandler.username)
             return redirect(url_for('acquire'))
             
-    return render_template('upload.html', account_or_upload = "account_page")
+    return render_template('upload.html', user_var = msg, account_or_upload = "upload")
 
