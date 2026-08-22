@@ -210,3 +210,23 @@ class dbHandler:
         finally:
             cursor.close()
             con.close()
+
+
+    def insertCropProperties(self, username, location, crop_season, temperature, humidity, rainfall, windspeed, crop_variety, irrigation, soil, symptoms):
+        con = self.connection()
+        if not con:
+            return False
+
+        try:
+            query = "INSERT INTO CROP_PROPERTIES (username, location, crop_season, temperature, humidity, rainfall, windspeed, crop_variety, irrigation, soil, symptoms) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cursor = con.cursor()
+            cursor.execute(query, (username, location, crop_season, temperature, humidity, rainfall, windspeed, crop_variety, irrigation, soil, symptoms,))
+            con.commit()
+            print("Insert Crop Properties committed")
+
+        except sql.Error as err:
+            print("insertCropProperties error:", err)
+            return False
+        finally:
+            cursor.close()
+            con.close()

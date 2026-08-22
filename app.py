@@ -158,6 +158,8 @@ def acquire():
             symptoms,
         )
 
+        databaseHandler.insertCropProperties(databaseHandler.username, location, crop_season, temperature, humidity, rainfall, windspeed, variety, irrigation, soil, symptoms)
+
         image_path = databaseHandler.getImagePath(databaseHandler.username)
 
         # print("Image path in app:", image_path)
