@@ -76,8 +76,9 @@ def account_page():
             print("Signup email:", signup_email)
             print("Signup password", signup_password)
 
-            databaseHandler.userRegistration(signup_name, signup_username, signup_email, signup_password)
-            folderHandler.createFolder(signup_username)
+            databaseHandler.userRegistration(
+                signup_name, signup_username, signup_email, signup_password
+            )
             return redirect(url_for("account_page"))
 
         elif form_type == "login_form":
@@ -90,6 +91,7 @@ def account_page():
             databaseHandler.verifyUser(login_password, login_email)
 
             if databaseHandler.login_successful:
+                folderHandler.createFolder(databaseHandler.username)
                 return redirect(url_for("upload"))
 
     return render_template("login.html")
@@ -143,7 +145,18 @@ def acquire():
         soil = request.form.get("soil")
         symptoms = request.form.get("symptoms")
 
-        prompt = dataAcquire.allFields(location, crop_season, temperature, humidity, rainfall, windspeed, variety, irrigation, soil, symptoms)
+        prompt = dataAcquire.allFields(
+            location,
+            crop_season,
+            temperature,
+            humidity,
+            rainfall,
+            windspeed,
+            variety,
+            irrigation,
+            soil,
+            symptoms,
+        )
 
         databaseHandler.insertCropProperties(databaseHandler.username, location, crop_season, temperature, humidity, rainfall, windspeed, variety, irrigation, soil, symptoms)
 
@@ -167,7 +180,7 @@ def acquire():
             )
 
         return render_template(
-            "result.html", user=user, user_image=user_image, result=result, account_or_upload = "upload", user_var = msg
+            "result.html", user=user, user_image=user_image, result=result
         )
 
     return render_template(
@@ -177,6 +190,38 @@ def acquire():
         user_var=msg,
         account_or_upload="upload",
     )
+
+
+# @app.route('/getCurrentPosition', methods=["POST"])
+# def get_current_position():
+#     data = request.get_json()
+
+#     latitude = data.get("latitude")
+#     longitude = data.get("longitude")
+
+#     print("Latitude:", latitude)
+#     print("Longitude:", longitude)
+
+#     response = requests.get(
+#         "https://nominatim.openstreetmap.org/reverse",
+#         params={
+#             "lat": latitude,
+#             "lon": longitude,
+#             "format": "json"
+#         },
+#         headers={
+#             "User-Agent": "MyFlaskApp/1.0"
+#         }
+#     )
+
+#     location_data = response.json()
+
+#     print("Location:", location_data.get("display_name"))
+
+#     return {
+#         "latitude": latitude,
+#         "longitude": longitude
+#     }
 
 
 @app.route("/upload", methods=["GET", "POST"])
