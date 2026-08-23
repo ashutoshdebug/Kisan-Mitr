@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+{% block navbar %}{% endblock navbar %}
+{% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/pageNotFound.css') }}"
+/>
+{% endblock %} 
+{% block content %}
+<div id="main-container">
+    <div id="head">
+        404- Page Not Found!
+    </div>
+    <span>Click here to go back to <a href="{{url_for('landingPage')}}">home</a></span>
+</div>
+{% endblock content %}
