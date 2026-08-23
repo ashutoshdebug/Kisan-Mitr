@@ -1,7 +1,7 @@
 import os
 import requests
 from werkzeug.utils import secure_filename
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json
 from flask_livereload import LiveReload
 from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
@@ -179,9 +179,12 @@ def acquire():
                 account_or_upload="upload",
             )
 
+        folderHandler.saveJsonFile(visionModel.result)
+
         return render_template(
-            "result.html", user=user, user_image=user_image, result=result
+            "result.html", user=user, user_image=user_image, result=result, user_var=msg, account_or_upload = "upload"
         )
+        
 
     return render_template(
         "acquireInfo.html",

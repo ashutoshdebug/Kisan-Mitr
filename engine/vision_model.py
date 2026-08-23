@@ -5,11 +5,13 @@ from google import genai
 import os
 import mimetypes
 from engine.dataAcquisition import dataAcquision
+from utils.filenFolderPath import fileFolderPath
 from dotenv import load_dotenv
 
 load_dotenv()
 
 dataAcquire = dataAcquision()
+fileFolderHandler = fileFolderPath()
 
 keys = [os.getenv('GEMINI_API_KEY_1'), os.getenv('GEMINI_API_KEY_2'), os.getenv('GEMINI_API_KEY_3')]
 
@@ -18,6 +20,7 @@ class visionModel:
 
     def __init__(self):
         self.result_generated = False
+        self.result = None
 
     def engine(self, image, prompt):
         api_key = next(key_cycle)
@@ -54,7 +57,7 @@ class visionModel:
         print(response_text)
 
         try:
-            result = json.loads(response_text)
+            self.result = json.loads(response_text)
             self.result_generated = True
 
         except json.JSONDecodeError:
@@ -62,4 +65,4 @@ class visionModel:
             print(response_text)
             return None
 
-        return result
+        return self.result

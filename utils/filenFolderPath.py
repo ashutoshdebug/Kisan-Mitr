@@ -1,4 +1,5 @@
 import os
+import json
 from pathlib import Path
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -82,3 +83,14 @@ class fileFolderPath:
         file.save(file_path)
         print("File name:", file)
         # databaseHandler.addImageName(databaseHandler.username_folder, new_name)
+
+    def saveJsonFile(self, result):
+        folder = Path(self.result_folder) / "result.json"
+        try:
+            with open(folder, "w") as file:
+                json.dump(result, file, indent=4)
+                return True
+
+        except (OSError, TypeError) as err:
+            print("JSON save error:", err)
+            return False

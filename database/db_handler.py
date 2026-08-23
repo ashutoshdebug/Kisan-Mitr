@@ -230,3 +230,18 @@ class dbHandler:
         finally:
             cursor.close()
             con.close()
+
+    def addResultName(self, username, result_file):
+        con = self.connection()
+        if not con:
+            return False
+
+        try:
+            query = "INSERT INTO RESULT (username, result_file) VALUES (%s, %s)"
+            cursor = con.cursor()
+            cursor.execute(query, (username, result_file))
+            con.commit()
+
+        finally:
+            cursor.close()
+            con.close()
