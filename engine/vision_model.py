@@ -55,6 +55,11 @@ class visionModel:
 
         try:
             result = json.loads(response_text)
+
+            # Temp save file
+            with open("result.json", "w") as file:
+                json.dump(result, file, indent=4)
+
             self.result_generated = True
 
         except json.JSONDecodeError:
