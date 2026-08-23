@@ -241,7 +241,7 @@ def upload():
             return redirect(request.url)
 
         if file:
-            folderHandler.filSave(file)
+            folderHandler.fileSave(file)
             # print("File path committed")
             databaseHandler.addImageName(
                 databaseHandler.username, folderHandler.new_name

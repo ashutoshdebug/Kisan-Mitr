@@ -55,7 +55,7 @@ class fileFolderPath:
         self.formatted_string = now.strftime("%Y-%m-%d_%H-%M-%S")
         return self.formatted_string
 
-    def filSave(self, file):
+    def fileSave(self, file):
         fileSavePath = Path(self.path)
         for item in fileSavePath.iterdir():
             # fileSavePath.unlink(missing_ok = True)
