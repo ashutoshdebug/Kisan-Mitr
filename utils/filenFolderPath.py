@@ -11,6 +11,8 @@ class fileFolderPath:
         self.formatted_string = None
         self.folder_path = None
         self.path = None
+        self.image_folder = None
+        self.result_folder = None
         self.new_name = None
 
     def createFolder(self, username):
@@ -25,18 +27,27 @@ class fileFolderPath:
             BASE_DIR = Path(__file__).resolve().parent.parent
             # print("Base dir:", BASE_DIR)
             self.path = BASE_DIR/ "static" / "uploads" / "database" / self.sanitize_name
+            self.image_folder = self.path / "image"
+            self.result_folder = self.path / "result"
     
             try:
                 print("Create folder username:", self.sanitize_name)
     
                 if self.path.exists():
-                    databaseHandler.addFolderPath(username = self.sanitize_name, path = str(self.path))
+                    if self.image_folder.exists() and self.result_folder.exists():
+                        databaseHandler.addFolderPath(username = self.sanitize_name, path = str(self.path))
+                    else:
+                        self.image_folder.mkdir(parents=True, exist_ok = True)
+                        self.result_folder.mkdir(parents=True, exist_ok=True)
+                        
                     # self.addFolderPath(self.sanitize_name, str(self.path))
                     # exist = True
                     # print("Folder exist:", exist)
     
                 else:
                     self.path.mkdir(parents=True, exist_ok=True)
+                    self.image_folder.mkdir(parents=True, exist_ok = True)
+                    self.result_folder.mkdir(parents=True, exist_ok=True)
                     # print(str(path))
                     databaseHandler.addFolderPath(username = self.sanitize_name, path = str(self.path))
                     print("Folder path called")
@@ -56,7 +67,8 @@ class fileFolderPath:
         return self.formatted_string
 
     def fileSave(self, file):
-        fileSavePath = Path(self.path)
+        print("fileSave path:",self.image_folder)
+        fileSavePath = Path(self.image_folder)
         for item in fileSavePath.iterdir():
             # fileSavePath.unlink(missing_ok = True)
             if item.is_file():
@@ -66,7 +78,7 @@ class fileFolderPath:
         filename = secure_filename(file.filename)
         name, extension = os.path.splitext(filename)
         self.new_name = (f"{name}_{self.dateTimeStamp()}{extension}")
-        file_path = os.path.join(self.path, self.new_name)
+        file_path = os.path.join(self.image_folder, self.new_name)
         file.save(file_path)
         print("File name:", file)
         # databaseHandler.addImageName(databaseHandler.username_folder, new_name)

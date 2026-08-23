@@ -199,7 +199,7 @@ class dbHandler:
                 print("No image record found for this user")
                 return None
 
-            self.imagePath = os.path.join(data[0], data[1])
+            self.imagePath = os.path.join(data[0], "image", data[1])
 
             print("Image Path:", self.imagePath)
             return self.imagePath
