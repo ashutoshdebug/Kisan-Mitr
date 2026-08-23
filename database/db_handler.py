@@ -20,6 +20,7 @@ class dbHandler:
         self.login_successful = False
         self.username = None
         self.imagePath = None
+        self.resultPath = None
         # self.username_folder = None
         # print("Init database:", self.database)
         self.password_hash = PasswordHash()
@@ -237,10 +238,35 @@ class dbHandler:
             return False
 
         try:
-            query = "INSERT INTO RESULT (username, result_file) VALUES (%s, %s)"
+            query = "INSERT INTO RESULT (username, result_file) VALUES (%s, %s) ON DUPLICATE KEY UPDATE result_file = VALUES(result_file)"
             cursor = con.cursor()
             cursor.execute(query, (username, result_file))
             con.commit()
+
+        except sql.Error as err:
+            print("addResultName error:", err)
+            return False
+
+        finally:
+            cursor.close()
+            con.close()
+
+    def getResultFilePath(self, username):
+        con = self.connection()
+        if not con:
+            return False
+
+        try:
+            query = "SELECT file_path.file_path, result.result_file FROM file_path JOIN result ON file_path.username = result.username WHERE file_path.username = %s"
+            cursor = con.cursor()
+            cursor.execute(query, (username,))
+            data = cursor.fetchone()
+            self.resultPath = os.path.join(data[0], "result", data[1])
+            print(data)
+
+        except sql.Error as err:
+            print("getResultFilePath error:", err)
+            return True
 
         finally:
             cursor.close()

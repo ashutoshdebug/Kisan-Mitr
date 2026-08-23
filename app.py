@@ -180,6 +180,11 @@ def acquire():
             )
 
         folderHandler.saveJsonFile(visionModel.result)
+        databaseHandler.addResultName(databaseHandler.username, folderHandler.result_file)
+        databaseHandler.getResultFilePath(databaseHandler.username)
+
+        with open(databaseHandler.resultPath, "r", encoding="utf-8") as file:
+            result = json.load(file)
 
         return render_template(
             "result.html", user=user, user_image=user_image, result=result, user_var=msg, account_or_upload = "upload"

@@ -14,6 +14,7 @@ class fileFolderPath:
         self.path = None
         self.image_folder = None
         self.result_folder = None
+        self.result_file = None
         self.new_name = None
 
     def createFolder(self, username):
@@ -87,6 +88,7 @@ class fileFolderPath:
     def saveJsonFile(self, result):
         folder = Path(self.result_folder) / "result.json"
         try:
+            self.result_file = "result.json"
             with open(folder, "w") as file:
                 json.dump(result, file, indent=4)
                 return True
