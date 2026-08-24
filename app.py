@@ -183,8 +183,13 @@ def acquire():
         databaseHandler.addResultName(databaseHandler.username, folderHandler.result_file)
         databaseHandler.getResultFilePath(databaseHandler.username)
 
-        with open(databaseHandler.resultPath, "r", encoding="utf-8") as file:
-            result = json.load(file)
+        try:
+            with open(databaseHandler.resultPath, "r", encoding="utf-8") as file:
+                result = json.load(file)
+                
+        except (OSError, TypeError,  json.JSONDecodeError) as err:
+            print("JSON open err:", err)
+            return False
 
         return render_template(
             "result.html", user=user, user_image=user_image, result=result, user_var=msg, account_or_upload = "upload"
