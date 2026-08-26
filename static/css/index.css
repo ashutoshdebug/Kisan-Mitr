@@ -81,33 +81,17 @@ nav {
   width: 50%;
 }
 
-#navbar .nav-right {
+#navbar #nav-right {
   width: 50%;
 }
 
-.small-menu {
-  display: flex;
-  justify-content: center;
-}
-
-.phone-menu {
-  display: none;
-  /* display: flex; */
-  align-items: center;
-  justify-content: end;
-}
-
-.material-symbols-outlined {
-  height: 100%;
-}
-
-.small-menu {
+#navbar #nav-right ul {
   display: flex;
   list-style: none;
   justify-content: space-evenly;
 }
 
-.nav-right ul li {
+#nav-right ul li {
   width: 50%;
   display: flex;
   justify-content: center;
