@@ -23,6 +23,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/index.css') }}"
     />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" />
 
     {% block styles %}{% endblock %}
     
@@ -42,8 +43,8 @@
               <div id="nav-left">
                 <span><a href="{{url_for('landingPage')}}">Kisan Mitra</a></span>
               </div>
-              <div id="nav-right">
-                <ul>
+              <div class="nav-right">
+                <ul class="small-menu">
                   <li><a href="{{url_for('motivePage')}}">Our Motive</a></li>
                   <li id="account-menu">
                     <a href="{{ url_for(account_or_upload)}}" id="user_name">{{user_var | default('Sign up/Log In')}}</a>
@@ -54,6 +55,11 @@
                     {% endif %}
                   </li>
                 </ul>
+                <div class="phone-menu">
+                  <span class="material-symbols-outlined">
+                    menu
+                  </span>
+                </div>
               </div>
             </div>
           </div>

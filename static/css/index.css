@@ -82,17 +82,33 @@ nav {
   width: 50%;
 }
 
-#navbar #nav-right {
+#navbar .nav-right {
   width: 50%;
 }
 
-#navbar #nav-right ul {
+.small-menu {
+  display: flex;
+  justify-content: center;
+}
+
+.phone-menu {
+  display: none;
+  /* display: flex; */
+  align-items: center;
+  justify-content: end;
+}
+
+.material-symbols-outlined {
+  height: 100%;
+}
+
+.small-menu {
   display: flex;
   list-style: none;
   justify-content: space-evenly;
 }
 
-#nav-right ul li {
+.nav-right ul li {
   width: 50%;
   display: flex;
   justify-content: center;
@@ -166,6 +182,14 @@ main {
     min-height: 3vh;
     max-height: 6vh;
     border-radius: 1.5vw;
+  }
+
+  .small-menu {
+    display: none;
+  }
+
+  .phone-menu {
+    display: flex;
   }
 
   .heading div span {
