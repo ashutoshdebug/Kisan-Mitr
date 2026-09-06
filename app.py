@@ -145,18 +145,7 @@ def acquire():
         soil = request.form.get("soil")
         symptoms = request.form.get("symptoms")
 
-        prompt = dataAcquire.allFields(
-            location,
-            crop_season,
-            temperature,
-            humidity,
-            rainfall,
-            windspeed,
-            variety,
-            irrigation,
-            soil,
-            symptoms,
-        )
+        prompt = dataAcquire.allFields(location, crop_season, temperature, humidity, rainfall, windspeed, variety, irrigation, soil, symptoms)
 
         databaseHandler.insertCropProperties(databaseHandler.username, location, crop_season, temperature, humidity, rainfall, windspeed, variety, irrigation, soil, symptoms)
 
@@ -167,7 +156,7 @@ def acquire():
         result = visionModel.engine(image_path, prompt)
 
         print("AI Result:")
-        print(result)
+        # print(result)
 
         if result is None:
             return render_template(
@@ -204,37 +193,6 @@ def acquire():
         account_or_upload="upload",
     )
 
-
-# @app.route('/getCurrentPosition', methods=["POST"])
-# def get_current_position():
-#     data = request.get_json()
-
-#     latitude = data.get("latitude")
-#     longitude = data.get("longitude")
-
-#     print("Latitude:", latitude)
-#     print("Longitude:", longitude)
-
-#     response = requests.get(
-#         "https://nominatim.openstreetmap.org/reverse",
-#         params={
-#             "lat": latitude,
-#             "lon": longitude,
-#             "format": "json"
-#         },
-#         headers={
-#             "User-Agent": "MyFlaskApp/1.0"
-#         }
-#     )
-
-#     location_data = response.json()
-
-#     print("Location:", location_data.get("display_name"))
-
-#     return {
-#         "latitude": latitude,
-#         "longitude": longitude
-#     }
 
 
 @app.route("/upload", methods=["GET", "POST"])
