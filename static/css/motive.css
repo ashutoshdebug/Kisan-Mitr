@@ -16,11 +16,14 @@ body {
 }
 
 body {
-    min-height: 100vh;
-    font-family: "Open Sans", sans-serif;
     background:
         linear-gradient(rgba(10, 28, 18, 0.42), rgba(10, 28, 18, 0.42)),
         url("../uploads/frontend/kisan_bg.jpg") center top / cover no-repeat fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
 }
 
 a {
@@ -77,7 +80,7 @@ a {
 }
 
 .hero-content h1 span {
-    color: #7fa65b;
+    color: #c5e86c;
     font-family: Georgia, serif;
     font-style: italic;
     font-weight: 400;
