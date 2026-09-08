@@ -1,103 +1,212 @@
-{% extends 'index.html' %} 
-{% block subtitle %} Login {% endblock %}
+{% extends 'index.html' %}
+
+{% block subtitle %}Login{% endblock %}
+
 {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/login.css') }}"
-/>
-{% endblock %} 
-{% block navbar%} {% endblock %} {# Don't add anything in this #} 
-{% block content %}
-<div id="body-div">
-  <div id="login_signup-box" class="glass-card">
-    <div class="slider-bg"></div>
-    <form action="" method="post" class="form-div">
-      <div class="sign_up_box">
-        <div class="heading">
-            Sign-Up
-        </div>
-        <div id="name" class="padding-bottom">
-          <label for="nameofuser" class="label-text">Name</label>
-          <input
-            type="text"
-            name="signup_name"
-            id="nameofuser"
-            class="input-field"
-            placeholder="Enter your full name"
-            autocomplete = "name"
-            required
-          />
-        </div>
-        <div id="username" class="padding-bottom">
-          <label for="usernamec" class="label-text">Username</label>
-          <input
-            type="text"
-            name="signup_username"
-            id="usernamec"
-            class="input-field"
-            placeholder="Choose a username"
-            autocomplete = "username"
-            required
-          />
-        </div>
-        <div class="email padding-bottom">
-          <label for="signup-email" class="label-text">Email</label>
-          <input
-            type="email"
-            name="signup_email"
-            id="signup-email"
-            class="input-field"
-            placeholder="Enter your email"
-            autocomplete = "email"
-            required
-          />
-        </div>
-        <div class="password padding-bottom">
-          <label for="signup-password" class="label-text">Password</label>
-          <input
-            type="password"
-            name="signup_password"
-            id="signup-password"
-            class="input-field"
-            placeholder="Choose a password"
-            required
-          />
-        </div>
-        <button type="submit" id="signUpSubmit" class="submit-form" name="form_type" value="signup_form">Sign Up</button>
-      </div>
-    </form>
-    <form action="" method="post" class="form-div">
-      <div class="login_box">
-        <div class="heading">
-            Log-in
-        </div>
-        <div class="email padding-bottom">
-          <label for="login-email" class="label-text">Email</label>
-          <input
-            type="email"
-            name="login_email"
-            id="login-email"
-            class="input-field"
-            placeholder="Enter your email"
-            autocomplete = "email"
-            required
-          />
-        </div>
-        <div class="password padding-bottom">
-          <label for="login-password" class="label-text">Password</label>
-          <input
-            type="password"
-            name="login_password"
-            id="login-password"
-            class="input-field"
-            placeholder="Enter your password"
-            required
-          />
-        </div>
-        <button type="submit" class="submit-form" name="form_type" value="login_form">Log In</button>
-      </div>
-    </form>
-  </div>
-</div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
-{% block jsscript %} {% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-layout">
+
+        <div class="auth-side">
+            <span class="side-eyebrow">KISAN MITRA</span>
+
+            <h1 id="side-title">Log in.</h1>
+
+            <p id="side-subtitle">Welcome back, farmer.</p>
+        </div>
+
+        <div class="auth-card login-mode" id="auth-card">
+
+            <div class="auth-options">
+                <button
+                    type="button"
+                    id="login-toggle"
+                    class="auth-option login-option active"
+                >LOG IN</button>
+
+                <button
+                    type="button"
+                    id="signup-toggle"
+                    class="auth-option register-option"
+                >REGISTER</button>
+            </div>
+
+            <div class="forms-wrapper">
+
+                <form
+                    action=""
+                    method="post"
+                    id="login-form"
+                    class="auth-form active-form"
+                >
+                    <div class="field">
+                        <label for="login-email">EMAIL</label>
+
+                        <input
+                            type="email"
+                            name="login_email"
+                            id="login-email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="login-password">PASSWORD</label>
+
+                        <input
+                            type="password"
+                            name="login_password"
+                            id="login-password"
+                            placeholder="Enter password"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-bottom">
+                        <button
+                            type="submit"
+                            class="brutal-button"
+                            name="form_type"
+                            value="login_form"
+                        >
+                            <span>LOG IN</span>
+                            <span class="button-arrow">→</span>
+                        </button>
+                    </div>
+                </form>
+
+                <form
+                    action=""
+                    method="post"
+                    id="signup-form"
+                    class="auth-form signup-form"
+                >
+                    <div class="field">
+                        <label for="nameofuser">NAME</label>
+
+                        <input
+                            type="text"
+                            name="signup_name"
+                            id="nameofuser"
+                            placeholder="Your full name"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="usernamec">USERNAME</label>
+
+                        <input
+                            type="text"
+                            name="signup_username"
+                            id="usernamec"
+                            placeholder="Choose a username"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="signup-email">EMAIL</label>
+
+                        <input
+                            type="email"
+                            name="signup_email"
+                            id="signup-email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="signup-password">PASSWORD</label>
+
+                        <input
+                            type="password"
+                            name="signup_password"
+                            id="signup-password"
+                            placeholder="Create password"
+                            autocomplete="new-password"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-bottom">
+                        <button
+                            type="submit"
+                            id="signUpSubmit"
+                            class="brutal-button"
+                            name="form_type"
+                            value="signup_form"
+                        >
+                            <span>REGISTER</span>
+                            <span class="button-arrow">→</span>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const authCard = document.getElementById("auth-card");
+    const loginToggle = document.getElementById("login-toggle");
+    const signupToggle = document.getElementById("signup-toggle");
+    const loginForm = document.getElementById("login-form");
+    const signupForm = document.getElementById("signup-form");
+    const sideTitle = document.getElementById("side-title");
+    const sideSubtitle = document.getElementById("side-subtitle");
+
+    function updateSide(title, subtitle) {
+        sideTitle.classList.add("title-change");
+
+        setTimeout(() => {
+            sideTitle.textContent = title;
+            sideSubtitle.textContent = subtitle;
+            sideTitle.classList.remove("title-change");
+        }, 150);
+    }
+
+    function showLogin() {
+        loginToggle.classList.add("active");
+        signupToggle.classList.remove("active");
+
+        signupForm.classList.remove("active-form");
+        loginForm.classList.add("active-form");
+
+        authCard.classList.replace("register-mode", "login-mode");
+
+        updateSide("Log in.", "Welcome back, farmer.");
+    }
+
+    function showRegister() {
+        signupToggle.classList.add("active");
+        loginToggle.classList.remove("active");
+
+        loginForm.classList.remove("active-form");
+        signupForm.classList.add("active-form");
+
+        authCard.classList.replace("login-mode", "register-mode");
+
+        updateSide("Register.", "Start your journey with us.");
+    }
+
+    loginToggle.addEventListener("click", showLogin);
+    signupToggle.addEventListener("click", showRegister);
+</script>
+
+{% endblock %}
+
+{% block jsscript %}{% endblock %}
