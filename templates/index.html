@@ -1,263 +1,149 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
 
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-    rel="stylesheet"
-  />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap"
+      rel="stylesheet"
+    />
 
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css"
+    />
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap"
-    rel="stylesheet"
-  />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
+    />
 
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css"
-  />
+    {% block styles %}{% endblock %}
 
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/index.css') }}"
-  />
+    <title>
+      Kisan Mitr | {% block subtitle %}Your own farming buddy!{% endblock %}
+    </title>
+  </head>
 
-  {% block styles %}{% endblock %}
+  <body>
+    <div id="body-div" data-scroll-container>
+      {% block navbar %}
 
-  <title>
-    Kisan Mitr |
-    {% block subtitle %}Your own farming buddy!{% endblock %}
-  </title>
+      <header>
+        <nav>
+          <div id="floating-nav">
+            <div id="navbar">
+              <div id="nav-left">
+                <span>
+                  <a href="{{ url_for('landingPage') }}"> Kisan Mitra </a>
+                </span>
+              </div>
 
-</head>
+              <div id="nav-right">
+                <ul>
+                  <li>
+                    <a href="{{ url_for('motivePage') }}"> Our Motive </a>
+                  </li>
 
-
-<body>
-
-  <div
-    id="body-div"
-    data-scroll-container
-  >
-
-    {% block navbar %}
-
-    <header>
-
-      <nav>
-
-        <div id="floating-nav">
-
-          <div id="navbar">
-
-            <div id="nav-left">
-
-              <span>
-                <a href="{{ url_for('landingPage') }}">
-                  Kisan Mitra
-                </a>
-              </span>
-
-            </div>
-
-
-            <div id="nav-right">
-
-              <ul>
-
-                <li>
-                  <a href="{{ url_for('motivePage') }}">
-                    Our Motive
-                  </a>
-                </li>
-
-
-                <li id="account-menu">
-
-                  <a
-                    href="{{ url_for(account_or_upload) }}"
-                    id="user_name"
-                  >
-                    {{ user_var | default('Sign up/Log In') }}
-                  </a>
-
-                  {% if user_var %}
-
-                  <div class="logout-dropdown">
-
-                    <a href="{{ url_for('landingPage') }}">
-                      Logout
+                  <li id="account-menu">
+                    <a href="{{ url_for(account_or_upload) }}" id="user_name">
+                      {{ user_var | default('Sign up/Log In') }}
                     </a>
 
-                  </div>
+                    {% if user_var %}
 
-                  {% endif %}
+                    <div class="logout-dropdown">
+                      <a href="{{ url_for('landingPage') }}"> Logout </a>
+                    </div>
 
-                </li>
-
-              </ul>
-
+                    {% endif %}
+                  </li>
+                </ul>
+              </div>
             </div>
-
           </div>
-
-        </div>
-
-      </nav>
-
-    </header>
-
-    {% endblock %}
-
-
-    <main>
-
-      {% block content %}
-
-      <!-- HERO -->
-
-      <section
-        id="hero-section"
-        data-scroll-section
-      >
-
-        <div class="heading">
-
-          <div>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.5"
-            >K</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.51"
-            >i</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.52"
-            >s</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.8"
-            >a</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.54"
-            >n</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.55"
-            >&nbsp;</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.56"
-            >M</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.57"
-            >i</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.5"
-            >t</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.58"
-            >r</span>
-
-            <span
-              data-scroll
-              data-scroll-speed="0.8"
-            >a</span>
-
-          </div>
-
-
-          <p>
-            Helping farmers protect their
-            <em style="color: wheat">crops</em>.
-          </p>
-
-        </div>
-
-      </section>
-
-
-      <!-- MOTIVE CTA -->
-
-      <section class="motive-cta">
-
-        <span class="motive-cta-label">
-          OUR MOTIVE
-        </span>
-
-        <h2>
-          Built for farmers.
-          <span>Guided by purpose.</span>
-        </h2>
-
-        <a
-          href="{{ url_for('motivePage') }}"
-          class="motive-cta-btn"
-        >
-          Explore our motive
-          <span>↗</span>
-        </a>
-
-      </section>
+        </nav>
+      </header>
 
       {% endblock %}
 
-    </main>
+      <main>
+        {% block content %}
 
-  </div>
+        <!-- HERO -->
 
+        <section id="hero-section" data-scroll-section>
+          <div class="heading">
+            <div>
+              <span data-scroll data-scroll-speed="0.5">K</span>
 
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
+              <span data-scroll data-scroll-speed="0.51">i</span>
 
-  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+              <span data-scroll data-scroll-speed="0.52">s</span>
 
-  {% block jsscript %}{% endblock %}
+              <span data-scroll data-scroll-speed="0.8">a</span>
 
-</body>
+              <span data-scroll data-scroll-speed="0.54">n</span>
 
+              <span data-scroll data-scroll-speed="0.55">&nbsp;</span>
+
+              <span data-scroll data-scroll-speed="0.56">M</span>
+
+              <span data-scroll data-scroll-speed="0.57">i</span>
+
+              <span data-scroll data-scroll-speed="0.5">t</span>
+
+              <span data-scroll data-scroll-speed="0.58">r</span>
+
+              <span data-scroll data-scroll-speed="0.8">a</span>
+            </div>
+
+            <p>
+              Helping farmers protect their
+              <em style="color: wheat">crops</em>.
+            </p>
+          </div>
+        </section>
+
+        <!-- MOTIVE CTA -->
+
+        <section class="motive-cta">
+          <span class="motive-cta-label"> OUR MOTIVE </span>
+
+          <h2>
+            Built for farmers.
+            <span>Guided by purpose.</span>
+          </h2>
+
+          <a href="{{ url_for('motivePage') }}" class="motive-cta-btn">
+            Explore our motive
+            <span>↗</span>
+          </a>
+        </section>
+
+        {% endblock %}
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+    {% block jsscript %}{% endblock %}
+  </body>
 </html>
