@@ -118,20 +118,26 @@ class dbHandler:
 
             is_match = bcrypt.checkpw(password.encode("utf-8"), db_password_hash)
             if is_match:
+
                 # self.username_folder = data[0]
+                
                 self.username = data[0]
+
                 # self.createFolder(self.username_folder)
                 # print("User exist!")
                 # print("Data:", data[1])
+                
                 self.login_successful = True
                 self.user_not_exist = False
+
                 return True
             else:
                 # print("Data:", data[1])
                 # print("User doesn't exist")
+
                 self.login_successful = False
-                # TODO:
                 self.user_not_exist = True
+
                 return False
             # return db_password_hash
 

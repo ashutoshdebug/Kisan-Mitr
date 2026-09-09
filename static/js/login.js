@@ -1,3 +1,4 @@
+// console.log("File attached")
 const authCard = document.getElementById("auth-card");
 const loginToggle = document.getElementById("login-toggle");
 const signupToggle = document.getElementById("signup-toggle");
@@ -42,3 +43,40 @@ function showRegister() {
 
 loginToggle.addEventListener("click", showLogin);
 signupToggle.addEventListener("click", showRegister);
+
+// Warning message
+loginForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData = new FormData(loginForm);
+  formData.append("form_type", "login_form");
+  fetch("/login", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => {
+      const contentType = response.headers.get("content-type");
+      // Login failed:
+      // Flask returned {"not_exist": true}
+      if (contentType && contentType.includes("application/json")) {
+        return response.json();
+      }
+      // Login successful:
+      // Flask redirected to /upload
+      window.location.href = response.url;
+      return null;
+    })
+    .then((data) => {
+      if (!data) {
+        return;
+      }
+      if (data.not_exist === true) {
+        const warning = document.getElementById("warning");
+        warning.textContent = "Invalid email or password.";
+        warning.style.display = "block";
+        warning.style.color = "red";
+      }
+    })
+    .catch((error) => {
+      console.error("Login error:", error);
+    });
+});

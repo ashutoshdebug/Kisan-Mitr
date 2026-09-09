@@ -90,9 +90,13 @@ def account_page():
 
             databaseHandler.verifyUser(login_password, login_email)
 
+            if databaseHandler.user_not_exist is True:
+                return jsonify({"not_exist": True}), 200
+
             if databaseHandler.login_successful:
                 folderHandler.createFolder(databaseHandler.username)
                 return redirect(url_for("upload"))
+            
 
     return render_template("login.html")
 
