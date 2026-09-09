@@ -16,6 +16,7 @@ fileFolderHandler = fileFolderPath()
 keys = [os.getenv('GEMINI_API_KEY_1'), os.getenv('GEMINI_API_KEY_2'), os.getenv('GEMINI_API_KEY_3')]
 
 key_cycle = itertools.cycle(keys)
+
 class visionModel:
 
     def __init__(self):
@@ -23,10 +24,13 @@ class visionModel:
         self.result = None
 
     def engine(self, image, prompt):
+        if not image or not prompt:
+            return False        
+
+        self.result_generated = False
+
         api_key = next(key_cycle)
-        client = genai.Client(
-            api_key=api_key
-        )
+        client = genai.Client(api_key=api_key)
 
         with open(image, "rb") as f:
             image_bytes = f.read()
@@ -54,15 +58,15 @@ class visionModel:
 
         response_text = interaction.output_text
 
-        print(response_text)
+        # print(response_text)
 
         try:
             self.result = json.loads(response_text)
             self.result_generated = True
 
         except json.JSONDecodeError:
-            print("Invalid JSON returned by Gemini.")
-            print(response_text)
+            # print("Invalid JSON returned by Gemini.")
+            # print(response_text)
             return None
 
         return self.result
