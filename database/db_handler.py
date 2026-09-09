@@ -108,6 +108,7 @@ class dbHandler:
             if not data:
                 # print("User doesn't exist")
                 self.login_successful = False
+                self.user_not_exist = True
                 return False
 
             db_password_hash = data[1]
@@ -128,6 +129,7 @@ class dbHandler:
             else:
                 # print("Data:", data[1])
                 # print("User doesn't exist")
+                self.login_successful = False
                 # TODO:
                 self.user_not_exist = True
                 return False

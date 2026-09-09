@@ -89,10 +89,6 @@ def account_page():
             print("Login password:", login_password)
 
             databaseHandler.verifyUser(login_password, login_email)
-            if databaseHandler.user_not_exist is True:
-                return jsonify({"not_exist": True}), 200
-
-            return jsonify({"not_exist": False}), 200
 
             if databaseHandler.login_successful:
                 folderHandler.createFolder(databaseHandler.username)
