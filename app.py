@@ -76,9 +76,11 @@ def account_page():
             print("Signup email:", signup_email)
             print("Signup password", signup_password)
 
-            databaseHandler.userRegistration(
-                signup_name, signup_username, signup_email, signup_password
-            )
+            databaseHandler.userRegistration(signup_name, signup_username, signup_email, signup_password)
+
+            if databaseHandler.user_already_exist is True:
+                return jsonify({"user_already_exist": True})
+            
             return redirect(url_for("account_page"))
 
         elif form_type == "login_form":

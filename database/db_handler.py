@@ -21,6 +21,7 @@ class dbHandler:
         self.username = None
         self.imagePath = None
         self.resultPath = None
+        self.user_already_exist = False
         self.user_not_exist = False
         # self.username_folder = None
         # print("Init database:", self.database)
@@ -53,6 +54,7 @@ class dbHandler:
             return None
 
     def userRegistration(self, name, username, email, password):
+        self.user_already_exist = False
         if not name or not username or not email or not password:
             # print("No sufficient data is provided to register user")
             return False
@@ -72,10 +74,12 @@ class dbHandler:
             cursor.execute(query, (name, username, lowerCaseEmail, encrypted_pass))
             con.commit()
             # print("Commited successfully")
+            self.user_already_exist = False
             return True
 
         except sql.Error as err:
             # print("Error adding user:", err)
+            self.user_already_exist = True
             return False
 
         finally:

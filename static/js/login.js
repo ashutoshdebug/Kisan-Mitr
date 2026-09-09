@@ -70,10 +70,46 @@ loginForm.addEventListener("submit", (event) => {
         return;
       }
       if (data.not_exist === true) {
-        const warning = document.getElementById("warning");
-        warning.textContent = "Invalid email or password.";
-        warning.style.display = "block";
-        warning.style.color = "red";
+        const warning_login = document.getElementById("warning-login");
+        warning_login.textContent = "Invalid email or password.";
+        warning_login.style.display = "block";
+        warning_login.style.color = "red";
+      }
+    })
+    .catch((error) => {
+      console.error("Login error:", error);
+    });
+});
+
+signupForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData_signup = new FormData(signupForm);
+  formData_signup.append("form_type", "signup_form");
+  fetch("/login", {
+    method: "POST",
+    body: formData_signup,
+  })
+    .then((response) => {
+      const contentType = response.headers.get("content-type");
+      // Login failed:
+      // Flask returned {"not_exist": true}
+      if (contentType && contentType.includes("application/json")) {
+        return response.json();
+      }
+      // Login successful:
+      // Flask redirected to /upload
+      window.location.href = response.url;
+      return null;
+    })
+    .then((data) => {
+      if (!data) {
+        return;
+      }
+      if (data.user_already_exist === true) {
+        const warning_signup = document.getElementById("warning-signup");
+        warning_signup.textContent = "User already exist!";
+        warning_signup.style.display = "block";
+        warning_signup.style.color = "red";
       }
     })
     .catch((error) => {

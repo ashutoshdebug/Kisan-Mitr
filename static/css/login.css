@@ -85,11 +85,11 @@
 }
 
 .auth-card.login-mode {
-    height: 385px;
+    height: 30vh;
 }
 
 .auth-card.register-mode {
-    height: 525px;
+    height: 43vh;
 }
 
 
