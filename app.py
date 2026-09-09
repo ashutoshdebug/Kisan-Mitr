@@ -89,6 +89,10 @@ def account_page():
             print("Login password:", login_password)
 
             databaseHandler.verifyUser(login_password, login_email)
+            if databaseHandler.user_not_exist is True:
+                return jsonify({"not_exist": True}), 200
+
+            return jsonify({"not_exist": False}), 200
 
             if databaseHandler.login_successful:
                 folderHandler.createFolder(databaseHandler.username)
@@ -155,18 +159,11 @@ def acquire():
 
         result = visionModel.engine(image_path, prompt)
 
-        print("AI Result:")
         # print(result)
+        # print("AI Result:")
 
         if result is None:
-            return render_template(
-                "acquireInfo.html",
-                user=user,
-                user_image=user_image,
-                user_var=msg,
-                error="Unable to generate a valid diagnosis.",
-                account_or_upload="upload",
-            )
+            return render_template("acquireInfo.html", user=user, user_image=user_image, user_var=msg, error="Unable to generate a valid diagnosis.", account_or_upload="upload",)
 
         folderHandler.saveJsonFile(visionModel.result)
         databaseHandler.addResultName(databaseHandler.username, folderHandler.result_file)
@@ -185,13 +182,7 @@ def acquire():
         )
         
 
-    return render_template(
-        "acquireInfo.html",
-        user=user,
-        user_image=user_image,
-        user_var=msg,
-        account_or_upload="upload",
-    )
+    return render_template("acquireInfo.html", user=user, user_image=user_image, user_var=msg, account_or_upload="upload",)
 
 
 

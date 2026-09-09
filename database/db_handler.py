@@ -21,6 +21,7 @@ class dbHandler:
         self.username = None
         self.imagePath = None
         self.resultPath = None
+        self.user_not_exist = False
         # self.username_folder = None
         # print("Init database:", self.database)
         self.password_hash = PasswordHash()
@@ -85,6 +86,7 @@ class dbHandler:
     def verifyUser(self, password, email):
         self.login_successful = False
         self.username = None
+        self.user_not_exist = False
         if not password or not email:
             print("No email and password are provided to verify the user")
             return False
@@ -121,10 +123,13 @@ class dbHandler:
                 # print("User exist!")
                 # print("Data:", data[1])
                 self.login_successful = True
+                self.user_not_exist = False
                 return True
             else:
                 # print("Data:", data[1])
                 # print("User doesn't exist")
+                # TODO:
+                self.user_not_exist = True
                 return False
             # return db_password_hash
 
