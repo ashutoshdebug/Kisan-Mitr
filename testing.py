@@ -2,7 +2,7 @@
 import bcrypt
 
 # Example password
-password = 'Ashutoshkt@05'
+password = 'Ashutoshkt'
 
 # Converting password to array of bytes
 bytes = password.encode('utf-8')

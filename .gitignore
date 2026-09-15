@@ -1,6 +1,13 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
+# Custom
+# Tach
+.tach/
+tach.yml
+tach_module_graph.dot
+tach.toml
+
 # Custom folder
 # 1. Ignore everything inside database (files and subdirectories)
 /static/uploads/database/*

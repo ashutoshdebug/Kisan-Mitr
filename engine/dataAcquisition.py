@@ -3,6 +3,12 @@ class dataAcquision:
         self.prompt = None
 
     def allFields(self, location, crop_season, temperature, humidity, rainfall, windspeed, variety, irrigation, soil, symptoms):
+        if not location or not crop_season or not variety or not irrigation or not soil:
+            return False
+
+        if temperature is None or humidity is None or rainfall is None or windspeed is None:
+            return False
+        
         self.prompt = f"""
             ================================================================================
             CROP PATHOLOGY CONTEXT & FIELD PARAMETER SCHEMA
@@ -160,6 +166,6 @@ class dataAcquision:
             - Do not change the JSON keys.
             - If information is unavailable, use an empty string or empty array.
         """
-        print(self.prompt)
+        # print(self.prompt)
 
         return self.prompt
