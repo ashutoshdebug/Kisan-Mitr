@@ -1,165 +1,204 @@
-{% extends 'index.html' %} 
-{% block subtitle %}Login{% endblock %} 
+{% extends 'index.html' %}
+
+{% block subtitle %}Login{% endblock %}
+
 {% block styles %}
 <link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/login.css') }}"
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/login.css') }}"
 />
-{% endblock %} 
-{% block navbar %}{% endblock %} 
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+
 {% block content %}
+
 <div class="auth-page">
-  <div class="auth-layout">
-    <div class="auth-side">
-      <span class="side-eyebrow">KISAN MITRA</span>
+    <div class="auth-layout">
 
-      <h1 id="side-title">Log in.</h1>
+        <div class="auth-side">
+            <span class="side-eyebrow">KISAN MITRA</span>
 
-      <p id="side-subtitle">Welcome back, farmer.</p>
+            <h1 id="side-title">Log in.</h1>
+
+            <p id="side-subtitle">Welcome back, farmer.</p>
+        </div>
+
+
+        <div class="auth-card login-mode" id="auth-card">
+
+            <div class="auth-options">
+
+                <button
+                    type="button"
+                    id="login-toggle"
+                    class="auth-option login-option active"
+                >
+                    LOG IN
+                </button>
+
+                <button
+                    type="button"
+                    id="signup-toggle"
+                    class="auth-option register-option"
+                >
+                    REGISTER
+                </button>
+
+            </div>
+
+
+            <div class="forms-wrapper">
+
+                <!-- LOGIN -->
+
+                <form
+                    action=""
+                    method="post"
+                    id="login-form"
+                    class="auth-form active-form"
+                >
+
+                    <div id="warning-login"></div>
+
+                    <div class="field">
+                        <label for="login-email">EMAIL</label>
+
+                        <input
+                            type="email"
+                            name="login_email"
+                            id="login-email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        />
+                    </div>
+
+
+                    <div class="field">
+                        <label for="login-password">PASSWORD</label>
+
+                        <input
+                            type="password"
+                            name="login_password"
+                            id="login-password"
+                            placeholder="Enter password"
+                            autocomplete="current-password"
+                            required
+                        />
+                    </div>
+
+
+                    <div class="form-bottom">
+
+                        <button
+                            type="submit"
+                            class="brutal-button"
+                            name="form_type"
+                            value="login_form"
+                        >
+                            <span>LOG IN</span>
+                            <span class="button-arrow">→</span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <!-- REGISTER -->
+
+                <form
+                    action=""
+                    method="post"
+                    id="signup-form"
+                    class="auth-form"
+                >
+
+                    <div id="warning-signup"></div>
+
+                    <div class="field">
+                        <label for="nameofuser">NAME</label>
+
+                        <input
+                            type="text"
+                            name="signup_name"
+                            id="nameofuser"
+                            placeholder="Your full name"
+                            autocomplete="name"
+                            required
+                        />
+                    </div>
+
+
+                    <div class="field">
+                        <label for="usernamec">USERNAME</label>
+
+                        <input
+                            type="text"
+                            name="signup_username"
+                            id="usernamec"
+                            placeholder="Choose a username"
+                            autocomplete="username"
+                            required
+                        />
+                    </div>
+
+
+                    <div class="field">
+                        <label for="signup-email">EMAIL</label>
+
+                        <input
+                            type="email"
+                            name="signup_email"
+                            id="signup-email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        />
+                    </div>
+
+
+                    <div class="field">
+                        <label for="signup-password">PASSWORD</label>
+
+                        <input
+                            type="password"
+                            name="signup_password"
+                            id="signup-password"
+                            placeholder="Create password"
+                            autocomplete="new-password"
+                            required
+                        />
+                    </div>
+
+
+                    <div class="form-bottom">
+
+                        <button
+                            type="submit"
+                            id="signUpSubmit"
+                            class="brutal-button"
+                            name="form_type"
+                            value="signup_form"
+                        >
+                            <span>REGISTER</span>
+                            <span class="button-arrow">→</span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
     </div>
-
-    <div class="auth-card login-mode" id="auth-card">
-      <div class="auth-options">
-        <button
-          type="button"
-          id="login-toggle"
-          class="auth-option login-option active"
-        >
-          LOG IN
-        </button>
-
-        <button
-          type="button"
-          id="signup-toggle"
-          class="auth-option register-option"
-        >
-          REGISTER
-        </button>
-      </div>
-
-      <div class="forms-wrapper">
-        <form
-          action=""
-          method="post"
-          id="login-form"
-          class="auth-form active-form"
-        >
-        <div id="warning-login"></div>
-          <div class="field">
-            <label for="login-email">EMAIL</label>
-
-            <input
-              type="email"
-              name="login_email"
-              id="login-email"
-              placeholder="you@example.com"
-              autocomplete="email"
-              required
-            />
-          </div>
-
-          <div class="field">
-            <label for="login-password">PASSWORD</label>
-
-            <input
-              type="password"
-              name="login_password"
-              id="login-password"
-              placeholder="Enter password"
-              autocomplete="current-password"
-              required
-            />
-          </div>
-
-          <div class="form-bottom">
-            <button
-              type="submit"
-              class="brutal-button"
-              name="form_type"
-              value="login_form"
-            >
-              <span>LOG IN</span>
-              <span class="button-arrow">→</span>
-            </button>
-          </div>
-        </form>
-
-        <form
-          action=""
-          method="post"
-          id="signup-form"
-          class="auth-form signup-form"
-        >
-        <div id="warning-signup"></div>
-          <div class="field">
-            <label for="nameofuser">NAME</label>
-
-            <input
-              type="text"
-              name="signup_name"
-              id="nameofuser"
-              placeholder="Your full name"
-              autocomplete="name"
-              required
-            />
-          </div>
-
-          <div class="field">
-            <label for="usernamec">USERNAME</label>
-
-            <input
-              type="text"
-              name="signup_username"
-              id="usernamec"
-              placeholder="Choose a username"
-              autocomplete="username"
-              required
-            />
-          </div>
-
-          <div class="field">
-            <label for="signup-email">EMAIL</label>
-
-            <input
-              type="email"
-              name="signup_email"
-              id="signup-email"
-              placeholder="you@example.com"
-              autocomplete="email"
-              required
-            />
-          </div>
-
-          <div class="field">
-            <label for="signup-password">PASSWORD</label>
-
-            <input
-              type="password"
-              name="signup_password"
-              id="signup-password"
-              placeholder="Create password"
-              autocomplete="new-password"
-              required
-            />
-          </div>
-
-          <div class="form-bottom">
-            <button
-              type="submit"
-              id="signUpSubmit"
-              class="brutal-button"-login
-              name="form_type"
-              value="signup_form"
-            >
-              <span>REGISTER</span>
-              <span class="button-arrow">→</span>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>
+
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 
-{% endblock %} {% block jsscript %}{% endblock %}
+{% endblock %}
+
+{% block jsscript %}{% endblock %}

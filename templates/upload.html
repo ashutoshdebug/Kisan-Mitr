@@ -1,42 +1,141 @@
-{% extends "index.html" %} 
-{% block subtitle %} Upload Image {% endblock subtitle %} 
-{% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/upload.css') }}"
-/>
-{% endblock %} 
-{% block content %}
-<form action="" id="uploadForm" enctype="multipart/form-data" method="post">
-  <div id="drag_n_drop_container">
-    <div id="dragNdrop">
-      <label for="fileInput" id="fileInputBox" style="cursor: pointer;">
-        <div id="dndHeader">
-          Drag and Drop your files here
-          <p>or click to browse your files</p>
-          <input 
-            type="file" 
-            name="fileInput" 
-            id="fileInput" 
-            accept="image/png, image/jpg, image/jpeg, image/webp" 
-            style="display: none;"
-          >
-          <span id="filename">Selected File: None</span>
-        </div> 
-        <div id="filetype">
-          <p>Supported file type: PNG, JPG, JPEG or WEBP</p>
-          <span id="warning">Please select a file first</span>
-        </div>
-      </label>
-    </div>
-    <div id="upload">
-      <button type="submit" id="uploadBtn">Submit</button>
-      <button type="reset" id="clear">Clear</button>
-    </div>
-  </div>
-</form>
-{% endblock content %} 
+{% extends "index.html" %}
 
-{% block jsscript %} 
-<script src="{{ url_for('static', filename='js/upload.js')}}"></script>
+{% block subtitle %}Upload Image{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<form
+    action=""
+    id="uploadForm"
+    enctype="multipart/form-data"
+    method="post"
+>
+    <div id="drag_n_drop_container">
+
+        <div class="upload-layout">
+
+            <div class="upload-side">
+
+                <span class="upload-eyebrow">
+                    KISAN MITRA
+                </span>
+
+                <h1>
+                    Upload your<br>
+                    <em>crop.</em>
+                </h1>
+
+                <p>
+                    Add a clear leaf image to begin detection.
+                </p>
+
+            </div>
+
+
+            <div class="upload-box">
+
+                <div id="dragNdrop">
+
+                    <div class="upload-header">
+
+                        <span class="header-action">×</span>
+
+                        <div class="header-title">
+                            <strong>Upload photos</strong>
+                            <span>No items selected</span>
+                        </div>
+
+                        <span class="header-action">+</span>
+
+                    </div>
+
+
+                    <label for="fileInput" id="fileInputBox">
+
+                        <img
+                            src="{{ url_for('static', filename='uploads/frontend/upload-icon.png') }}"
+                            alt="Upload photos"
+                            class="upload-icon"
+                        >
+
+
+                        <div id="dndHeader">
+
+                            <strong>
+                                Drag and drop
+                            </strong>
+
+                            <p>
+                                or browse for photos
+                            </p>
+
+                            <span class="browse-button">
+                                Browse
+                            </span>
+
+                            <input
+                                type="file"
+                                name="fileInput"
+                                id="fileInput"
+                                accept="image/png, image/jpg, image/jpeg, image/webp"
+                            >
+
+                            <span id="filename">
+                                No file selected
+                            </span>
+
+                        </div>
+
+
+                        <div id="filetype">
+
+                            <p>
+                                PNG, JPG, JPEG or WEBP
+                            </p>
+
+                            <span id="warning">
+                                Please select a file first
+                            </span>
+
+                        </div>
+
+                    </label>
+
+                </div>
+
+
+                <div id="upload">
+
+                    <button
+                        type="submit"
+                        id="uploadBtn"
+                    >
+                        <span>Submit</span>
+                        <span class="button-arrow">→</span>
+                    </button>
+
+                    <button
+                        type="reset"
+                        id="clear"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</form>
+
+{% endblock content %}
+
+{% block jsscript %}
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
 {% endblock jsscript %}
