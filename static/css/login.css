@@ -5,10 +5,7 @@
     justify-content: center;
     padding: 30px;
     background:
-        linear-gradient(
-            rgba(15, 22, 16, 0.48),
-            rgba(15, 22, 16, 0.48)
-        ),
+        linear-gradient(rgba(15,22,16,.48), rgba(15,22,16,.48)),
         url("../uploads/frontend/2.jpg") center / cover no-repeat fixed;
     font-family: "Open Sans", sans-serif;
 }
@@ -20,13 +17,10 @@
     gap: 115px;
 }
 
-
-/* LEFT SIDE */
-
 .auth-side {
     width: 230px;
     flex-shrink: 0;
-    animation: side-in 0.7s ease both;
+    animation: side-in .7s ease both;
 }
 
 .side-eyebrow {
@@ -35,7 +29,7 @@
     color: #c5e86c;
     font-size: 10px;
     font-weight: 900;
-    letter-spacing: 0.2em;
+    letter-spacing: .2em;
 }
 
 .auth-side h1 {
@@ -44,14 +38,14 @@
     font-family: Georgia, serif;
     font-size: 72px;
     font-weight: 700;
-    line-height: 0.9;
-    letter-spacing: -0.05em;
-    transition: opacity 0.18s ease, transform 0.18s ease;
+    line-height: .9;
+    letter-spacing: -.05em;
+    transition: opacity .18s ease, transform .18s ease;
 }
 
 .auth-side p {
     margin-top: 16px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255,255,255,.8);
     font-size: 14px;
     line-height: 1.6;
 }
@@ -61,22 +55,19 @@
     transform: translateX(-12px);
 }
 
-
-/* CARD */
-
 .auth-card {
     width: 400px;
     flex-shrink: 0;
     padding: 24px;
     display: flex;
     flex-direction: column;
-    background: #fff;
+    background: #eaf1df;
     border: 3px solid #111;
     border-radius: 22px;
     box-shadow: 8px 8px 0 #111;
     overflow: hidden;
-    transition: height 0.4s ease;
-    animation: card-in 0.7s 0.1s ease both;
+    transition: height .4s ease;
+    animation: card-in .7s .1s ease both;
 }
 
 .auth-card.login-mode {
@@ -86,9 +77,6 @@
 .auth-card.register-mode {
     height: 560px;
 }
-
-
-/* LOGIN / REGISTER */
 
 .auth-options {
     display: flex;
@@ -108,9 +96,9 @@
     font-weight: 900;
     cursor: pointer;
     transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease,
-        background 0.2s ease;
+        transform .12s ease,
+        box-shadow .12s ease,
+        background .2s ease;
 }
 
 .login-option {
@@ -127,12 +115,9 @@
 
 .auth-option.active {
     background: #a88cff;
-    transform: translate(-2px, -2px);
+    transform: translate(-2px,-2px);
     box-shadow: 5px 5px 0 #111;
 }
-
-
-/* FORMS */
 
 .forms-wrapper {
     flex: 1;
@@ -150,9 +135,9 @@
     pointer-events: none;
     transform: translateX(24px);
     transition:
-        opacity 0.3s ease,
-        transform 0.3s ease,
-        visibility 0.3s ease;
+        opacity .3s ease,
+        transform .3s ease,
+        visibility .3s ease;
 }
 
 .auth-form.active-form {
@@ -161,9 +146,6 @@
     pointer-events: auto;
     transform: translateX(0);
 }
-
-
-/* FIELDS */
 
 .field {
     margin-bottom: 18px;
@@ -175,7 +157,7 @@
     color: #111;
     font-size: 10px;
     font-weight: 900;
-    letter-spacing: 0.08em;
+    letter-spacing: .08em;
 }
 
 .field input {
@@ -190,9 +172,7 @@
     font-family: "Open Sans", sans-serif;
     font-size: 13px;
     font-weight: 600;
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+    transition: transform .15s ease, box-shadow .15s ease;
 }
 
 .field input::placeholder {
@@ -201,12 +181,9 @@
 }
 
 .field input:focus {
-    transform: translate(-2px, -2px);
+    transform: translate(-2px,-2px);
     box-shadow: 4px 4px 0 #9ad64c;
 }
-
-
-/* SUBMIT */
 
 .form-bottom {
     margin-top: 17px;
@@ -232,9 +209,9 @@
     cursor: pointer;
     box-shadow: 5px 5px 0 #111;
     transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease,
-        background 0.2s ease;
+        transform .12s ease,
+        box-shadow .12s ease,
+        background .2s ease;
 }
 
 .brutal-button:hover {
@@ -242,7 +219,7 @@
 }
 
 .brutal-button:active {
-    transform: translate(5px, 5px);
+    transform: translate(5px,5px);
     box-shadow: 0 0 0 #111;
 }
 
@@ -250,22 +227,18 @@
     position: absolute;
     right: 14px;
     font-size: 18px;
-    transition: transform 0.2s ease;
+    transition: transform .2s ease;
 }
 
 .brutal-button:hover .button-arrow {
     transform: translateX(4px);
 }
 
-
-/* ANIMATIONS */
-
 @keyframes side-in {
     from {
         opacity: 0;
         transform: translateX(-30px);
     }
-
     to {
         opacity: 1;
         transform: translateX(0);
@@ -277,15 +250,11 @@
         opacity: 0;
         transform: translateX(30px) translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: translate(0);
     }
 }
-
-
-/* TABLET */
 
 @media (max-width: 900px) {
     .auth-layout {
@@ -308,9 +277,6 @@
         font-size: 54px;
     }
 }
-
-
-/* MOBILE */
 
 @media (max-width: 500px) {
     .auth-page {
@@ -373,9 +339,6 @@
         font-size: 11px;
     }
 }
-
-
-/* REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
     .auth-card,

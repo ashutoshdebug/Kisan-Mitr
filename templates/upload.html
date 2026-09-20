@@ -8,21 +8,12 @@
 
 {% block content %}
 
-<form
-    action=""
-    id="uploadForm"
-    enctype="multipart/form-data"
-    method="post"
->
+<form action="" id="uploadForm" enctype="multipart/form-data" method="post">
     <div id="drag_n_drop_container">
-
         <div class="upload-layout">
 
             <div class="upload-side">
-
-                <span class="upload-eyebrow">
-                    KISAN MITRA
-                </span>
+                <span class="upload-eyebrow">KISAN MITRA</span>
 
                 <h1>
                     Upload your<br>
@@ -32,27 +23,21 @@
                 <p>
                     Add a clear leaf image to begin detection.
                 </p>
-
             </div>
 
-
             <div class="upload-box">
-
                 <div id="dragNdrop">
 
                     <div class="upload-header">
-
                         <span class="header-action">×</span>
 
                         <div class="header-title">
                             <strong>Upload photos</strong>
-                            <span>No items selected</span>
+                            <span id="upload-status">No items selected</span>
                         </div>
 
                         <span class="header-action">+</span>
-
                     </div>
-
 
                     <label for="fileInput" id="fileInputBox">
 
@@ -62,20 +47,11 @@
                             class="upload-icon"
                         >
 
-
                         <div id="dndHeader">
+                            <strong>Drag and drop</strong>
+                            <p>or browse for photos</p>
 
-                            <strong>
-                                Drag and drop
-                            </strong>
-
-                            <p>
-                                or browse for photos
-                            </p>
-
-                            <span class="browse-button">
-                                Browse
-                            </span>
+                            <span class="browse-button">Browse</span>
 
                             <input
                                 type="file"
@@ -84,58 +60,76 @@
                                 accept="image/png, image/jpg, image/jpeg, image/webp"
                             >
 
-                            <span id="filename">
-                                No file selected
-                            </span>
-
+                            <span id="filename">No file selected</span>
                         </div>
 
-
                         <div id="filetype">
-
-                            <p>
-                                PNG, JPG, JPEG or WEBP
-                            </p>
+                            <p>PNG, JPG, JPEG or WEBP</p>
 
                             <span id="warning">
                                 Please select a file first
                             </span>
-
                         </div>
 
                     </label>
-
                 </div>
 
-
                 <div id="upload">
-
-                    <button
-                        type="submit"
-                        id="uploadBtn"
-                    >
+                    <button type="submit" id="uploadBtn">
                         <span>Submit</span>
                         <span class="button-arrow">→</span>
                     </button>
 
-                    <button
-                        type="reset"
-                        id="clear"
-                    >
+                    <button type="reset" id="clear">
                         Clear
                     </button>
-
                 </div>
-
             </div>
 
         </div>
-
     </div>
 </form>
 
 {% endblock content %}
 
 {% block jsscript %}
+
 <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("fileInput");
+    const box = document.getElementById("dragNdrop");
+    const status = document.getElementById("upload-status");
+    const filename = document.getElementById("filename");
+    const form = document.getElementById("uploadForm");
+
+    const updateState = () => {
+        const selected = input.files.length > 0;
+
+        box.classList.toggle("file-selected", selected);
+        status.textContent = selected
+            ? "Image selected"
+            : "No items selected";
+    };
+
+    input.addEventListener("change", updateState);
+
+    box.addEventListener("drop", () => {
+        setTimeout(updateState, 100);
+    });
+
+    form.addEventListener("reset", () => {
+        setTimeout(() => {
+            input.value = "";
+            box.classList.remove("file-selected");
+            status.textContent = "No items selected";
+            filename.textContent = "No file selected";
+        }, 0);
+    });
+
+    updateState();
+});
+</script>
+
 {% endblock jsscript %}
