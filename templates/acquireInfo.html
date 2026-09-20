@@ -1,63 +1,225 @@
 {% extends "index.html" %}
-{% block subtitle %}
-Enter your information
-{% endblock %}
+
+{% block subtitle %}Enter your information{% endblock %}
+
 {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/acquireInfo.css') }}"
-/>
-{% endblock %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/acquireInfo.css') }}">
+{% endblock %}
+
 {% block content %}
+
 <div id="main-container">
     <div id="post-main-container">
-        <div class="heading">
-            Dashboard
+        <div class="info-layout">
+
+            <div class="info-side">
+                <span class="info-eyebrow">KISAN MITRA</span>
+
+                <h1>
+                    Know your<br>
+                    <em>crop.</em>
+                </h1>
+
+                <p>
+                    Add a few details about your field
+                    so we can improve the crop analysis.
+                </p>
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="card-heading">
+                    <strong>Crop information</strong>
+                </div>
+
+
+                <div id="image-container">
+                    <span>Your image</span>
+
+                    <div class="image-preview">
+                        <img
+                            src="{{ url_for('static', filename=user_image) }}"
+                            alt="Uploaded crop image"
+                        >
+                    </div>
+                </div>
+
+
+                <form action="" method="post" id="parameter-form">
+
+                    <div class="form-grid">
+
+                        <div class="form-field full">
+                            <label for="location">LOCATION</label>
+
+                            <input
+                                type="text"
+                                name="location"
+                                id="location"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="form-field">
+                            <label for="season">CROP SEASON</label>
+
+                            <select
+                                name="season"
+                                id="season"
+                                required
+                            >
+                                <option value="select">Select season</option>
+                                <option value="kharif">Kharif</option>
+                                <option value="rabi">Rabi</option>
+                                <option value="zaid">Zaid / Summer</option>
+                                <option value="wholeyear">
+                                    Whole Year / Perennial
+                                </option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-field">
+                            <label for="variety">CROP VARIETY</label>
+
+                            <input
+                                type="text"
+                                name="variety"
+                                id="variety"
+                            >
+                        </div>
+
+
+                        <div class="form-field">
+                            <label for="temperature">AVG TEMPERATURE</label>
+
+                            <input
+                                type="text"
+                                name="temperature"
+                                id="temperature"
+                                readonly
+                            >
+                        </div>
+
+
+                        <div class="form-field">
+                            <label for="humidity">AVG HUMIDITY</label>
+
+                            <input
+                                type="text"
+                                name="humidity"
+                                id="humidity"
+                                readonly
+                            >
+                        </div>
+
+
+                        <div class="form-field">
+                            <label for="rainfall">AVG RAINFALL</label>
+
+                            <input
+                                type="text"
+                                name="rainfall"
+                                id="rainfall"
+                                readonly
+                            >
+                        </div>
+
+
+                        <div class="form-field">
+                            <label for="windspeed">AVG WINDSPEED</label>
+
+                            <input
+                                type="text"
+                                name="windspeed"
+                                id="windspeed"
+                                readonly
+                            >
+                        </div>
+
+
+                        <div class="form-field">
+                            <label for="irrigation">IRRIGATION TYPE</label>
+
+                            <select
+                                name="irrigation"
+                                id="irrigation"
+                            >
+                                <option value="select">Select type</option>
+                                <option value="drip">Drip Irrigation</option>
+                                <option value="sprinkler">
+                                    Sprinkler Irrigation
+                                </option>
+                                <option value="rainfed">
+                                    Rainfed Irrigation
+                                </option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-field">
+                            <label for="soil">SOIL TYPE</label>
+
+                            <select
+                                name="soil"
+                                id="soil"
+                                required
+                            >
+                                <option value="select">Select type</option>
+                                <option value="black">Black Soil</option>
+                                <option value="alluvial">Alluvial Soil</option>
+                                <option value="red-yellow">
+                                    Red & Yellow Soil
+                                </option>
+                                <option value="laterite">
+                                    Laterite Soil
+                                </option>
+                                <option value="arid-desert">
+                                    Arid/Desert Soil
+                                </option>
+                                <option value="mountain-forest">
+                                    Mountain/Forest Soil
+                                </option>
+                                <option value="saline-alkaline">
+                                    Saline & Alkaline Soil
+                                </option>
+                                <option value="peaty-marshy">
+                                    Peaty & Marshy Soil
+                                </option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-field full">
+                            <label for="symptoms">SYMPTOMS (OPTIONAL)</label>
+
+                            <textarea
+                                name="symptoms"
+                                id="symptoms"
+                                rows="3"
+                            ></textarea>
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="submit-button">
+                        <span>Continue analysis</span>
+                        <span class="button-arrow">→</span>
+                    </button>
+
+                </form>
+
+            </div>
+
         </div>
-        <div id="account">
-            Hi {{user}}!
-        </div>
-        <div id="image-container">
-            Your image:
-            <img src="{{url_for('static', filename=user_image)}}" alt="User Image">
-        </div>
-        <form action="" method="post" id="parameter-form">
-            <label for="location">Location:</label>
-            <input type="text" name="location" id="location" required>
-            <label for="season">Crop Season</label>
-            <select name="season" id="season" required>
-                <option value="select">select value</option>
-                <option value="kharif">Kharif</option>
-                <option value="rabi">Rabi</option>
-                <option value="zaid">Zaid / Summer</option>
-                <option value="wholeyear">Whole Year / Perennial</option>
-            </select>
-            <label for="temperature">Avg Temperature:</label>
-            <input type="text" name="temperature" id="temperature" readonly>
-            <label for="humidity">Avg Humidity:</label>
-            <input type="text" name="humidity" id="humidity" readonly>
-            <label for="rainfall">Avg Rainfall:</label>
-            <input type="text" name="rainfall" id="rainfall" readonly>
-            <label for="windspeed">Avg Windspeed:</label>
-            <input type="text" name="windspeed" id="windspeed" readonly>
-            <label for="variety">Crop Variety:</label>
-            <input type="text" name="variety" id="variety">
-            <label for="irrigation">Irrigation Type:</label>
-            <select name="irrigation" id="irrigation">
-                <option value="select">select value</option>
-                <option value="drip">Drip Irrigation</option>
-                <option value="sprinkler">Sprinkler Irrigation</option>
-                <option value="rainfed">Rainfed Irrigation</option>
-            </select>
-            <label for="soil">Soil Type:</label>
-            <input type="text" name="soil" id="soil">
-            <label for="symptoms">Symptoms (Optional):</label>
-            <textarea name="symptoms" id="symptoms"></textarea>
-            <button type="submit">Submit</button>
-        </form>
     </div>
 </div>
+
 {% endblock content %}
+
 {% block jsscript %}
-<script src="{{ url_for('static', filename='js/acquireInfo.js')}}"></script>
+<script src="{{ url_for('static', filename='js/acquireInfo.js') }}"></script>
 {% endblock jsscript %}

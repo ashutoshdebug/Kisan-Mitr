@@ -1,57 +1,396 @@
-  body {
-    background-image: url("../uploads/frontend/kisan_bg.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+}
+
+#body-div {
     min-height: 100vh;
-    /* border-radius: 0.2vw; */
-  }
+
+    background:
+        linear-gradient(
+            rgba(15, 22, 16, .46),
+            rgba(15, 22, 16, .46)
+        ),
+        url("../uploads/frontend/kisan_bg.jpg")
+        center / cover no-repeat fixed;
+}
+
+
+/* PAGE */
 
 #main-container {
-    width: 100%;
-    height: 100%;
-    padding: 1vw;
+    min-height: 100vh;
+    padding: 30px;
 }
 
 #post-main-container {
-    width: 100%;
-    height: 100%;
-    margin-top: 2vh;
-    /* background: #d9e1e3; */
+    min-height: calc(100vh - 60px);
+
     display: flex;
-    justify-content: start;
-    flex-direction: column;
     align-items: center;
-    padding: 1vw;
+    justify-content: center;
+
+    padding: 30px;
 }
 
-.heading {
-    font-size: 3vw;
+.info-layout {
+    width: min(1080px, 100%);
+
+    display: flex;
+    align-items: center;
+    gap: 115px;
 }
 
-#account {
-    margin-top: 1.5vh;
-    font-size: 1.5vw;
+
+/* LEFT */
+
+.info-side {
+    width: 230px;
+    flex-shrink: 0;
+
+    color: #fff;
+    transform: translateY(-45px);
 }
+
+.info-eyebrow {
+    display: block;
+
+    margin-bottom: 14px;
+
+    color: #c5e86c;
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .2em;
+}
+
+.info-side h1 {
+    margin: 0;
+
+    color: #fff;
+
+    font-family: Georgia, serif;
+    font-size: 72px;
+    font-weight: 700;
+
+    line-height: .9;
+    letter-spacing: -.05em;
+}
+
+.info-side h1 em {
+    color: #c5e86c;
+
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.info-side p {
+    max-width: 225px;
+
+    margin-top: 18px;
+
+    color: rgba(255, 255, 255, .82);
+
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+
+/* CARD */
+
+.info-card {
+    width: 520px;
+
+    padding: 22px;
+
+    background: #eaf1df;
+
+    border: 3px solid #111;
+    border-radius: 22px;
+
+    box-shadow: none;
+
+    overflow: hidden;
+}
+
+
+/* HEADER */
+
+.card-heading {
+    padding-bottom: 13px;
+    border-bottom: 3px solid #111;
+}
+
+.card-heading strong {
+    color: #172319;
+
+    font-family: Georgia, serif;
+    font-size: 26px;
+}
+
+
+/* IMAGE */
 
 #image-container {
+    margin: 15px 0 17px;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: max-content;
-    height: max-content;
-    margin: 2vh;
+    gap: 7px;
 }
+
+#image-container > span {
+    color: #31562d;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.image-preview {
+    width: 100%;
+    height: 210px;
+
+    padding: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border: 3px solid #111;
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e5efd7,
+            #eef3e8
+        );
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+
+/* FORM */
 
 #parameter-form {
-    display: flex;
-    /* align-items: center; */
-    justify-content: center;
-    flex-direction: column;
+    margin: 0;
 }
 
-#parameter-form label {
-    color: white;
-    margin-top: 1vw;
+.form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-field {
+    min-width: 0;
+}
+
+.form-field.full {
+    grid-column: 1 / -1;
+}
+
+.form-field label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #172319;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: .08em;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+
+    border: 2px solid #111;
+    border-radius: 7px;
+    outline: none;
+
+    background: #fff;
+    color: #111;
+
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+}
+
+.form-field input,
+.form-field select {
+    height: 40px;
+    padding: 0 10px;
+}
+
+.form-field textarea {
+    min-height: 62px;
+
+    padding: 9px;
+    resize: none;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    box-shadow: 4px 4px 0 #9ad64c;
+}
+
+
+/* BUTTON */
+
+.submit-button {
+    width: 100%;
+    height: 48px;
+
+    margin-top: 16px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 3px solid #111;
+    border-radius: 8px;
+
+    background: #9ad64c;
+    color: #111;
+
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow: 5px 5px 0 #111;
+
+    transition:
+        transform .12s ease,
+        box-shadow .12s ease,
+        background .2s ease;
+}
+
+.submit-button span:last-child {
+    position: absolute;
+    right: 14px;
+
+    font-size: 18px;
+}
+
+.submit-button:hover {
+    background: #b1e45b;
+}
+
+.submit-button:active {
+    transform: translate(5px, 5px);
+    box-shadow: none;
+}
+
+
+/* TABLET */
+
+@media (max-width: 900px) {
+
+    html,
+    body {
+        overflow: auto;
+    }
+
+    #main-container {
+        padding: 20px;
+    }
+
+    #post-main-container {
+        padding: 30px 10px;
+    }
+
+    .info-layout {
+        width: min(650px, 100%);
+
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .info-side {
+        width: 100%;
+
+        text-align: center;
+        transform: none;
+    }
+
+    .info-side p {
+        margin-inline: auto;
+    }
+
+    .info-card {
+        width: 520px;
+        max-width: 100%;
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 560px) {
+
+    #post-main-container {
+        padding: 20px 0;
+    }
+
+    .info-side h1 {
+        font-size: 48px;
+    }
+
+    .info-side p {
+        font-size: 13px;
+    }
+
+    .info-card {
+        width: 100%;
+
+        padding: 18px;
+
+        border-radius: 18px;
+
+        box-shadow: none;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-field.full {
+        grid-column: auto;
+    }
+
+    .image-preview {
+        height: 220px;
+    }
 }
