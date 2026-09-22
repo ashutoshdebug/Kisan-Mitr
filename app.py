@@ -214,3 +214,8 @@ def upload():
             return redirect(url_for("acquire"))
 
     return render_template("upload.html", user_var=msg, account_or_upload="upload")
+
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
