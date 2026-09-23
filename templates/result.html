@@ -1,189 +1,717 @@
 {% extends 'index.html' %}
-{% block subtitle %} Crop Diagnosis Result {% endblock %} 
+
+{% block subtitle %}
+    Crop Diagnosis Result
+{% endblock %}
+
 {% block styles %}
 <link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/result.css') }}"
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/result.css') }}"
 />
-{% endblock %} 
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+
 {% block content %}
-<div id="body-div">
-  <div id="result-container" class="glass-card">
-    <section class="result-section">
-      <div class="section-heading">
-        <span class="section-number"> 01 </span>
-        <div>
-          <h2>Primary Diagnosis</h2>
-          <p>
-            Identified pathogen and environmental conditions contributing to the
-            disease.
-          </p>
+<div class="result-page">
+    <div class="result-shell">
+
+        <!-- Page header -->
+        <header class="result-hero">
+            <div class="hero-copy">
+                <span class="eyebrow">KISAN MITR • AI CROP HEALTH REPORT</span>
+                <h1>Crop Diagnosis <span>Result</span></h1>
+                <p>
+                    Your crop image has been analyzed. Review the diagnosis,
+                    treatment options and recovery recommendations below.
+                </p>
+            </div>
+
+            <div class="hero-meta">
+                {% if user %}
+                <span class="meta-label">Prepared for</span>
+                <strong>{{ user }}</strong>
+                {% endif %}
+
+                <span class="meta-status">
+                    <span class="status-dot"></span>
+                    Analysis complete
+                </span>
+            </div>
+        </header>
+
+        <!-- Image + diagnosis summary -->
+        <section class="overview-grid">
+
+            <div class="image-card">
+                <div class="card-topline">
+                    <span class="card-kicker">01</span>
+                    <span class="card-title">Analyzed Crop</span>
+                </div>
+
+                {% if user_image %}
+                <div class="crop-image-wrap">
+                    <img
+                        src="{{ url_for('static', filename=user_image) }}"
+                        alt="Uploaded crop image"
+                        class="crop-image"
+                    >
+                </div>
+                {% else %}
+                <div class="image-placeholder">
+                    <span>🌿</span>
+                    <p>Crop image unavailable</p>
+                </div>
+                {% endif %}
+
+                <p class="image-note">
+                    Image submitted for AI-assisted crop diagnosis.
+                </p>
+            </div>
+
+            <div class="diagnosis-card">
+
+                <div class="card-topline">
+                    <span class="card-kicker">02</span>
+                    <span class="card-title">Primary Diagnosis</span>
+                </div>
+
+                <div class="diagnosis-badge">
+                    AI DIAGNOSIS
+                </div>
+
+                <h2>
+                    {{ result.primary_diagnosis.pathogen_common_name }}
+                </h2>
+
+                <p class="scientific-name large-scientific">
+                    {{ result.primary_diagnosis.pathogen_scientific_name }}
+                </p>
+
+                <div class="diagnosis-facts">
+
+                    <div class="fact-box">
+                        <span class="fact-label">
+                            Classification
+                        </span>
+
+                        <strong>
+                            {{ result.primary_diagnosis.disease_classification }}
+                        </strong>
+                    </div>
+
+                    <div class="fact-box">
+                        <span class="fact-label">
+                            Environmental Trigger
+                        </span>
+
+                        <strong>
+                            {{ result.primary_diagnosis.environmental_trigger }}
+                        </strong>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Quick overview -->
+        <section class="quick-overview">
+
+            <div class="section-intro compact-intro">
+
+                <div>
+                    <span class="section-eyebrow">
+                        AT A GLANCE
+                    </span>
+
+                    <h2>
+                        Diagnosis Overview
+                    </h2>
+                </div>
+
+                <p>
+                    Key findings from the generated crop health analysis.
+                </p>
+
+            </div>
+
+            <div class="quick-grid">
+
+                <div class="quick-card">
+
+                    <span class="quick-icon">
+                        🌿
+                    </span>
+
+                    <div>
+                        <span>Condition</span>
+
+                        <strong>
+                            {{ result.primary_diagnosis.pathogen_common_name }}
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="quick-card">
+
+                    <span class="quick-icon">
+                        🦠
+                    </span>
+
+                    <div>
+                        <span>Pathogen</span>
+
+                        <strong>
+                            {{ result.primary_diagnosis.pathogen_scientific_name }}
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="quick-card">
+
+                    <span class="quick-icon">
+                        🌦️
+                    </span>
+
+                    <div>
+                        <span>Trigger</span>
+
+                        <strong>
+                            {{ result.primary_diagnosis.environmental_trigger }}
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Primary Diagnosis -->
+        <section class="result-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    03
+                </span>
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        DIAGNOSIS DETAILS
+                    </span>
+
+                    <h2>
+                        Primary Diagnosis
+                    </h2>
+
+                    <p>
+                        Identified pathogen and environmental conditions
+                        contributing to the disease.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-grid three-columns">
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Pathogen
+                    </span>
+
+                    <h3>
+                        {{ result.primary_diagnosis.pathogen_common_name }}
+                    </h3>
+
+                    <p class="scientific-name">
+                        {{ result.primary_diagnosis.pathogen_scientific_name }}
+                    </p>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Disease Classification
+                    </span>
+
+                    <p class="feature-text">
+                        {{ result.primary_diagnosis.disease_classification }}
+                    </p>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Environmental Trigger
+                    </span>
+
+                    <p class="feature-text">
+                        {{ result.primary_diagnosis.environmental_trigger }}
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- Chemical Control -->
+        <section class="result-section treatment-section chemical-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    04
+                </span>
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        TREATMENT OPTION
+                    </span>
+
+                    <h2>
+                        💊 Chemical Control
+                    </h2>
+
+                    <p>
+                        Recommended chemical treatment and application
+                        guidelines.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-grid two-columns">
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Active Ingredients
+                    </span>
+
+                    <ul class="result-list">
+
+                        {% for ingredient in result.chemical_control.active_ingredients %}
+
+                        <li>
+                            {{ ingredient }}
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Commercial / Trade Names
+                    </span>
+
+                    <ul class="result-list">
+
+                        {% for name in result.chemical_control.trade_names %}
+
+                        <li>
+                            {{ name }}
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </article>
+
+
+                <article class="result-card highlight-card">
+
+                    <span class="result-label">
+                        Dosage & Dilution
+                    </span>
+
+                    <p>
+                        {{ result.chemical_control.dosage }}
+                    </p>
+
+                </article>
+
+
+                <article class="result-card warning-card">
+
+                    <span class="result-label">
+                        ⚠ Pre-Harvest Interval
+                    </span>
+
+                    <p>
+                        {{ result.chemical_control.pre_harvest_interval }}
+                    </p>
+
+                </article>
+
+
+                <article class="result-card full-width action-card">
+
+                    <span class="result-label">
+                        Spray Guidelines
+                    </span>
+
+                    <p>
+                        {{ result.chemical_control.spray_guidelines }}
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- Biological & Organic -->
+        <section class="result-section treatment-section organic-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    05
+                </span>
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        ALTERNATIVE OPTION
+                    </span>
+
+                    <h2>
+                        🌱 Biological & Organic Alternatives
+                    </h2>
+
+                    <p>
+                        Biological control agents and organic treatment
+                        options.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-grid two-columns">
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Bio-control Agents
+                    </span>
+
+                    <ul class="result-list">
+
+                        {% for agent in result.biological_control.bio_control_agents %}
+
+                        <li>
+                            {{ agent }}
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Organic Sprays
+                    </span>
+
+                    <ul class="result-list">
+
+                        {% for spray in result.biological_control.organic_sprays %}
+
+                        <li>
+                            {{ spray }}
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Application Frequency
+                    </span>
+
+                    <p>
+                        {{ result.biological_control.application_frequency }}
+                    </p>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Application Procedure
+                    </span>
+
+                    <p>
+                        {{ result.biological_control.application_procedure }}
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- Cultural & Field Remediation -->
+        <section class="result-section treatment-section field-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    06
+                </span>
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        FIELD MANAGEMENT
+                    </span>
+
+                    <h2>
+                        🌾 Cultural & Field Remediation
+                    </h2>
+
+                    <p>
+                        Field-management practices to reduce disease
+                        progression and recurrence.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-grid three-columns">
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        💧 Irrigation Adjustments
+                    </span>
+
+                    <p>
+                        {{ result.cultural_remediation.irrigation_adjustments }}
+                    </p>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        🧹 Field Sanitation
+                    </span>
+
+                    <p>
+                        {{ result.cultural_remediation.field_sanitation }}
+                    </p>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        🌱 Soil Drainage & Aeration
+                    </span>
+
+                    <p>
+                        {{ result.cultural_remediation.soil_drainage_and_aeration }}
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- Recovery & Follow-up -->
+        <section class="result-section treatment-section recovery-section">
+
+            <div class="section-heading">
+
+                <span class="section-number">
+                    07
+                </span>
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        NEXT STEPS
+                    </span>
+
+                    <h2>
+                        📅 Recovery & Follow-up
+                    </h2>
+
+                    <p>
+                        Post-treatment recovery and monitoring recommendations.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-grid two-columns">
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Foliar Nutrition
+                    </span>
+
+                    <ul class="result-list">
+
+                        {% for nutrient in result.recovery_followup.foliar_nutrition %}
+
+                        <li>
+                            {{ nutrient }}
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Micronutrients
+                    </span>
+
+                    <ul class="result-list">
+
+                        {% for nutrient in result.recovery_followup.micronutrients %}
+
+                        <li>
+                            {{ nutrient }}
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Follow-up Period
+                    </span>
+
+                    <p>
+                        {{ result.recovery_followup.followup_period }}
+                    </p>
+
+                </article>
+
+
+                <article class="result-card">
+
+                    <span class="result-label">
+                        Monitoring Milestones
+                    </span>
+
+                    <p>
+                        {{ result.recovery_followup.monitoring_milestones }}
+                    </p>
+
+                </article>
+
+
+                <article class="result-card full-width action-card">
+
+                    <span class="result-label">
+                        Secondary Treatment Conditions
+                    </span>
+
+                    <p>
+                        {{ result.recovery_followup.secondary_treatment_conditions }}
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- Actions -->
+        <div class="result-actions">
+
+            <a
+                class="primary-action"
+                href="{{ url_for('upload') }}"
+            >
+                <span>↻</span>
+                Analyze Another Crop
+            </a>
+
         </div>
-      </div>
-      <div class="result-grid">
-        <div class="result-card">
-          <span class="result-label"> Pathogen </span>
-          <h3>{{ result.primary_diagnosis.pathogen_common_name }}</h3>
-          <p class="scientific-name">
-            {{ result.primary_diagnosis.pathogen_scientific_name }}
-          </p>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Disease Classification </span>
-          <p>{{ result.primary_diagnosis.disease_classification }}</p>
-        </div>
-        <div class="result-card full-width">
-          <span class="result-label"> Environmental Trigger </span>
-          <p>{{ result.primary_diagnosis.environmental_trigger }}</p>
-        </div>
-      </div>
-    </section>
-    <section class="result-section">
-      <div class="section-heading">
-        <span class="section-number"> 02 </span>
-        <div>
-          <h2>Chemical Control</h2>
-          <p>Recommended chemical treatment and application guidelines.</p>
-        </div>
-      </div>
-      <div class="result-grid">
-        <div class="result-card">
-          <span class="result-label"> Active Ingredients </span>
-          <ul class="result-list">
-            {% for ingredient in result.chemical_control.active_ingredients %}
-            <li>{{ ingredient }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Commercial / Trade Names </span>
-          <ul class="result-list">
-            {% for name in result.chemical_control.trade_names %}
-            <li>{{ name }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Dosage & Dilution </span>
-          <p>{{ result.chemical_control.dosage }}</p>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Pre-Harvest Interval </span>
-          <p>{{ result.chemical_control.pre_harvest_interval }}</p>
-        </div>
-        <div class="result-card full-width">
-          <span class="result-label"> Spray Guidelines </span>
-          <p>{{ result.chemical_control.spray_guidelines }}</p>
-        </div>
-      </div>
-    </section>
-    <section class="result-section">
-      <div class="section-heading">
-        <span class="section-number"> 03 </span>
-        <div>
-          <h2>Biological & Organic Alternatives</h2>
-          <p>Biological control agents and organic treatment options.</p>
-        </div>
-      </div>
-      <div class="result-grid">
-        <div class="result-card">
-          <span class="result-label"> Bio-control Agents </span>
-          <ul class="result-list">
-            {% for agent in result.biological_control.bio_control_agents %}
-            <li>{{ agent }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Organic Sprays </span>
-          <ul class="result-list">
-            {% for spray in result.biological_control.organic_sprays %}
-            <li>{{ spray }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Application Frequency </span>
-          <p>{{ result.biological_control.application_frequency }}</p>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Application Procedure </span>
-          <p>{{ result.biological_control.application_procedure }}</p>
-        </div>
-      </div>
-    </section>
-    <section class="result-section">
-      <div class="section-heading">
-        <span class="section-number"> 04 </span>
-        <div>
-          <h2>Cultural & Field Remediation</h2>
-          <p>
-            Field-management practices to reduce disease progression and
-            recurrence.
-          </p>
-        </div>
-      </div>
-      <div class="result-grid">
-        <div class="result-card">
-          <span class="result-label"> Irrigation Adjustments </span>
-          <p>{{ result.cultural_remediation.irrigation_adjustments }}</p>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Field Sanitation </span>
-          <p>{{ result.cultural_remediation.field_sanitation }}</p>
-        </div>
-        <div class="result-card full-width">
-          <span class="result-label"> Soil Drainage & Aeration </span>
-          <p>{{ result.cultural_remediation.soil_drainage_and_aeration }}</p>
-        </div>
-      </div>
-    </section>
-    <section class="result-section">
-      <div class="section-heading">
-        <span class="section-number"> 05 </span>
-        <div>
-          <h2>Recovery & Follow-up</h2>
-          <p>Post-treatment recovery and monitoring recommendations.</p>
-        </div>
-      </div>
-      <div class="result-grid">
-        <div class="result-card">
-          <span class="result-label"> Foliar Nutrition </span>
-          <ul class="result-list">
-            {% for nutrient in result.recovery_followup.foliar_nutrition %}
-            <li>{{ nutrient }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Micronutrients </span>
-          <ul class="result-list">
-            {% for nutrient in result.recovery_followup.micronutrients %}
-            <li>{{ nutrient }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Follow-up Period </span>
-          <p>{{ result.recovery_followup.followup_period }}</p>
-        </div>
-        <div class="result-card">
-          <span class="result-label"> Monitoring Milestones </span>
-          <p>{{ result.recovery_followup.monitoring_milestones }}</p>
-        </div>
-        <div class="result-card full-width">
-          <span class="result-label"> Secondary Treatment Conditions </span>
-          <p>{{ result.recovery_followup.secondary_treatment_conditions }}</p>
-        </div>
-      </div>
-    </section>
-    <div class="result-footer">
-      <p>
-        Analysis generated from the provided crop, environmental, and symptom
-        data.
-      </p>
+
+
+        <!-- Footer -->
+        <footer class="result-footer">
+
+            <div class="footer-line"></div>
+
+            <p>
+                Analysis generated from the provided crop,
+                environmental, and symptom data.
+            </p>
+
+            <span>
+                Kisan Mitr • AI-assisted crop health guidance
+            </span>
+
+        </footer>
+
     </div>
-  </div>
 </div>
-{% endblock %} 
-{% block jsscript %} {% endblock %}
+{% endblock %}
+
+{% block jsscript %}{% endblock %}
