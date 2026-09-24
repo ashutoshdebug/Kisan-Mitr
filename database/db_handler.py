@@ -1,47 +1,43 @@
-import mysql.connector as sql
-from mysql.connector import errorcode
 import os
-from pathlib import Path
+
 import bcrypt
-from utils.password_hash import PasswordHash
+import mysql.connector as sql
 from dotenv import load_dotenv
+from mysql.connector import errorcode
+
+from utils.password_hash import PasswordHash
+
 
 load_dotenv()
-# Connecting to the server
+
+DEFAULT_PROFILE_IMAGE = "uploads/frontend/default-profile.svg"
 
 
 class dbHandler:
     def __init__(self):
         self.host = os.getenv("db_host")
-        # print("Host:", self.host)
         self.user = os.getenv("db_user")
         self.password = os.getenv("db_password")
         self.database = os.getenv("database")
+
         self.login_successful = False
         self.username = None
         self.imagePath = None
         self.resultPath = None
+
         self.user_already_exist = False
         self.user_not_exist = False
-        # self.username_folder = None
-        # print("Init database:", self.database)
+
         self.password_hash = PasswordHash()
 
     def connection(self):
         try:
-            con = sql.connect(
+            return sql.connect(
                 host=self.host,
                 user=self.user,
                 password=self.password,
-                database=self.database,
+                database=self.database
             )
-            # cursor = con.cursor()
-            # print("Connection databse", self.database)
-            # query = f'USE {self.database}'
-            # cursor.execute(query)
-            # con.commit()
-            # print("Connected successfully!")
-            return con
 
         except sql.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -53,46 +49,188 @@ class dbHandler:
 
             return None
 
-    def userRegistration(self, name, username, email, password):
+    def userRegistration(
+        self,
+        name,
+        username,
+        email,
+        password
+    ):
         self.user_already_exist = False
+
         if not name or not username or not email or not password:
-            # print("No sufficient data is provided to register user")
             return False
 
         con = self.connection()
+
         if not con:
             return False
 
         cursor = None
 
-        lowerCaseEmail = str(email).lower()
-        # print(lowerCaseEmail)
-        encrypted_pass = self.password_hash.userPassword(password)
-        query = "INSERT INTO ACCOUNT (name, username, email, password) VALUES (%s, %s, %s, %s)"
         try:
+            encrypted_pass = self.password_hash.userPassword(password)
+
+            query = """
+                INSERT INTO ACCOUNT
+                (name, username, email, password)
+                VALUES (%s, %s, %s, %s)
+            """
+
             cursor = con.cursor()
-            cursor.execute(query, (name, username, lowerCaseEmail, encrypted_pass))
+            cursor.execute(
+                query,
+                (
+                    name,
+                    username,
+                    str(email).lower(),
+                    encrypted_pass
+                )
+            )
+
             con.commit()
-            # print("Commited successfully")
-            self.user_already_exist = False
             return True
 
         except sql.Error as err:
-            # print("Error adding user:", err)
+            print("Registration SQL error:", err)
             self.user_already_exist = True
             return False
 
         finally:
-            if cursor is not None:
+            if cursor:
                 cursor.close()
+
+            con.close()
+
+    def createUserProfile(self, username):
+        if not username:
+            return False
+
+        con = self.connection()
+
+        if not con:
+            return False
+
+        cursor = None
+
+        try:
+            query = """
+                INSERT INTO user_profile
+                (username, profile_image)
+                VALUES (%s, %s)
+                ON DUPLICATE KEY UPDATE
+                profile_image = COALESCE(
+                    profile_image,
+                    VALUES(profile_image)
+                )
+            """
+
+            cursor = con.cursor()
+            cursor.execute(
+                query,
+                (
+                    username,
+                    DEFAULT_PROFILE_IMAGE
+                )
+            )
+
+            con.commit()
+            return True
+
+        except sql.Error as err:
+            print("Create profile SQL error:", err)
+            return False
+
+        finally:
+            if cursor:
+                cursor.close()
+
+            con.close()
+
+    def getUserProfile(self, username):
+        if not username:
+            return None
+
+        con = self.connection()
+
+        if not con:
+            return None
+
+        cursor = None
+
+        try:
+            query = """
+                SELECT
+                    account.name,
+                    account.email,
+                    user_profile.profile_image
+                FROM account
+                LEFT JOIN user_profile
+                    ON account.username = user_profile.username
+                WHERE account.username = %s
+            """
+
+            cursor = con.cursor(dictionary=True)
+            cursor.execute(query, (username,))
+
+            return cursor.fetchone()
+
+        except sql.Error as err:
+            print("Get profile SQL error:", err)
+            return None
+
+        finally:
+            if cursor:
+                cursor.close()
+
+            con.close()
+
+    def saveProfileImage(self, username, image_path):
+        if not username or not image_path:
+            return False
+
+        con = self.connection()
+
+        if not con:
+            return False
+
+        cursor = None
+
+        try:
+            query = """
+                INSERT INTO user_profile
+                (username, profile_image)
+                VALUES (%s, %s)
+                ON DUPLICATE KEY UPDATE
+                profile_image = VALUES(profile_image)
+            """
+
+            cursor = con.cursor()
+            cursor.execute(
+                query,
+                (username, image_path)
+            )
+
+            con.commit()
+            return True
+
+        except sql.Error as err:
+            print("Save profile image SQL error:", err)
+            return False
+
+        finally:
+            if cursor:
+                cursor.close()
+
             con.close()
 
     def verifyUser(self, password, email):
         self.login_successful = False
         self.username = None
         self.user_not_exist = False
+
         if not password or not email:
-            print("No email and password are provided to verify the user")
+            print("No email and password are provided")
             return False
 
         con = self.connection()
@@ -103,15 +241,20 @@ class dbHandler:
         cursor = None
 
         try:
-            lowerCaseEmail = str(email).lower()
-            # print(lowerCaseEmail)
             cursor = con.cursor()
-            cursor.execute("SELECT username, password FROM ACCOUNT WHERE email = %s", (lowerCaseEmail,),)
+
+            cursor.execute(
+                """
+                SELECT username, password
+                FROM ACCOUNT
+                WHERE email = %s
+                """,
+                (str(email).lower(),)
+            )
+
             data = cursor.fetchone()
 
             if not data:
-                # print("User doesn't exist")
-                self.login_successful = False
                 self.user_not_exist = True
                 return False
 
@@ -120,37 +263,25 @@ class dbHandler:
             if isinstance(db_password_hash, str):
                 db_password_hash = db_password_hash.encode("utf-8")
 
-            is_match = bcrypt.checkpw(password.encode("utf-8"), db_password_hash)
-            if is_match:
-
-                # self.username_folder = data[0]
-                
+            if bcrypt.checkpw(
+                password.encode("utf-8"),
+                db_password_hash
+            ):
                 self.username = data[0]
-
-                # self.createFolder(self.username_folder)
-                # print("User exist!")
-                # print("Data:", data[1])
-                
                 self.login_successful = True
-                self.user_not_exist = False
-
                 return True
-            else:
-                # print("Data:", data[1])
-                # print("User doesn't exist")
 
-                self.login_successful = False
-                self.user_not_exist = True
-
-                return False
-            # return db_password_hash
+            self.user_not_exist = True
+            return False
 
         except sql.Error as err:
             print("Error:", err)
+            return False
 
         finally:
-            if cursor is not None:
+            if cursor:
                 cursor.close()
+
             con.close()
 
     def addFolderPath(self, username, path):
@@ -159,26 +290,34 @@ class dbHandler:
             return False
 
         con = self.connection()
+
         if not con:
             return False
 
         cursor = None
 
         try:
-            query = "INSERT INTO FILE_PATH (username, file_path) VALUES (%s, %s) ON DUPLICATE KEY UPDATE file_path = VALUES(file_path)"
+            query = """
+                INSERT INTO FILE_PATH
+                (username, file_path)
+                VALUES (%s, %s)
+                ON DUPLICATE KEY UPDATE
+                file_path = VALUES(file_path)
+            """
+
             cursor = con.cursor()
-            cursor.execute(query, (username, path,),)
+            cursor.execute(query, (username, path))
+
             con.commit()
-            # print("File path committed")
             return True
 
-        except sql.Error as err:
-            # print("File path database error:", err)
+        except sql.Error:
             return False
 
         finally:
-            if cursor is not None:
+            if cursor:
                 cursor.close()
+
             con.close()
 
     def addImageName(self, username, imageName):
@@ -186,17 +325,28 @@ class dbHandler:
             return False
 
         con = self.connection()
+
         if not con:
             return False
 
         cursor = None
 
         try:
-            query = "INSERT INTO IMAGE_NAME (username, image_name) VALUES (%s, %s) ON DUPLICATE KEY UPDATE image_name = VALUES(image_name)"
+            query = """
+                INSERT INTO IMAGE_NAME
+                (username, image_name)
+                VALUES (%s, %s)
+                ON DUPLICATE KEY UPDATE
+                image_name = VALUES(image_name)
+            """
+
             cursor = con.cursor()
-            cursor.execute(query, (username, imageName))
+            cursor.execute(
+                query,
+                (username, imageName)
+            )
+
             con.commit()
-            # print("Image name committed")
             return True
 
         except sql.Error as err:
@@ -204,8 +354,9 @@ class dbHandler:
             return False
 
         finally:
-            if cursor is not None:
+            if cursor:
                 cursor.close()
+
             con.close()
 
     def getImagePath(self, username):
@@ -213,124 +364,234 @@ class dbHandler:
             return False
 
         con = self.connection()
+
         if not con:
             return False
 
         cursor = None
-        
 
         try:
-            query = "SELECT file_path.file_path, image_name.image_name FROM file_path JOIN image_name ON file_path.username = image_name.username WHERE file_path.username = %s"
+            query = """
+                SELECT
+                    file_path.file_path,
+                    image_name.image_name
+                FROM file_path
+                JOIN image_name
+                    ON file_path.username = image_name.username
+                WHERE file_path.username = %s
+            """
+
             cursor = con.cursor()
             cursor.execute(query, (username,))
-            data = cursor.fetchone()
 
-            # print("GetImagePath username:", username)
-            # print("GetImagePath Database data:", data)
+            data = cursor.fetchone()
 
             if not data:
                 print("No image record found for this user")
                 return None
 
-            self.imagePath = os.path.join(data[0], "image", data[1])
+            self.imagePath = os.path.join(
+                data[0],
+                "image",
+                data[1]
+            )
 
-            # print("Image Path:", self.imagePath)
             return self.imagePath
 
         except sql.Error as err:
-            # print("getImagePath SQL error:", err)
+            print("getImagePath SQL error:", err)
             return False
 
         finally:
-            if cursor is not None:
+            if cursor:
                 cursor.close()
+
             con.close()
 
-
-    def insertCropProperties(self, username, location, crop_season, temperature, humidity, rainfall, windspeed, crop_variety, irrigation, soil, symptoms):
-        if not username or not location or not crop_season or not crop_variety or not irrigation or not soil:
+    def insertCropProperties(
+        self,
+        username,
+        location,
+        crop_season,
+        temperature,
+        humidity,
+        rainfall,
+        windspeed,
+        crop_variety,
+        irrigation,
+        soil,
+        symptoms
+    ):
+        if (
+            not username
+            or not location
+            or not crop_season
+            or not crop_variety
+            or not irrigation
+            or not soil
+        ):
             return False
 
-        if temperature is None or humidity is None or rainfall is None or windspeed is None:
+        if (
+            temperature is None
+            or humidity is None
+            or rainfall is None
+            or windspeed is None
+        ):
             return False
-        
+
         con = self.connection()
+
         if not con:
             return False
 
         cursor = None
 
         try:
-            query = "INSERT INTO CROP_PROPERTIES (username, location, crop_season, temperature, humidity, rainfall, windspeed, crop_variety, irrigation, soil, symptoms) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE location = VALUES(location), crop_season = VALUES(crop_season), temperature = VALUES(temperature), humidity = VALUES(humidity), rainfall = VALUES(rainfall), windspeed = VALUES(windspeed), crop_variety = VALUES(crop_variety), irrigation = VALUES(irrigation), soil = VALUES(soil), symptoms = VALUES(symptoms)"
+            query = """
+                INSERT INTO CROP_PROPERTIES
+                (
+                    username,
+                    location,
+                    crop_season,
+                    temperature,
+                    humidity,
+                    rainfall,
+                    windspeed,
+                    crop_variety,
+                    irrigation,
+                    soil,
+                    symptoms
+                )
+                VALUES (
+                    %s, %s, %s, %s, %s,
+                    %s, %s, %s, %s, %s,
+                    %s
+                )
+                ON DUPLICATE KEY UPDATE
+                    location = VALUES(location),
+                    crop_season = VALUES(crop_season),
+                    temperature = VALUES(temperature),
+                    humidity = VALUES(humidity),
+                    rainfall = VALUES(rainfall),
+                    windspeed = VALUES(windspeed),
+                    crop_variety = VALUES(crop_variety),
+                    irrigation = VALUES(irrigation),
+                    soil = VALUES(soil),
+                    symptoms = VALUES(symptoms)
+            """
+
             cursor = con.cursor()
-            cursor.execute(query, (username, location, crop_season, temperature, humidity, rainfall, windspeed, crop_variety, irrigation, soil, symptoms,))
+            cursor.execute(
+                query,
+                (
+                    username,
+                    location,
+                    crop_season,
+                    temperature,
+                    humidity,
+                    rainfall,
+                    windspeed,
+                    crop_variety,
+                    irrigation,
+                    soil,
+                    symptoms
+                )
+            )
+
             con.commit()
-            # print("Insert Crop Properties committed")
             return True
 
-        except sql.Error as err:
-            # print("insertCropProperties error:", err)
+        except sql.Error:
             return False
-        
+
         finally:
-            if cursor is not None:
+            if cursor:
                 cursor.close()
+
             con.close()
 
     def addResultName(self, username, result_file):
         if not username or not result_file:
             return False
-        
+
         con = self.connection()
+
         if not con:
             return False
-        
+
         cursor = None
 
         try:
-            query = "INSERT INTO RESULT (username, result_file) VALUES (%s, %s) ON DUPLICATE KEY UPDATE result_file = VALUES(result_file)"
+            query = """
+                INSERT INTO RESULT
+                (username, result_file)
+                VALUES (%s, %s)
+                ON DUPLICATE KEY UPDATE
+                result_file = VALUES(result_file)
+            """
+
             cursor = con.cursor()
-            cursor.execute(query, (username, result_file))
+            cursor.execute(
+                query,
+                (username, result_file)
+            )
+
             con.commit()
             return True
 
-        except sql.Error as err:
-            # print("addResultName error:", err)
+        except sql.Error:
             return False
 
         finally:
-            if cursor is not None:
+            if cursor:
                 cursor.close()
+
             con.close()
 
     def getResultFilePath(self, username):
         if not username:
             return False
-        
+
         con = self.connection()
+
         if not con:
             return False
-        
+
         cursor = None
 
         try:
-            query = "SELECT file_path.file_path, result.result_file FROM file_path JOIN result ON file_path.username = result.username WHERE file_path.username = %s"
+            query = """
+                SELECT
+                    file_path.file_path,
+                    result.result_file
+                FROM file_path
+                JOIN result
+                    ON file_path.username = result.username
+                WHERE file_path.username = %s
+            """
+
             cursor = con.cursor()
             cursor.execute(query, (username,))
+
             data = cursor.fetchone()
 
             if not data:
                 return False
-            
-            self.resultPath = os.path.join(data[0], "result", data[1])
-            # print(data)
+
+            self.resultPath = os.path.join(
+                data[0],
+                "result",
+                data[1]
+            )
+
             return True
 
-        except sql.Error as err:
-            # print("getResultFilePath error:", err)
+        except sql.Error:
             return False
 
         finally:
-            if cursor is not None:
+            if cursor:
                 cursor.close()
+
             con.close()
