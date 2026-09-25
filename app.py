@@ -108,10 +108,13 @@ def account_page():
 def profile():
     if not databaseHandler.login_successful:
         return redirect(url_for("account_page"))
+
+    user_var = True
+    profile_data_user = databaseHandler.getProfileData(databaseHandler.username)
     
     default_image = "uploads/frontend/default-profile.svg"
     profile_data = databaseHandler.getProfileData(databaseHandler.username)
-    return render_template("profile.html", current_image = default_image, profile_name = profile_data[0], profile_email = profile_data[1], profile_username = profile_data[2])
+    return render_template("profile.html", user_var = user_var, profile_name = profile_data_user[0], current_image = default_image, profile_name_user = profile_data[0], profile_email = profile_data[1], profile_username = profile_data[2])
 
 
 @app.route("/result")
