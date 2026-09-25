@@ -21,8 +21,8 @@
 
         <div class="profile-image-section">
 
-            {% set default_image = 'uploads/frontend/default-profile.svg' %}
-            {% set current_image = profile.profile_image | default(default_image, true) %}
+            {# {% set default_image = 'uploads/frontend/default-profile.svg' %} #}
+            {# {% set current_image = profile.profile_image | default(default_image, true) %} #}
 
             <div class="profile-image-area">
 
@@ -44,7 +44,7 @@
                         CHANGE IMAGE
                     </button>
 
-                    {% if profile.profile_image and profile.profile_image != default_image %}
+                    {# {% if profile.profile_image and profile.profile_image != default_image %} #}
                         <button
                             type="button"
                             id="remove-image"
@@ -52,7 +52,7 @@
                         >
                             REMOVE IMAGE
                         </button>
-                    {% endif %}
+                    {# {% endif %} #}
 
                 </div>
 
@@ -65,17 +65,17 @@
 
             <div class="detail-item">
                 <span class="detail-label">NAME</span>
-                <h2>{{ profile.name }}</h2>
+                <h2>{{ profile_name }}</h2>
             </div>
 
             <div class="detail-item">
                 <span class="detail-label">EMAIL</span>
-                <p>{{ profile.email }}</p>
+                <p>{{ profile_email }}</p>
             </div>
 
             <div class="detail-item">
                 <span class="detail-label">USERNAME</span>
-                <p>{{ username }}</p>
+                <p>{{ profile_username }}</p>
             </div>
 
             <form
