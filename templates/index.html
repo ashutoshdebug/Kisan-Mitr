@@ -141,50 +141,52 @@
         {% endblock %}
       </main>
 
+
       <!-- FOOTER -->
 
-      <footer class="site-footer">
-        <div class="footer-content">
+{% block footer %}
+<footer class="site-footer">
+  <div class="footer-content">
 
-          <div class="footer-brand">
-            <h2>Kisan Mitr</h2>
+    <div class="footer-brand">
+      <h2>Kisan Mitr</h2>
 
-            <p>
-              Helping farmers protect their crops with better information
-              and smarter decisions.
-            </p>
-          </div>
+      <p>
+        Helping farmers protect their crops with better information
+        and smarter decisions.
+      </p>
+    </div>
 
-          <div class="footer-links">
-            <h3>Quick Links</h3>
+    <div class="footer-links">
+      <h3>Quick Links</h3>
 
-            <a href="{{ url_for('landingPage') }}">Home</a>
+      <a href="{{ url_for('landingPage') }}">Home</a>
+      <a href="{{ url_for('motivePage') }}">Our Motive</a>
+    </div>
 
-            <a href="{{ url_for('motivePage') }}">Our Motive</a>
-          </div>
+    <div class="footer-project">
+      <h3>Project</h3>
 
-          <div class="footer-project">
-            <h3>Project</h3>
+      <p>
+        Built with the aim of supporting farmers.
+      </p>
 
-            <p>
-              Built with the aim of supporting farmers.
-            </p>
+      <a
+        href="https://github.com/ashutoshdebug/Kisan-Mitr"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub Repository ↗
+      </a>
+    </div>
 
-            <a
-              href="https://github.com/ashutoshdebug/Kisan-Mitr"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub Repository ↗
-            </a>
-          </div>
+  </div>
 
-        </div>
-
-        <div class="footer-bottom">
-          <p>© 2026 Kisan Mitr. Built for farmers.</p>
-        </div>
-      </footer>
+  <div class="footer-bottom">
+    <p>© 2026 Kisan Mitr. Built for farmers.</p>
+  </div>
+</footer>
+{% endblock %}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
