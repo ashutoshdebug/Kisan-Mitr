@@ -14,6 +14,7 @@ class fileFolderPath:
         self.path = None
         self.image_folder = None
         self.result_folder = None
+        self.user_profile_pfp_folder = None
         self.result_file = None
         self.new_name = None
 
@@ -31,16 +32,18 @@ class fileFolderPath:
             self.path = BASE_DIR/ "static" / "uploads" / "database" / self.sanitize_name
             self.image_folder = self.path / "image"
             self.result_folder = self.path / "result"
+            self.user_profile_pfp_folder = self.path / "pfp_folder"
     
             try:
                 print("Create folder username:", self.sanitize_name)
     
                 if self.path.exists():
-                    if self.image_folder.exists() and self.result_folder.exists():
+                    if self.image_folder.exists() and self.result_folder.exists() and self.user_profile_pfp_folder.exists():
                         databaseHandler.addFolderPath(username = self.sanitize_name, path = str(self.path))
                     else:
                         self.image_folder.mkdir(parents=True, exist_ok = True)
                         self.result_folder.mkdir(parents=True, exist_ok=True)
+                        self.user_profile_pfp_folder.mkdir(parents=True, exist_ok=True)
                         
                     # self.addFolderPath(self.sanitize_name, str(self.path))
                     # exist = True
@@ -50,6 +53,7 @@ class fileFolderPath:
                     self.path.mkdir(parents=True, exist_ok=True)
                     self.image_folder.mkdir(parents=True, exist_ok = True)
                     self.result_folder.mkdir(parents=True, exist_ok=True)
+                    self.user_profile_pfp_folder.mkdir(parents=True, exist_ok=True)
                     # print(str(path))
                     databaseHandler.addFolderPath(username = self.sanitize_name, path = str(self.path))
                     print("Folder path called")
