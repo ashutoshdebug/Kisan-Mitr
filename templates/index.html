@@ -129,14 +129,62 @@
         </a>
       </section>
 
-      {% endblock %}
-    </main>
+        {% endblock %}
+      </main>
+
+
+      <!-- FOOTER -->
+
+{% block footer %}
+<footer class="site-footer">
+  <div class="footer-content">
+
+    <div class="footer-brand">
+      <h2>Kisan Mitr</h2>
+
+      <p>
+        Helping farmers protect their crops with better information
+        and smarter decisions.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+
+      <a href="{{ url_for('landingPage') }}">Home</a>
+      <a href="{{ url_for('motivePage') }}">Our Motive</a>
+    </div>
+
+    <div class="footer-project">
+      <h3>Project</h3>
+
+      <p>
+        Built with the aim of supporting farmers.
+      </p>
+
+      <a
+        href="https://github.com/ashutoshdebug/Kisan-Mitr"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub Repository ↗
+      </a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Kisan Mitr. Built for farmers.</p>
+  </div>
+</footer>
+{% endblock %}
+    </div>
 
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
   <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
-  {% block jsscript %}{% endblock %}
-</body>
+    {% block jsscript %}{% endblock %}
+  </body>
 </html>
