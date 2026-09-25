@@ -176,6 +176,17 @@ def acquire():
         image_path = databaseHandler.getImagePath(databaseHandler.username)
 
         # print("Image path in app:", image_path)
+        
+        in_development = os.getenv("in_development") == "True"
+        # print(type(in_development))
+        # print(in_development)
+
+        if in_development:
+            with open("development_assets/result.json", "r", encoding="utf-8") as file:
+                result = json.load(file)
+            return render_template(
+                        "result.html", user=user, user_image=user_image, result=result, user_var = user_var, profile_name = profile_data[0], account_or_upload = "upload"
+            )
 
         result = visionModel.engine(image_path, prompt)
 
