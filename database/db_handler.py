@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Connecting to the server
 
+password_hash = PasswordHash()
 
 class dbHandler:
     def __init__(self):
@@ -23,9 +24,9 @@ class dbHandler:
         self.resultPath = None
         self.user_already_exist = False
         self.user_not_exist = False
+        self.profile_data = None
         # self.username_folder = None
         # print("Init database:", self.database)
-        self.password_hash = PasswordHash()
 
     def connection(self):
         try:
@@ -334,3 +335,31 @@ class dbHandler:
             if cursor is not None:
                 cursor.close()
             con.close()
+
+
+    def getProfileData(self, username):
+        self.profile_data = None
+
+        con = self.connection()
+        if not con:
+            return False
+
+        cursor = None
+        # print("getProfileUsername:", username)
+        try:
+            query = "SELECT name, email, username FROM ACCOUNT WHERE username = %s"
+            cursor = con.cursor()
+            cursor.execute(query, (username,))
+            data = cursor.fetchone()
+            # print("GetProfileData:", data)
+
+            self.profile_data = data
+
+            # print("Profile name:", self.profile_name)
+            # print("Profile email:", self.profile_email)
+            # print("Profile username:", self.profile_username)
+
+            return self.profile_data
+
+        finally:
+            pass

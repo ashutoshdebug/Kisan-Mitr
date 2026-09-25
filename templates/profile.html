@@ -1,0 +1,105 @@
+{% extends "index.html" %}
+
+{% block subtitle %}Profile{% endblock %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+>
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/profile.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <div class="profile-card">
+
+        <div class="profile-image-section">
+
+            {# {% set default_image = 'uploads/frontend/default-profile.svg' %} #}
+            {# {% set current_image = profile.profile_image | default(default_image, true) %} #}
+
+            <div class="profile-image-area">
+
+                <div class="profile-avatar">
+                    <img
+                        src="{{ url_for('static', filename=current_image) }}"
+                        alt="Profile picture"
+                        id="profile-preview"
+                    >
+                </div>
+
+                <div class="image-options" id="image-options">
+
+                    <button
+                        type="button"
+                        id="change-image"
+                        class="image-option"
+                    >
+                        CHANGE IMAGE
+                    </button>
+
+                    {# {% if profile.profile_image and profile.profile_image != default_image %} #}
+                        <button
+                            type="button"
+                            id="remove-image"
+                            class="image-option remove-option"
+                        >
+                            REMOVE IMAGE
+                        </button>
+                    {# {% endif %} #}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-details-section">
+
+            <div class="detail-item">
+                <span class="detail-label">NAME</span>
+                <h2>{{ profile_name }}</h2>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">EMAIL</span>
+                <p>{{ profile_email }}</p>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">USERNAME</span>
+                <p>{{ profile_username }}</p>
+            </div>
+
+            <form
+                action="{{ url_for('profile') }}"
+                method="post"
+                enctype="multipart/form-data"
+                id="profile-form"
+            >
+                <input
+                    type="file"
+                    name="profile_image"
+                    id="profile_image"
+                    accept=".png,.jpg,.jpeg,.webp"
+                >
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block jsscript %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}
