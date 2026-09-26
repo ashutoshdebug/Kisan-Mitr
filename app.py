@@ -1,5 +1,6 @@
 import os
 import requests
+from pathlib import Path
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json
 from flask_livereload import LiveReload
@@ -104,17 +105,78 @@ def account_page():
 
     return render_template("login.html")
 
-@app.route("/profile", methods = ["GET", "POST"])
+@app.route("/profile", methods=["GET", "POST"])
 def profile():
+
     if not databaseHandler.login_successful:
         return redirect(url_for("account_page"))
 
-    user_var = True
-    profile_data_user = databaseHandler.getProfileData(databaseHandler.username)
-    
-    default_image = "uploads/frontend/default-profile.svg"
-    profile_data = databaseHandler.getProfileData(databaseHandler.username)
-    return render_template("profile.html", user_var = user_var, profile_name = profile_data_user[0], current_image = default_image, profile_name_user = profile_data[0], profile_email = profile_data[1], profile_username = profile_data[2])
+    username = databaseHandler.username
+
+    # Make sure the user's folder structure exists
+    folderHandler.createFolder(username)
+
+    # -------------------------
+    # POST
+    # -------------------------
+    if request.method == "POST":
+
+        # -------------------------
+        # REMOVE PROFILE IMAGE
+        # -------------------------
+        if request.is_json:
+            data = request.get_json()
+
+            if data.get("remove_image") is True:
+
+                try:
+                    for item in Path(folderHandler.pfp_custom).iterdir():
+                        if item.is_file():
+                            item.unlink()
+
+                    return jsonify({
+                        "status": "success"
+                    }), 200
+
+                except OSError as err:
+                    print("Remove PFP error:", err)
+
+                    return jsonify({
+                        "status": "error"
+                    }), 500
+
+        profile_file = request.files.get("profile_image")
+
+        if profile_file and profile_file.filename:
+
+            success = folderHandler.addCustomPfP(profile_file)
+
+            if not success:
+                return jsonify({
+                    "status": "error",
+                    "message": "Unable to save profile image."
+                }), 500
+
+            return redirect(url_for("profile"))
+
+    profile_data = databaseHandler.getProfileData(username)
+
+    profile_image = folderHandler.getPFPImage(app.root_path)
+
+    has_custom_profile_image = (
+        folderHandler.getCustomPfP() is not None
+    )
+
+    return render_template(
+        "profile.html",
+        user_var=True,
+        profile_name=profile_data[0],
+        profile_image=profile_image,
+        has_custom_profile_image=has_custom_profile_image,
+        profile_name_user=profile_data[0],
+        profile_email=profile_data[1],
+        profile_username=profile_data[2]
+    )
 
 
 @app.route("/result")
