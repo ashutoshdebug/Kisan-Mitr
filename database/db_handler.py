@@ -362,4 +362,6 @@ class dbHandler:
             return self.profile_data
 
         finally:
-            pass
+            if cursor is not None:
+                cursor.close()
+            con.close()
