@@ -31,7 +31,8 @@ def landingPage():
     if databaseHandler.login_successful:
         user_var = True
         profile_data = databaseHandler.getProfileData(databaseHandler.username)
-        return render_template("index.html", user_var = user_var, profile_name = profile_data[0], account_or_upload="upload")
+        profile_image = folderHandler.getPFPImage(app.root_path)
+        return render_template("index.html", user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload="upload")
     return render_template("index.html", account_or_upload="account_page")
 
 
@@ -60,7 +61,8 @@ def motivePage():
     if databaseHandler.login_successful:
         user_var = True
         profile_data = databaseHandler.getProfileData(databaseHandler.username)
-        return render_template("motive.html", user_var=user_var, profile_name = profile_data[0], account_or_upload="upload")
+        profile_image = folderHandler.getPFPImage(app.root_path)
+        return render_template("motive.html", profile_image=profile_image, user_var=user_var, profile_name = profile_data[0], account_or_upload="upload")
     return render_template("motive.html", account_or_upload="account_page")
 
 
@@ -113,17 +115,9 @@ def profile():
 
     username = databaseHandler.username
 
-    # Make sure the user's folder structure exists
     folderHandler.createFolder(username)
 
-    # -------------------------
-    # POST
-    # -------------------------
     if request.method == "POST":
-
-        # -------------------------
-        # REMOVE PROFILE IMAGE
-        # -------------------------
         if request.is_json:
             data = request.get_json()
 
@@ -186,12 +180,13 @@ def results():
 
     # msg = f"Hi {databaseHandler.username}!"
     user_var = True
+    profile_image = folderHandler.getPFPImage(app.root_path)
     profile_data = databaseHandler.getProfileData(databaseHandler.username)
 
     if not visionModel.result_generated:
         return redirect(url_for("upload"))
 
-    return render_template("result.html", account_or_upload="upload", user_var = user_var, profile_name = profile_data[0])
+    return render_template("result.html", account_or_upload="upload", profile_image=profile_image, user_var = user_var, profile_name = profile_data[0])
 
 
 @app.route("/acquire", methods=["GET", "POST"])
@@ -203,6 +198,8 @@ def acquire():
     # msg = f"Hi {databaseHandler.username}!"
     user_var = True
     profile_data = databaseHandler.getProfileData(databaseHandler.username)
+    profile_image = folderHandler.getPFPImage(app.root_path)
+
 
     session["username"] = databaseHandler.username
     session["user-image"] = databaseHandler.imagePath
@@ -247,7 +244,7 @@ def acquire():
             with open("development_assets/result.json", "r", encoding="utf-8") as file:
                 result = json.load(file)
             return render_template(
-                        "result.html", user=user, user_image=user_image, result=result, user_var = user_var, profile_name = profile_data[0], account_or_upload = "upload"
+                        "result.html", user=user, user_image=user_image, result=result, user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload = "upload"
             )
 
         result = visionModel.engine(image_path, prompt)
@@ -256,7 +253,7 @@ def acquire():
         # print("AI Result:")
 
         if result is None:
-            return render_template("acquireInfo.html", user=user, user_image = user_image, user_var = user_var, profile_name = profile_data[0],error="Unable to generate a valid diagnosis.", account_or_upload="upload",)
+            return render_template("acquireInfo.html", user=user, user_image = user_image, user_var = user_var, profile_image=profile_image,profile_name = profile_data[0],error="Unable to generate a valid diagnosis.", account_or_upload="upload",)
 
         folderHandler.saveJsonFile(visionModel.result)
         databaseHandler.addResultName(databaseHandler.username, folderHandler.result_file)
@@ -271,11 +268,11 @@ def acquire():
             return False
 
         return render_template(
-            "result.html", user=user, user_image=user_image, result=result, user_var = user_var, profile_name = profile_data[0], account_or_upload = "upload"
+            "result.html", user=user, user_image=user_image, result=result, user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload = "upload"
         )
         
 
-    return render_template("acquireInfo.html", user=user, user_image=user_image, user_var = user_var, profile_name = profile_data[0], account_or_upload="upload",)
+    return render_template("acquireInfo.html", user=user, user_image=user_image, user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload="upload",)
 
 
 
@@ -288,6 +285,8 @@ def upload():
     # msg = f"Hi {databaseHandler.username}!"
     user_var = True
     profile_data = databaseHandler.getProfileData(databaseHandler.username)
+    profile_image = folderHandler.getPFPImage(app.root_path)
+
     # return render_template("upload.html", user_var = msg, account_or_upload = "upload")
 
     if request.method == "POST":
@@ -306,4 +305,4 @@ def upload():
             databaseHandler.getImagePath(databaseHandler.username)
             return redirect(url_for("acquire"))
 
-    return render_template("upload.html", user_var= user_var, profile_name = profile_data[0], account_or_upload="upload")
+    return render_template("upload.html", user_var= user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload="upload")
