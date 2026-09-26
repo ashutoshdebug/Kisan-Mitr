@@ -17,7 +17,7 @@ class fileFolderPath:
         self.result_folder = None
         self.user_profile_pfp_folder = None
         self.pfp_default = None
-        self.pfp_custom = None
+        # self.pfp_custom = None
         self.result_file = None
         self.new_name = None
 
@@ -37,13 +37,13 @@ class fileFolderPath:
             self.result_folder = self.path / "result"
             self.user_profile_pfp_folder = self.path / "pfp_folder"
             # self.pfp_default = self.user_profile_pfp_folder / "pfp_default"
-            self.pfp_custom = self.user_profile_pfp_folder / "pfp_custom"
+            # self.pfp_custom = self.user_profile_pfp_folder / "pfp_custom"
     
             try:
                 print("Create folder username:", self.sanitize_name)
     
                 if self.path.exists():
-                    if self.image_folder.exists() and self.result_folder.exists() and self.user_profile_pfp_folder.exists() and self.pfp_custom.exists():
+                    if self.image_folder.exists() and self.result_folder.exists() and self.user_profile_pfp_folder.exists():
                         # self.addDefaultPFP("static/uploads/frontend/default-profile.svg")
                         databaseHandler.addFolderPath(username = self.sanitize_name, path = str(self.path))
                     else:
@@ -51,7 +51,7 @@ class fileFolderPath:
                         self.result_folder.mkdir(parents=True, exist_ok=True)
                         self.user_profile_pfp_folder.mkdir(parents=True, exist_ok=True)
                         # self.pfp_default.mkdir(parents=True, exist_ok=True)
-                        self.pfp_custom.mkdir(parents=True, exist_ok=True)
+                        # self.pfp_custom.mkdir(parents=True, exist_ok=True)
                         # self.addDefaultPFP("static/uploads/frontend/default-profile.svg")
                         
                         
@@ -65,11 +65,11 @@ class fileFolderPath:
                     self.result_folder.mkdir(parents=True, exist_ok=True)
                     self.user_profile_pfp_folder.mkdir(parents=True, exist_ok=True)
                     # self.pfp_default.mkdir(parents=True, exist_ok=True)
-                    self.pfp_custom.mkdir(parents=True, exist_ok=True)
+                    # self.pfp_custom.mkdir(parents=True, exist_ok=True)
                     # self.addDefaultPFP("static/uploads/frontend/default-profile.svg")
                     # print(str(path))
                     databaseHandler.addFolderPath(username = self.sanitize_name, path = str(self.path))
-                    print("Folder path called")
+                    # print("Folder path called")
                     return True
                     # exist = False
                     # print("Folder doesn't exist:", exist)
@@ -131,7 +131,7 @@ class fileFolderPath:
             return False
         try:
             # Remove existing custom profile pictures
-            for item in Path(self.pfp_custom).iterdir():
+            for item in Path(self.user_profile_pfp_folder).iterdir():
                 if item.is_file():
                     item.unlink()
             filename = secure_filename(file.filename)
@@ -142,7 +142,7 @@ class fileFolderPath:
 
             # Keep the uploaded filename simple and unique
             new_name = f"{name}_{self.dateTimeStamp()}{extension}"
-            file_path = Path(self.pfp_custom) / new_name
+            file_path = Path(self.user_profile_pfp_folder) / new_name
             file.save(file_path)
 
             # print("Custom PFP saved:", file_path)
@@ -156,7 +156,7 @@ class fileFolderPath:
 
     def getCustomPfP(self):
         try:
-            pfp_folder = Path(self.pfp_custom)
+            pfp_folder = Path(self.user_profile_pfp_folder)
 
             if not pfp_folder.exists():
                 return None
