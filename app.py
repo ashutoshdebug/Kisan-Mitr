@@ -33,7 +33,7 @@ def landingPage():
     # if databaseHandler.login_successful:
         user_var = True
         profile_data = databaseHandler.getProfileData(username)
-        profile_image = folderHandler.getPFPImage(app.root_path)
+        profile_image = folderHandler.getPFPImage(app.root_path, username)
         return render_template("index.html", user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload="upload")
     return render_template("index.html", account_or_upload="account_page")
 
@@ -65,7 +65,7 @@ def motivePage():
         username = session["username"]
         user_var = True
         profile_data = databaseHandler.getProfileData(username)
-        profile_image = folderHandler.getPFPImage(app.root_path)
+        profile_image = folderHandler.getPFPImage(app.root_path, username)
         return render_template("motive.html", profile_image=profile_image, user_var=user_var, profile_name = profile_data[0], account_or_upload="upload")
     return render_template("motive.html", account_or_upload="account_page")
 
@@ -161,7 +161,7 @@ def profile():
 
     profile_data = databaseHandler.getProfileData(username)
 
-    profile_image = folderHandler.getPFPImage(app.root_path)
+    profile_image = folderHandler.getPFPImage(app.root_path, username)
 
     has_custom_profile_image = (
         folderHandler.getCustomPfP() is not None
@@ -187,7 +187,7 @@ def results():
     username = session["username"]
     # msg = f"Hi {databaseHandler.username}!"
     user_var = True
-    profile_image = folderHandler.getPFPImage(app.root_path)
+    profile_image = folderHandler.getPFPImage(app.root_path, username)
     profile_data = databaseHandler.getProfileData(username)
 
     if not visionModel.result_generated:
@@ -206,7 +206,7 @@ def acquire():
     user_var = True
     username = session["username"]
     profile_data = databaseHandler.getProfileData(username)
-    profile_image = folderHandler.getPFPImage(app.root_path)
+    profile_image = folderHandler.getPFPImage(app.root_path, username)
 
 
     # session["username"] = databaseHandler.username
@@ -295,7 +295,7 @@ def upload():
     # msg = f"Hi {databaseHandler.username}!"
     user_var = True
     profile_data = databaseHandler.getProfileData(username)
-    profile_image = folderHandler.getPFPImage(app.root_path)
+    profile_image = folderHandler.getPFPImage(app.root_path, username)
 
     # return render_template("upload.html", user_var = msg, account_or_upload = "upload")
 

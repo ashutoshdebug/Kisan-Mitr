@@ -172,16 +172,35 @@ class fileFolderPath:
             return None
 
 
-    def getPFPImage(self, root_path):
-        if not root_path:
-            return None
-        
-        default_image = "uploads/frontend/default-profile.svg"
-        custom_pfp = self.getCustomPfP()
+    def getPFPImage(self, root_path, username):
+        if not root_path or not username:
+            return "uploads/frontend/default-profile.svg"
 
-        if custom_pfp is None:
-            return default_image
+        try:
+            username = secure_filename(username)
 
-        static_path = os.path.join(root_path, "static")
+            pfp_folder = (
+                Path(root_path)
+                / "static"
+                / "uploads"
+                / "database"
+                / username
+                / "pfp_folder"
+            )
 
-        return os.path.relpath(custom_pfp, static_path).replace("\\", "/")
+            if not pfp_folder.exists():
+                return "uploads/frontend/default-profile.svg"
+
+            for item in pfp_folder.iterdir():
+                if item.is_file():
+                    static_path = Path(root_path) / "static"
+
+                    return str(
+                        item.relative_to(static_path)
+                    ).replace("\\", "/")
+
+            return "uploads/frontend/default-profile.svg"
+
+        except OSError as err:
+            print("Get PFP error:", err)
+            return "uploads/frontend/default-profile.svg"
