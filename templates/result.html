@@ -57,104 +57,96 @@
     </div>
 
 
+    <!-- =========================
+         01 PRIMARY DIAGNOSIS
+    ========================== -->
 
-<!-- =========================
-     01 PRIMARY DIAGNOSIS
-========================== -->
+    <section class="result-section">
 
-<!-- =========================
-     01 PRIMARY DIAGNOSIS
-========================== -->
+      <div class="section-heading">
 
-<section class="result-section">
+        <span class="section-number">01</span>
 
-  <div class="section-heading">
+        <div>
+          <h2>Primary Diagnosis</h2>
 
-    <span class="section-number">01</span>
-
-    <div>
-      <h2>Primary Diagnosis</h2>
-
-      <p>
-        Identify the pathogen, disease classification,
-        and environmental conditions affecting your crop.
-      </p>
-    </div>
-
-  </div>
-
-
-  <div class="result-grid">
-
-    <!-- DIAGNOSIS DETAILS -->
-
-    <div class="result-card diagnosis-card">
-
-      <span class="result-label">
-        🦠 Pathogen
-      </span>
-
-      <h3>
-        {{ result.primary_diagnosis.pathogen_common_name }}
-      </h3>
-
-      <p class="scientific-name">
-        {{ result.primary_diagnosis.pathogen_scientific_name }}
-      </p>
-
-
-      <div class="diagnosis-divider"></div>
-
-
-      <span class="result-label">
-        🧬 Disease Classification
-      </span>
-
-      <p class="large-result-text">
-        {{ result.primary_diagnosis.disease_classification }}
-      </p>
-
-
-      <div class="diagnosis-divider"></div>
-
-
-      <span class="result-label">
-        🌦️ Environmental Trigger
-      </span>
-
-      <p class="large-result-text">
-        {{ result.primary_diagnosis.environmental_trigger }}
-      </p>
-
-    </div>
-
-
-    <!-- USER UPLOADED CROP -->
-
-    <div class="result-card uploaded-crop-card">
-
-      <span class="result-label">
-        📷 Your Uploaded Crop
-      </span>
-
-      <div class="uploaded-crop-image">
-
-        <img
-          src="{{ url_for('static', filename=user_image) }}"
-          alt="Uploaded crop image"
-        />
+          <p>
+            Identify the pathogen, disease classification,
+            and environmental conditions affecting your crop.
+          </p>
+        </div>
 
       </div>
 
-      <p class="uploaded-crop-caption">
-        Image used for the crop diagnosis.
-      </p>
 
-    </div>
+      <div class="result-grid">
 
-  </div>
+        <!-- DIAGNOSIS DETAILS -->
 
-</section>
+        <div class="result-card diagnosis-card">
+
+          <span class="result-label">
+            🦠 Pathogen
+          </span>
+
+          <h3>
+            {{ result.primary_diagnosis.pathogen_common_name }}
+          </h3>
+
+          <p class="scientific-name">
+            {{ result.primary_diagnosis.pathogen_scientific_name }}
+          </p>
+
+          <div class="diagnosis-divider"></div>
+
+          <span class="result-label">
+            🧬 Disease Classification
+          </span>
+
+          <p class="large-result-text">
+            {{ result.primary_diagnosis.disease_classification }}
+          </p>
+
+          <div class="diagnosis-divider"></div>
+
+          <span class="result-label">
+            🌦️ Environmental Trigger
+          </span>
+
+          <p class="large-result-text">
+            {{ result.primary_diagnosis.environmental_trigger }}
+          </p>
+
+        </div>
+
+
+        <!-- USER UPLOADED CROP -->
+
+        <div class="result-card uploaded-crop-card">
+
+          <span class="result-label">
+            📷 Your Uploaded Crop
+          </span>
+
+          <div class="uploaded-crop-image">
+
+            <img
+              src="{{ url_for('static', filename=user_image) }}"
+              alt="Uploaded crop image"
+            />
+
+          </div>
+
+          <p class="uploaded-crop-caption">
+            Image used for the crop diagnosis.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
 
     <!-- =========================
          02 CHEMICAL CONTROL
@@ -437,6 +429,7 @@
             Post-treatment nutrition, monitoring,
             and recovery recommendations.
           </p>
+
         </div>
 
       </div>
@@ -551,24 +544,6 @@
         </p>
 
       </div>
-
-    </div>
-
-
-    <!-- =========================
-         RESULT FOOTER
-    ========================== -->
-
-    <div class="result-footer">
-
-      <div class="result-footer-icon">
-        🌾
-      </div>
-
-      <p>
-        Analysis generated from the provided crop,
-        environmental, and symptom data.
-      </p>
 
     </div>
 

@@ -58,7 +58,7 @@ nav,
   align-items: center;
   justify-content: space-between;
 
-  position: relative;
+  position: fixed;
   z-index: 9999;
 
   border-radius: 10px;

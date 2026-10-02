@@ -11,7 +11,7 @@
 #body-div {
   width: 100%;
   min-height: 100vh;
-  padding: 125px 0 80px;
+  padding: 0;
 }
 
 
@@ -19,10 +19,13 @@
    MAIN CONTAINER
    ========================================================= */
 
+
 #result-container {
   width: 90%;
   max-width: 1250px;
-  margin: 0 auto;
+
+  margin: 125px auto 80px;
+
   padding: 48px;
 
   background: rgba(234, 241, 223, 0.95);
@@ -33,7 +36,6 @@
   box-shadow:
     10px 10px 0 rgba(16, 45, 32, 0.28);
 }
-
 
 /* =========================================================
    HERO
