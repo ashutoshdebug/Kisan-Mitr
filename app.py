@@ -9,6 +9,7 @@ from routes.logout import register_logout_page
 from routes.pageNotFound import register_pageNotFound_page
 from routes.motivePage import register_motivePage
 from routes.login import register_login_page
+from routes.profile import register_profile_page
 from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
@@ -36,75 +37,7 @@ register_logout_page(app)
 register_pageNotFound_page(app)
 register_motivePage(app)
 register_login_page(app)
-
-
-
-
-
-@app.route("/profile", methods=["GET", "POST"])
-def profile():
-
-    if "username" not in session:
-        return redirect(url_for("account_page"))
-
-    username = session["username"]
-
-    folderHandler.createFolder(username)
-
-    if request.method == "POST":
-        if request.is_json:
-            data = request.get_json()
-
-            if data.get("remove_image") is True:
-
-                try:
-                    for item in Path(folderHandler.pfp_custom).iterdir():
-                        if item.is_file():
-                            item.unlink()
-
-                    return jsonify({
-                        "status": "success"
-                    }), 200
-
-                except OSError as err:
-                    print("Remove PFP error:", err)
-
-                    return jsonify({
-                        "status": "error"
-                    }), 500
-
-        profile_file = request.files.get("profile_image")
-
-        if profile_file and profile_file.filename:
-
-            success = folderHandler.addCustomPfP(profile_file)
-
-            if not success:
-                return jsonify({
-                    "status": "error",
-                    "message": "Unable to save profile image."
-                }), 500
-
-            return redirect(url_for("profile"))
-
-    profile_data = databaseHandler.getProfileData(username)
-
-    profile_image = folderHandler.getPFPImage(app.root_path, username)
-
-    has_custom_profile_image = (
-        folderHandler.getCustomPfP() is not None
-    )
-
-    return render_template(
-        "profile.html",
-        user_var=True,
-        profile_name=profile_data[0],
-        profile_image=profile_image,
-        has_custom_profile_image=has_custom_profile_image,
-        profile_name_user=profile_data[0],
-        profile_email=profile_data[1],
-        profile_username=profile_data[2]
-    )
+register_profile_page(app)
 
 
 @app.route("/result")
