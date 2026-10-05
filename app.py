@@ -40,21 +40,7 @@ register_login_page(app)
 register_profile_page(app)
 
 
-@app.route("/result")
-def results():
-    if "username" not in session:
-        return redirect(url_for("account_page"))
 
-    username = session["username"]
-    # msg = f"Hi {databaseHandler.username}!"
-    user_var = True
-    profile_image = folderHandler.getPFPImage(app.root_path, username)
-    profile_data = databaseHandler.getProfileData(username)
-
-    if not visionModel.result_generated:
-        return redirect(url_for("upload"))
-
-    return render_template("result.html", account_or_upload="upload", profile_image=profile_image, user_var = user_var, profile_name = profile_data[0])
 
 
 @app.route("/acquire", methods=["GET", "POST"])
@@ -168,6 +154,7 @@ def upload():
             return redirect(request.url)
 
         if file:
+            folderHandler.createFolder(username)
             folderHandler.fileSave(file)
             # print("File path committed")
             databaseHandler.addImageName(
