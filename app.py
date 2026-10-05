@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 from flask_livereload import LiveReload
 from routes.landing import register_landing_page
 from routes.logout import register_logout_page
+from routes.pageNotFound import register_pageNotFound_page
 from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
@@ -30,6 +31,7 @@ dataAcquire = dataAcquision()
 
 register_landing_page(app)
 register_logout_page(app)
+register_pageNotFound_page(app)
 
 
 
