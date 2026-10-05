@@ -10,6 +10,7 @@ from routes.pageNotFound import register_pageNotFound_page
 from routes.motivePage import register_motivePage
 from routes.login import register_login_page
 from routes.profile import register_profile_page
+from routes.results import register_result_page
 from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
@@ -38,7 +39,7 @@ register_pageNotFound_page(app)
 register_motivePage(app)
 register_login_page(app)
 register_profile_page(app)
-
+register_result_page(app)
 
 
 
