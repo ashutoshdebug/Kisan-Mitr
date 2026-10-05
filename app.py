@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json
 from flask_livereload import LiveReload
 from routes.landing import register_landing_page
+from routes.logout import register_logout_page
 from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
@@ -28,20 +29,8 @@ dataAcquire = dataAcquision()
 
 
 register_landing_page(app)
+register_logout_page(app)
 
-@app.route("/logout", methods=["GET", "POST"])
-def logout():
-    # data = request.get_json()
-    # # print(data)
-    # logout = data.get("logout")
-
-    # # print("Logout value:", logout)
-
-    # if logout == True:
-    #     databaseHandler.login_successful = False
-    session.clear()
-    response = {"status": "success"}
-    return jsonify(response), 200
 
 
 @app.errorhandler(404)
