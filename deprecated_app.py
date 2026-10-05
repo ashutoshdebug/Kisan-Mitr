@@ -4,7 +4,6 @@ from pathlib import Path
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json
 from flask_livereload import LiveReload
-from routes.landing import register_landing_page
 from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
@@ -27,7 +26,17 @@ visionModel = visionModel()
 dataAcquire = dataAcquision()
 
 
-register_landing_page(app)
+@app.route("/")
+def landingPage():
+    if "username" in session:
+        username = session["username"]
+    # if databaseHandler.login_successful:
+        user_var = True
+        profile_data = databaseHandler.getProfileData(username)
+        profile_image = folderHandler.getPFPImage(app.root_path, username)
+        return render_template("index.html", user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload="upload")
+    return render_template("index.html", account_or_upload="account_page")
+
 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
