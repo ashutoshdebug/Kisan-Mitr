@@ -12,6 +12,7 @@ from routes.login import register_login_page
 from routes.profile import register_profile_page
 from routes.results import register_result_page
 from routes.acquire import register_acquire_page
+from routes.upload import register_upload_page
 from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
@@ -42,38 +43,4 @@ register_login_page(app)
 register_profile_page(app)
 register_result_page(app)
 register_acquire_page(app)
-
-
-
-@app.route("/upload", methods=["GET", "POST"])
-def upload():
-    if "username" not in session:
-        return redirect(url_for("account_page"))
-
-    username = session["username"]
-    # if databaseHandler.login_successful:
-    # msg = f"Hi {databaseHandler.username}!"
-    user_var = True
-    profile_data = databaseHandler.getProfileData(username)
-    profile_image = folderHandler.getPFPImage(app.root_path, username)
-
-    # return render_template("upload.html", user_var = msg, account_or_upload = "upload")
-
-    if request.method == "POST":
-        file = request.files["fileInput"]
-
-        if file.filename == "":
-            print("No selected file")
-            return redirect(request.url)
-
-        if file:
-            folderHandler.createFolder(username)
-            folderHandler.fileSave(file)
-            # print("File path committed")
-            databaseHandler.addImageName(
-                username, folderHandler.new_name
-            )
-            databaseHandler.getImagePath(username)
-            return redirect(url_for("acquire"))
-
-    return render_template("upload.html", user_var= user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload="upload")
+register_upload_page(app)
