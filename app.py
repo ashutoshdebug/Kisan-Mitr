@@ -7,6 +7,7 @@ from flask_livereload import LiveReload
 from routes.landing import register_landing_page
 from routes.logout import register_logout_page
 from routes.pageNotFound import register_pageNotFound_page
+from routes.motivePage import register_motivePage
 from database.db_handler import dbHandler
 from engine.dataAcquisition import dataAcquision
 from utils.filenFolderPath import fileFolderPath
@@ -32,24 +33,8 @@ dataAcquire = dataAcquision()
 register_landing_page(app)
 register_logout_page(app)
 register_pageNotFound_page(app)
+register_motivePage(app)
 
-
-
-@app.errorhandler(404)
-def pageNotFound(error):
-    return render_template("pageNotFound.html"), 404
-
-
-@app.route("/motive")
-def motivePage():
-    # if databaseHandler.login_successful:
-    if "username" in session:
-        username = session["username"]
-        user_var = True
-        profile_data = databaseHandler.getProfileData(username)
-        profile_image = folderHandler.getPFPImage(app.root_path, username)
-        return render_template("motive.html", profile_image=profile_image, user_var=user_var, profile_name = profile_data[0], account_or_upload="upload")
-    return render_template("motive.html", account_or_upload="account_page")
 
 
 @app.route("/login", methods=["GET", "POST"])
