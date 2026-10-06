@@ -5,69 +5,97 @@
 flowchart TD
 
 subgraph group_web["Web workflow"]
-  node_routes["Flask routes<br/>[app.py]"]
-  node_webpages["Web pages"]
-  node_upload["Image upload<br/>[upload.js]"]
-  node_results["Diagnosis results<br/>[result.html]"]
+  node_flask["Flask app<br/>[app.py]"]
+  node_upload_route["Image upload<br/>[upload.py]"]
+  node_acquire_route["Field details<br/>[acquire.py]"]
+  node_result_route["Diagnosis results<br/>[results.py]"]
+  node_web_pages["Web pages"]
+  node_upload_ui["Upload interface<br/>[upload.js]"]
+  node_field_ui["Field form<br/>[acquireInfo.js]"]
+  node_landing_route["Landing page<br/>[landing.py]"]
+  node_motive_route["Motive page<br/>[motivePage.py]"]
+  node_notfound_route["Not found<br/>[pageNotFound.py]"]
 end
 
-subgraph group_diagnosis["Diagnosis"]
-  node_fieldform["Field details<br/>[acquireInfo.js]"]
+subgraph group_diagnosis["Crop diagnosis"]
   node_prompt["Prompt builder<br/>[dataAcquisition.py]"]
-  node_vision["Vision analysis<br/>[vision_model.py]"]
+  node_vision["Image analysis<br/>[vision_model.py]"]
   node_gemini{{"Gemini service"}}
   node_geocoder{{"Geocoding service"}}
   node_weather{{"Weather service"}}
 end
 
-subgraph group_storage["Persistence and files"]
-  node_dbhandler["Data persistence<br/>[db_handler.py]"]
-  node_mysql[("MySQL database")]
-  node_filepaths["File management<br/>[filenFolderPath.py]"]
-  node_userfiles[("User uploads")]
+subgraph group_accounts["Accounts and profile"]
+  node_login_route["Login and signup<br/>[login.py]"]
+  node_profile_route["Profile management<br/>[profile.py]"]
+  node_logout_route["Logout<br/>[logout.py]"]
+  node_password["Password hashing<br/>[password_hash.py]"]
 end
 
-subgraph group_profile["Account and profile"]
-  node_auth["Account access<br/>[db_handler.py]"]
-  node_password["Password hashing<br/>[password_hash.py]"]
-  node_profileui["Profile management<br/>[profile.js]"]
+subgraph group_persistence["Persistence and files"]
+  node_db_handler["Database handler<br/>[db_handler.py]"]
+  node_mysql[("MySQL database")]
+  node_file_manager["User file manager<br/>[filenFolderPath.py]"]
+  node_user_files[("User uploads")]
 end
 
 node_farmer(("Farmer"))
 
-node_farmer -->|"submits requests"| node_routes
-node_routes -->|"renders pages"| node_webpages
-node_farmer -->|"selects image"| node_upload
-node_upload -.->|"posts image"| node_routes
-node_farmer -->|"enters details"| node_fieldform
-node_fieldform -->|"geocodes location"| node_geocoder
-node_fieldform -->|"fetches weather"| node_weather
-node_routes -->|"builds prompt"| node_prompt
-node_routes -.->|"requests analysis"| node_vision
-node_vision -->|"sends image and prompt"| node_gemini
-node_vision -.->|"produces diagnosis"| node_results
-node_routes -->|"verifies account"| node_auth
-node_auth -->|"hashes passwords"| node_password
-node_routes -.->|"handles profile actions"| node_profileui
-node_routes -->|"reads and writes"| node_dbhandler
-node_dbhandler -->|"queries"| node_mysql
-node_routes -->|"manages user files"| node_filepaths
-node_filepaths -->|"stores files"| node_userfiles
-node_filepaths -->|"records folder path"| node_dbhandler
+node_farmer -->|"uses app"| node_flask
+node_flask -->|"registers"| node_landing_route
+node_flask -->|"registers"| node_login_route
+node_flask -->|"registers"| node_logout_route
+node_flask -->|"registers"| node_motive_route
+node_flask -->|"registers"| node_notfound_route
+node_flask -->|"registers"| node_profile_route
+node_flask -->|"registers"| node_result_route
+node_flask -->|"registers"| node_acquire_route
+node_flask -->|"registers"| node_upload_route
+node_farmer -->|"selects image"| node_upload_ui
+node_upload_ui -.->|"posts image"| node_upload_route
+node_upload_route -->|"saves image"| node_file_manager
+node_upload_route -->|"records image name"| node_db_handler
+node_upload_route -->|"redirects to"| node_acquire_route
+node_farmer -->|"enters details"| node_field_ui
+node_field_ui -.->|"looks up location"| node_geocoder
+node_field_ui -.->|"fetches weather"| node_weather
+node_acquire_route -->|"builds prompt"| node_prompt
+node_acquire_route -->|"stores field details"| node_db_handler
+node_acquire_route -->|"requests analysis"| node_vision
+node_vision -->|"sends image prompt"| node_gemini
+node_vision -.->|"saves result"| node_file_manager
+node_acquire_route -->|"persists result"| node_file_manager
+node_acquire_route -->|"records result name"| node_db_handler
+node_acquire_route -->|"renders diagnosis"| node_web_pages
+node_result_route -->|"renders results page"| node_web_pages
+node_login_route -->|"checks account"| node_db_handler
+node_login_route -->|"creates folders"| node_file_manager
+node_db_handler -->|"hashes password"| node_password
+node_profile_route -->|"reads profile"| node_db_handler
+node_profile_route -->|"manages profile image"| node_file_manager
+node_db_handler -->|"queries and writes"| node_mysql
+node_file_manager -->|"stores user files"| node_user_files
+node_file_manager -->|"records folder path"| node_db_handler
 
-click node_routes "https://github.com/ashutoshdebug/kisan-mitr/blob/main/app.py"
-click node_webpages "https://github.com/ashutoshdebug/kisan-mitr/tree/main/templates"
-click node_upload "https://github.com/ashutoshdebug/kisan-mitr/blob/main/static/js/upload.js"
-click node_fieldform "https://github.com/ashutoshdebug/kisan-mitr/blob/main/static/js/acquireInfo.js"
+click node_flask "https://github.com/ashutoshdebug/kisan-mitr/blob/main/app.py"
+click node_upload_route "https://github.com/ashutoshdebug/kisan-mitr/blob/main/routes/upload.py"
+click node_acquire_route "https://github.com/ashutoshdebug/kisan-mitr/blob/main/routes/acquire.py"
+click node_result_route "https://github.com/ashutoshdebug/kisan-mitr/blob/main/routes/results.py"
+click node_web_pages "https://github.com/ashutoshdebug/kisan-mitr/tree/main/templates"
+click node_upload_ui "https://github.com/ashutoshdebug/kisan-mitr/blob/main/static/js/upload.js"
+click node_field_ui "https://github.com/ashutoshdebug/kisan-mitr/blob/main/static/js/acquireInfo.js"
 click node_prompt "https://github.com/ashutoshdebug/kisan-mitr/blob/main/engine/dataAcquisition.py"
 click node_vision "https://github.com/ashutoshdebug/kisan-mitr/blob/main/engine/vision_model.py"
-click node_results "https://github.com/ashutoshdebug/kisan-mitr/blob/main/templates/result.html"
-click node_auth "https://github.com/ashutoshdebug/kisan-mitr/blob/main/database/db_handler.py"
+click node_login_route "https://github.com/ashutoshdebug/kisan-mitr/blob/main/routes/login.py"
+click node_profile_route "https://github.com/ashutoshdebug/kisan-mitr/blob/main/routes/profile.py"
+click node_logout_route "https://github.com/ashutoshdebug/kisan-mitr/blob/main/routes/logout.py"
 click node_password "https://github.com/ashutoshdebug/kisan-mitr/blob/main/utils/password_hash.py"
-click node_profileui "https://github.com/ashutoshdebug/kisan-mitr/blob/main/static/js/profile.js"
-click node_dbhandler "https://github.com/ashutoshdebug/kisan-mitr/blob/main/database/db_handler.py"
-click node_filepaths "https://github.com/ashutoshdebug/kisan-mitr/blob/main/utils/filenFolderPath.py"
-click node_userfiles "https://github.com/ashutoshdebug/kisan-mitr/tree/main/static/uploads/database"
+click node_db_handler "https://github.com/ashutoshdebug/kisan-mitr/blob/main/database/db_handler.py"
+click node_file_manager "https://github.com/ashutoshdebug/kisan-mitr/blob/main/utils/filenFolderPath.py"
+click node_user_files "https://github.com/ashutoshdebug/kisan-mitr/tree/main/static/uploads/database"
+click node_landing_route "https://github.com/ashutoshdebug/kisan-mitr/blob/main/routes/landing.py"
+click node_motive_route "https://github.com/ashutoshdebug/kisan-mitr/blob/main/routes/motivePage.py"
+click node_notfound_route "https://github.com/ashutoshdebug/kisan-mitr/blob/main/routes/pageNotFound.py"
 
 classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
 classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
@@ -76,9 +104,9 @@ classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
 classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
 classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
 classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
-class node_routes,node_webpages,node_upload,node_results toneBlue
-class node_fieldform,node_prompt,node_vision,node_gemini,node_geocoder,node_weather toneAmber
-class node_dbhandler,node_mysql,node_filepaths,node_userfiles toneMint
-class node_auth,node_password,node_profileui toneRose
+class node_flask,node_upload_route,node_acquire_route,node_result_route,node_web_pages,node_upload_ui,node_field_ui,node_landing_route,node_motive_route,node_notfound_route toneBlue
+class node_prompt,node_vision,node_gemini,node_geocoder,node_weather toneAmber
+class node_login_route,node_profile_route,node_logout_route,node_password toneMint
+class node_db_handler,node_mysql,node_file_manager,node_user_files toneRose
 class node_farmer toneIndigo
 ```
