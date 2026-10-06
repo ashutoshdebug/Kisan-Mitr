@@ -1,0 +1,57 @@
+{
+    "primary_diagnosis": {
+        "pathogen_common_name": "Septoria Leaf Spot",
+        "pathogen_scientific_name": "Septoria lycopersici",
+        "disease_classification": "Fungal",
+        "environmental_trigger": "Extremely high humidity (96%), moderate temperature (22.4 \u00b0C), and wet canopy conditions favoring fungal spore germination and secondary spread."
+    },
+    "chemical_control": {
+        "active_ingredients": [
+            "Mancozeb",
+            "Chlorothalonil",
+            "Azoxystrobin",
+            "Copper Oxychloride"
+        ],
+        "trade_names": [
+            "Dithane M-45",
+            "Kavach",
+            "Amistar",
+            "Blitox 50"
+        ],
+        "dosage": "Mancozeb 75% WP @ 2.0-2.5 g/L of water or Chlorothalonil 75% WP @ 2.0 g/L of water.",
+        "spray_guidelines": "Apply as a protective foliar spray ensuring thorough coverage of both upper and lower leaf surfaces. Repeat at 7-10 day intervals during persistent high humidity.",
+        "pre_harvest_interval": "7 to 14 days depending on specific active ingredient used."
+    },
+    "biological_control": {
+        "bio_control_agents": [
+            "Bacillus subtilis",
+            "Trichoderma harzianum"
+        ],
+        "organic_sprays": [
+            "Copper Hydroxide",
+            "Neem Oil (10,000 ppm)",
+            "Potassium Bicarbonate"
+        ],
+        "application_frequency": "Every 5 to 7 days during high relative humidity or at first sign of disease onset.",
+        "application_procedure": "Foliar spray applied early in the morning or late afternoon to avoid leaf scorch, thoroughly wetting the canopy."
+    },
+    "cultural_remediation": {
+        "irrigation_adjustments": "Maintain drip irrigation to avoid leaf wetness; ensure irrigation runs early in the day so any accidental splash dries rapidly.",
+        "field_sanitation": "Prune and destroy infected lower leaves showing lesions; clear and burn infected plant debris post-harvest; maintain a 2-3 year crop rotation with non-solanaceous crops.",
+        "soil_drainage_and_aeration": "Improve field air circulation by proper plant spacing, staking/trellising plants, and pruning lower leaves up to 30 cm from the soil surface."
+    },
+    "recovery_followup": {
+        "foliar_nutrition": [
+            "Water-soluble NPK 19-19-19",
+            "Seaweed extract"
+        ],
+        "micronutrients": [
+            "Zinc",
+            "Boron",
+            "Magnesium"
+        ],
+        "monitoring_milestones": "Inspect lower to mid-canopy leaves every 3-4 days for new lesion development; verify leaf drying efficiency after irrigation.",
+        "followup_period": "7-10 days post-initial fungicide application.",
+        "secondary_treatment_conditions": "If lesions continue spreading into the upper canopy or if high humidity (>90%) persists past 7 days, rotate to a systemic fungicide like Azoxystrobin."
+    }
+}

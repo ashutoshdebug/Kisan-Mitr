@@ -9,9 +9,11 @@ from dotenv import load_dotenv
 load_dotenv()
 # Connecting to the server
 
-password_hash = PasswordHash()
 
 class dbHandler:
+    password_hash = PasswordHash()
+    
+    
     def __init__(self):
         self.host = os.getenv("db_host")
         # print("Host:", self.host)
@@ -362,4 +364,6 @@ class dbHandler:
             return self.profile_data
 
         finally:
-            pass
+            if cursor is not None:
+                cursor.close()
+            con.close()
