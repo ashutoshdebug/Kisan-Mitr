@@ -1,190 +1,372 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-    rel="stylesheet"
-  >
-  <link
-    href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap"
-    rel="stylesheet"
-  >
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css"
-  >
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/index.css') }}"
-  >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
-  {% block styles %}{% endblock %}
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    >
 
-  <title>Kisan Mitr | {% block subtitle %}Your own farming buddy!{% endblock %}</title>
-</head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    >
 
-<body>
-  <div id="body-div" data-scroll-container>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap"
+      rel="stylesheet"
+    >
 
-    {% block navbar %}
-    <header>
-      <nav>
-        <div id="floating-nav">
-          <div id="navbar">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css"
+    >
 
-            <div id="nav-left">
-              <a href="{{ url_for('landingPage') }}">Kisan Mitra</a>
-            </div>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
+    >
 
-            <div id="nav-right">
-              <ul>
-                <li>
-                  <a href="{{ url_for('motivePage') }}">Our Motive</a>
-                </li>
+    {% block styles %}{% endblock %}
 
-                <li id="account-menu">
-                  {% if user_var %}
-                  {% set avatar = profile_image | default(
-                    'uploads/frontend/default-profile.svg', true
-                  ) %}
+    <title>
+      Kisan Mitr | {% block subtitle %}Your own farming buddy!{% endblock %}
+    </title>
+  </head>
 
-                  <button
-                    type="button"
-                    id="account-button"
-                    class="account-button"
-                    aria-label="Open account menu"
-                  >
-                    <img
-                      src="{{ url_for('static', filename=avatar) }}"
-                      alt="Profile"
-                      class="account-avatar"
+  <body>
+    <div id="body-div" data-scroll-container>
+
+      {% block navbar %}
+
+      <!-- NAVBAR -->
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Main navigation">
+
+          <div id="floating-nav">
+
+            <div
+              id="navbar"
+              class="site-navbar"
+              data-navbar
+            >
+
+              <!-- LEFT: BRAND -->
+              <div
+                id="nav-left"
+                class="nav-left"
+              >
+                <a
+                  href="{{ url_for('landingPage') }}"
+                  aria-label="Kisan Mitr Home"
+                >
+                  Kisan Mitra
+                </a>
+              </div>
+
+
+              <!-- RIGHT: NAVIGATION + ACCOUNT -->
+              <div
+                id="nav-right"
+                class="nav-right"
+              >
+
+                <ul>
+
+                  <!-- OUR MOTIVE -->
+                  <li id="nav-motive">
+                    <a href="{{ url_for('motivePage') }}">
+                      Our Motive
+                    </a>
+                  </li>
+
+
+                  <!-- ACCOUNT -->
+                  <li id="account-menu">
+
+                    {% if user_var %}
+
+                    {% set avatar = profile_image | default(
+                      'uploads/frontend/default-profile.svg',
+                      true
+                    ) %}
+
+                    <button
+                      type="button"
+                      id="account-button"
+                      class="account-button"
+                      aria-label="Open account menu"
                     >
-                  </button>
+                      <img
+                        src="{{ url_for('static', filename=avatar) }}"
+                        alt="Profile"
+                        class="account-avatar"
+                      >
+                    </button>
 
-                  <div class="logout-dropdown">
-                    <a href="{{ url_for('profile') }}" class="dropdown-user">
-                      <strong>{{ profile_name | default(username) }}</strong>
-                      <small>Profile</small>
+
+                    <!-- ACCOUNT DROPDOWN -->
+                    <div class="logout-dropdown">
+
+                      <a
+                        href="{{ url_for('profile') }}"
+                        class="dropdown-user"
+                      >
+                        <strong>
+                          {{ profile_name | default(username) }}
+                        </strong>
+
+                        <small>
+                          Profile
+                        </small>
+                      </a>
+
+                      <a href="{{ url_for('upload') }}">
+                        Upload
+                      </a>
+
+                      <button
+                        type="button"
+                        id="logout-btn"
+                      >
+                        Logout
+                      </button>
+
+                    </div>
+
+                    {% else %}
+
+                    <!-- LOGGED OUT -->
+                    <a
+                      href="{{ url_for('account_page') }}"
+                      id="user_name"
+                    >
+                      Sign up/Log In
                     </a>
 
-                    <a href="{{ url_for('upload') }}">Upload</a>
+                    {% endif %}
 
-                    <button type="button" id="logout-btn">Logout</button>
-                  </div>
+                  </li>
 
-                  {% else %}
-                  <a href="{{ url_for('account_page') }}" id="user_name">
-                    Sign up/Log In
-                  </a>
-                  {% endif %}
-                </li>
-              </ul>
+                </ul>
+
+              </div>
+
             </div>
 
           </div>
-        </div>
-      </nav>
-    </header>
-    {% endblock %}
 
-    <main>
-      {% block content %}
+        </nav>
+      </header>
 
-      <section id="hero-section" data-scroll-section>
-        <div class="heading">
-          <div>
-            <span data-scroll data-scroll-speed="0.5">K</span>
-            <span data-scroll data-scroll-speed="0.51">i</span>
-            <span data-scroll data-scroll-speed="0.52">s</span>
-            <span data-scroll data-scroll-speed="0.8">a</span>
-            <span data-scroll data-scroll-speed="0.54">n</span>
-            <span data-scroll data-scroll-speed="0.55">&nbsp;</span>
-            <span data-scroll data-scroll-speed="0.56">M</span>
-            <span data-scroll data-scroll-speed="0.57">i</span>
-            <span data-scroll data-scroll-speed="0.5">t</span>
-            <span data-scroll data-scroll-speed="0.58">r</span>
-            <span data-scroll data-scroll-speed="0.8">a</span>
+      {% endblock %}
+
+
+      <main>
+
+        {% block content %}
+
+        <!-- HERO -->
+        <section
+          id="hero-section"
+          data-scroll-section
+        >
+
+          <div class="heading">
+
+            <div>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.5"
+              >K</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.51"
+              >i</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.52"
+              >s</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.8"
+              >a</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.54"
+              >n</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.55"
+              >&nbsp;</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.56"
+              >M</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.57"
+              >i</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.5"
+              >t</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.58"
+              >r</span>
+
+              <span
+                data-scroll
+                data-scroll-speed="0.8"
+              >a</span>
+
+            </div>
+
+
+            <p>
+              Helping farmers protect their
+              <em style="color: wheat">crops</em>.
+            </p>
+
           </div>
 
-          <p>Helping farmers protect their <em style="color: wheat">crops</em>.</p>
-        </div>
-      </section>
+        </section>
 
-      <section class="motive-cta">
-        <span class="motive-cta-label">OUR MOTIVE</span>
 
-        <h2>
-          Built for farmers.
-          <span>Guided by purpose.</span>
-        </h2>
+        <!-- MOTIVE CTA -->
+        <section class="motive-cta">
 
-        <a href="{{ url_for('motivePage') }}" class="motive-cta-btn">
-          Explore our motive <span>↗</span>
-        </a>
-      </section>
+          <span class="motive-cta-label">
+            OUR MOTIVE
+          </span>
+
+          <h2>
+            Built for farmers.
+            <span>Guided by purpose.</span>
+          </h2>
+
+          <a
+            href="{{ url_for('motivePage') }}"
+            class="motive-cta-btn"
+          >
+            Explore our motive
+            <span>↗</span>
+          </a>
+
+        </section>
 
         {% endblock %}
+
       </main>
 
 
       <!-- FOOTER -->
+      {% block footer %}
 
-{% block footer %}
-<footer class="site-footer">
-  <div class="footer-content">
+      <footer class="site-footer">
 
-    <div class="footer-brand">
-      <h2>Kisan Mitr</h2>
+        <div class="footer-content">
 
-      <p>
-        Helping farmers protect their crops with better information
-        and smarter decisions.
-      </p>
+          <!-- FOOTER BRAND -->
+          <div class="footer-brand">
+
+            <h2>
+              Kisan Mitr
+            </h2>
+
+            <p>
+              Helping farmers protect their crops with better information
+              and smarter decisions.
+            </p>
+
+          </div>
+
+
+          <!-- FOOTER LINKS -->
+          <div class="footer-links">
+
+            <h3>
+              Quick Links
+            </h3>
+
+            <a href="{{ url_for('landingPage') }}">
+              Home
+            </a>
+
+            <a href="{{ url_for('motivePage') }}">
+              Our Motive
+            </a>
+
+          </div>
+
+
+          <!-- FOOTER PROJECT -->
+          <div class="footer-project">
+
+            <h3>
+              Project
+            </h3>
+
+            <p>
+              Built with the aim of supporting farmers.
+            </p>
+
+            <a
+              href="https://github.com/ashutoshdebug/Kisan-Mitr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub Repository ↗
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+          <p>
+            © 2026 Kisan Mitr. Built for farmers.
+          </p>
+
+        </div>
+
+      </footer>
+
+      {% endblock %}
+
     </div>
 
-    <div class="footer-links">
-      <h3>Quick Links</h3>
 
-      <a href="{{ url_for('landingPage') }}">Home</a>
-      <a href="{{ url_for('motivePage') }}">Our Motive</a>
-    </div>
+    <!-- LOCOMOTIVE SCROLL -->
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
 
-    <div class="footer-project">
-      <h3>Project</h3>
 
-      <p>
-        Built with the aim of supporting farmers.
-      </p>
-
-      <a
-        href="https://github.com/ashutoshdebug/Kisan-Mitr"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        GitHub Repository ↗
-      </a>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2026 Kisan Mitr. Built for farmers.</p>
-  </div>
-</footer>
-{% endblock %}
-    </div>
-
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
-  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <!-- PROJECT JAVASCRIPT -->
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
     {% block jsscript %}{% endblock %}
+
   </body>
 </html>
