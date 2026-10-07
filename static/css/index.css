@@ -50,7 +50,9 @@ nav,
 }
 
 
-/* MAIN NAVBAR */
+/* =========================================================
+   MAIN NAVBAR
+   ========================================================= */
 
 #navbar {
   width: 90%;
@@ -67,28 +69,44 @@ nav,
   position: fixed;
   top: 5vh;
   left: 50%;
+
   transform: translate(-50%, -50%);
 
   z-index: 9999;
 
-  border-radius: 10px;
+  border-radius: 999px;
 
   background: #9ad64c;
 
   font-weight: bold;
 
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  /*
+     IMPORTANT:
+     All navbar transformations use the same
+     smooth timing so the change from full navbar
+     to capsule feels like one continuous animation.
+  */
+
   transition:
-    background-color 0.35s ease,
-    backdrop-filter 0.35s ease,
-    -webkit-backdrop-filter 0.35s ease,
-    box-shadow 0.35s ease,
-    transform 0.35s ease,
-    opacity 0.35s ease;
+    width 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    min-width 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    min-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.5s ease,
+    border 0.5s ease,
+    box-shadow 0.5s ease,
+    backdrop-filter 0.5s ease,
+    -webkit-backdrop-filter 0.5s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 
 /* =========================================================
-   NAVBAR - NORMAL STATE
+   LEFT - KISAN MITRA
    ========================================================= */
 
 #navbar #nav-left {
@@ -99,6 +117,8 @@ nav,
   justify-content: flex-start;
 
   grid-column: 1;
+
+  min-width: 0;
 }
 
 #navbar #nav-left a {
@@ -111,10 +131,63 @@ nav,
   font-weight: bold;
 
   white-space: nowrap;
+
+  transform-origin: left center;
+
+  transition:
+    font-size 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease,
+    color 0.45s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 
-/* RIGHT SIDE */
+/* =========================================================
+   CENTER - OUR MOTIVE
+   ========================================================= */
+
+#navbar #nav-center {
+  width: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  grid-column: 2;
+
+  overflow: hidden;
+
+  transition:
+    width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease,
+    transform 0.45s ease,
+    visibility 0.4s ease;
+}
+
+#navbar #nav-center a {
+  display: inline-flex;
+  align-items: center;
+
+  color: #111;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  white-space: nowrap;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s ease;
+}
+
+#navbar #nav-center a:hover {
+  opacity: 0.65;
+}
+
+
+/* =========================================================
+   RIGHT - ACCOUNT
+   ========================================================= */
 
 #navbar #nav-right {
   width: auto;
@@ -124,6 +197,14 @@ nav,
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  overflow: hidden;
+
+  transition:
+    width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease,
+    transform 0.45s ease,
+    visibility 0.4s ease;
 }
 
 #navbar #nav-right ul {
@@ -137,42 +218,6 @@ nav,
   gap: 28px;
 
   list-style: none;
-}
-
-
-/* =========================================================
-   OUR MOTIVE
-   ========================================================= */
-
-#nav-motive {
-  width: auto !important;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease,
-    visibility 0.25s ease;
-}
-
-#nav-motive a {
-  display: inline-flex;
-  align-items: center;
-
-  color: #111;
-
-  font-size: 14px;
-  font-weight: bold;
-
-  white-space: nowrap;
-
-  transition: opacity 0.2s ease;
-}
-
-#nav-motive a:hover {
-  opacity: 0.65;
 }
 
 
@@ -279,7 +324,6 @@ nav,
   border-radius: 8px;
 
   background: transparent;
-
   color: #111;
 
   font-family: "Open Sans", sans-serif;
@@ -322,32 +366,99 @@ nav,
 
 
 /* =========================================================
-   NAVBAR SCROLL STATE
+   SCROLLED STATE
    =========================================================
 
-   JavaScript will add:
-   #navbar.navbar-scrolled
+   Full navbar
+          ↓
+   smooth transformation
+          ↓
+   small glass capsule
 
-   when the user starts scrolling.
-
+   Only Kisan Mitra remains.
    ========================================================= */
 
 #navbar.navbar-scrolled {
-  background: rgba(154, 214, 76, 0.18);
 
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  width: auto;
+
+  min-width: 0;
+
+  height: 48px;
+
+  min-height: 48px;
+  max-height: 48px;
+
+  padding: 5px 15px;
+
+  /*
+     Keep the capsule at the same LEFT anchor.
+     This prevents the Kisan Mitra from jumping around.
+  */
+
+  left: 5%;
+
+  transform: translateY(-50%);
+
+  display: flex;
+
+  justify-content: flex-start;
+
+  border-radius: 999px;
+
+  background: rgba(154, 214, 76, 0.20);
+
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255, 255, 255, 0.24);
 
   box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.08);
-
-  border: 1px solid rgba(255, 255, 255, 0.15);
+    0 8px 28px rgba(0, 0, 0, 0.12);
 }
 
 
-/* Hide "Our Motive" while scrolling */
+/* =========================================================
+   SCROLLED - KISAN MITRA
+   ========================================================= */
 
-#navbar.navbar-scrolled #nav-motive {
+#navbar.navbar-scrolled #nav-left {
+
+  width: auto;
+
+  grid-column: auto;
+
+  padding: 0 2px;
+
+  opacity: 1;
+}
+
+#navbar.navbar-scrolled #nav-left a {
+
+  /*
+     Bigger font after scrolling.
+     Smooth transition comes from the base rule.
+  */
+
+  font-size: 20px;
+
+  color: #111;
+
+  opacity: 1;
+
+  transform: scale(1);
+
+}
+
+
+/* =========================================================
+   SCROLLED - HIDE OUR MOTIVE
+   ========================================================= */
+
+#navbar.navbar-scrolled #nav-center {
+
+  width: 0;
+
   opacity: 0;
 
   visibility: hidden;
@@ -355,38 +466,51 @@ nav,
   transform: translateY(-8px);
 
   pointer-events: none;
-
-  width: 0 !important;
 }
 
+#navbar.navbar-scrolled #nav-center a {
 
-/* Keep profile visible */
+  opacity: 0;
 
-#navbar.navbar-scrolled #account-menu {
-  opacity: 1;
-  visibility: visible;
+  transform: translateY(-8px);
+
+  pointer-events: none;
 }
 
 
 /* =========================================================
-   NAVBAR HIDDEN STATE
-   =========================================================
-
-   JavaScript will add:
-   #navbar.navbar-hidden
-
-   when user scrolls DOWN.
-
-   It will come back when user scrolls UP.
-
+   SCROLLED - HIDE ACCOUNT
    ========================================================= */
 
-#navbar.navbar-hidden {
-  transform: translate(-50%, calc(-50% - 100px));
+#navbar.navbar-scrolled #nav-right {
+
+  width: 0;
 
   opacity: 0;
 
+  visibility: hidden;
+
+  transform: translateY(-8px);
+
   pointer-events: none;
+}
+
+
+/* =========================================================
+   NO OLD HIDDEN BEHAVIOUR
+   =========================================================
+
+   Kisan Mitra stays visible.
+   We only transform the navbar into capsule mode.
+   ========================================================= */
+
+#navbar.navbar-hidden {
+
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform: translateY(-50%);
 }
 
 
@@ -406,6 +530,7 @@ main {
    ========================================================= */
 
 #hero-section {
+
   width: 100%;
   min-height: 100vh;
 
@@ -415,18 +540,22 @@ main {
 }
 
 .heading {
+
   display: flex;
+
   align-items: center;
 
   flex-direction: column;
 }
 
 .heading div span {
+
   display: inline-block;
 
   color: white;
 
   font-size: 7vw;
+
   font-weight: bold;
 
   mix-blend-mode: difference;
@@ -444,6 +573,7 @@ main {
    ========================================================= */
 
 .motive-cta {
+
   width: 88%;
 
   margin: 0 auto 70px;
@@ -458,17 +588,20 @@ main {
 }
 
 .motive-cta-label {
+
   display: block;
 
   color: #c5e86c;
 
   font-size: 10px;
+
   font-weight: 700;
 
-  letter-spacing: .18em;
+  letter-spacing: 0.18em;
 }
 
 .motive-cta h2 {
+
   margin-top: 18px;
 
   color: white;
@@ -477,10 +610,11 @@ main {
 
   font-size: clamp(38px, 5vw, 64px);
 
-  line-height: .95;
+  line-height: 0.95;
 }
 
 .motive-cta h2 span {
+
   display: block;
 
   color: #c5e86c;
@@ -493,6 +627,7 @@ main {
 }
 
 .motive-cta-btn {
+
   display: inline-flex;
 
   align-items: center;
@@ -503,7 +638,7 @@ main {
 
   padding: 12px 20px;
 
-  border: 1px solid rgba(255, 255, 255, .25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 
   border-radius: 30px;
 
@@ -511,16 +646,18 @@ main {
 
   font-size: 11px;
 
-  transition: .2s ease;
+  transition: 0.2s ease;
 }
 
 .motive-cta-btn span {
+
   color: #c5e86c;
 
   font-size: 14px;
 }
 
 .motive-cta-btn:hover {
+
   background: white;
 
   color: #143b29;
@@ -551,6 +688,7 @@ main {
 @media (max-width: 600px) {
 
   #navbar {
+
     width: 92%;
 
     height: 54px;
@@ -562,7 +700,7 @@ main {
 
     grid-template-columns: 1fr auto 1fr;
 
-    border-radius: 10px;
+    border-radius: 999px;
   }
 
 
@@ -573,7 +711,14 @@ main {
   }
 
 
-  /* RIGHT SIDE */
+  /* CENTER */
+
+  #navbar #nav-center a {
+    font-size: 11px;
+  }
+
+
+  /* RIGHT */
 
   #navbar #nav-right {
     justify-content: flex-end;
@@ -584,16 +729,10 @@ main {
   }
 
 
-  /* OUR MOTIVE */
-
-  #nav-motive a {
-    font-size: 11px;
-  }
-
-
   /* PROFILE */
 
   .account-button {
+
     width: 42px;
     height: 42px;
   }
@@ -602,28 +741,52 @@ main {
   /* DROPDOWN */
 
   .logout-dropdown {
+
     width: 175px;
 
     right: 0;
+
     left: auto;
 
     transform: none;
   }
 
 
-  /* MOBILE SCROLL STATE */
+  /* SCROLLED MOBILE */
 
   #navbar.navbar-scrolled {
-    background: rgba(154, 214, 76, 0.14);
 
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    width: auto;
+
+    height: 44px;
+
+    min-height: 44px;
+    max-height: 44px;
+
+    padding: 4px 12px;
+
+    left: 4%;
+
+    background: rgba(154, 214, 76, 0.18);
+
+    -webkit-backdrop-filter: blur(13px);
+    backdrop-filter: blur(13px);
+
+    border-radius: 999px;
+  }
+
+  #navbar.navbar-scrolled #nav-left a {
+
+    font-size: 17px;
+
+    color: #111;
   }
 
 
   /* MOTIVE CTA */
 
   .motive-cta {
+
     width: 92%;
 
     padding: 55px 25px;
@@ -646,7 +809,7 @@ main {
     font-size: 14px;
   }
 
-  #nav-motive a {
+  #navbar #nav-center a {
     font-size: 10px;
   }
 
@@ -655,8 +818,29 @@ main {
   }
 
   .account-button {
+
     width: 38px;
     height: 38px;
+  }
+
+
+  #navbar.navbar-scrolled {
+
+    left: 3%;
+
+    height: 42px;
+
+    min-height: 42px;
+    max-height: 42px;
+
+    padding: 4px 10px;
+  }
+
+  #navbar.navbar-scrolled #nav-left a {
+
+    font-size: 16px;
+
+    color: #111;
   }
 
 }
@@ -667,6 +851,7 @@ main {
    ========================================================= */
 
 .site-footer {
+
   width: 100%;
 
   margin-top: 40px;
@@ -681,6 +866,7 @@ main {
 }
 
 .footer-content {
+
   max-width: 1200px;
 
   margin: 0 auto;
@@ -693,6 +879,7 @@ main {
 }
 
 .footer-brand h2 {
+
   margin-bottom: 15px;
 
   color: #c5e86c;
@@ -704,6 +891,7 @@ main {
 
 .footer-brand p,
 .footer-project p {
+
   max-width: 400px;
 
   color: rgba(255, 255, 255, 0.72);
@@ -717,6 +905,7 @@ main {
 
 .footer-links,
 .footer-project {
+
   display: flex;
 
   flex-direction: column;
@@ -726,6 +915,7 @@ main {
 
 .footer-links h3,
 .footer-project h3 {
+
   margin-bottom: 15px;
 
   color: white;
@@ -736,6 +926,7 @@ main {
 }
 
 .footer-links a {
+
   margin-bottom: 10px;
 
   color: rgba(255, 255, 255, 0.7);
@@ -748,12 +939,14 @@ main {
 }
 
 .footer-links a:hover {
+
   color: #c5e86c;
 
   transform: translateX(4px);
 }
 
 .footer-project a {
+
   display: inline-block;
 
   margin-top: 15px;
@@ -774,12 +967,14 @@ main {
 }
 
 .footer-project a:hover {
+
   background: #c5e86c;
 
   color: #102d20;
 }
 
 .footer-bottom {
+
   max-width: 1200px;
 
   margin: 45px auto 0;
@@ -792,6 +987,7 @@ main {
 }
 
 .footer-bottom p {
+
   color: rgba(255, 255, 255, 0.5);
 
   font-family: "Open Sans", sans-serif;
@@ -807,20 +1003,24 @@ main {
 @media (max-width: 700px) {
 
   .site-footer {
+
     padding: 45px 8% 20px;
   }
 
   .footer-content {
+
     grid-template-columns: 1fr;
 
     gap: 35px;
   }
 
   .footer-brand p {
+
     max-width: 100%;
   }
 
   .footer-bottom {
+
     margin-top: 35px;
   }
 
