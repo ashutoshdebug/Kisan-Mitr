@@ -1,10 +1,9 @@
-// ========================================
-// LOCOMOTIVE SCROLL
-// ========================================
+/* =========================================================
+   LOCOMOTIVE SCROLL
+   ========================================================= */
 
-const scrollContainer = document.querySelector(
-  "[data-scroll-container]"
-);
+const scrollContainer =
+  document.querySelector("[data-scroll-container]");
 
 let scroll = null;
 
@@ -19,36 +18,41 @@ if (
 }
 
 
-// ========================================
-// ACCOUNT DROPDOWN
-// ========================================
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
 
-const accountMenu = document.querySelector(
-  "#account-menu"
-);
+const navbar =
+  document.querySelector("#navbar");
 
-const accountButton = document.querySelector(
-  "#account-button"
-);
+const accountMenu =
+  document.querySelector("#account-menu");
 
-const dropDown = document.querySelector(
-  ".logout-dropdown"
-);
+const accountButton =
+  document.querySelector("#account-button");
 
-const logoutBtn = document.querySelector(
-  "#logout-btn"
-);
+const dropDown =
+  document.querySelector(".logout-dropdown");
+
+const logoutBtn =
+  document.querySelector("#logout-btn");
+
+
+/* =========================================================
+   ACCOUNT DROPDOWN
+   ========================================================= */
 
 let hideTimeout;
-
 
 const showDropdown = () => {
 
   clearTimeout(hideTimeout);
 
-  dropDown?.classList.add(
-    "logout-dropdown-show"
-  );
+  if (dropDown) {
+    dropDown.classList.add(
+      "logout-dropdown-show"
+    );
+  }
 };
 
 
@@ -56,9 +60,11 @@ const hideDropdown = () => {
 
   hideTimeout = setTimeout(() => {
 
-    dropDown?.classList.remove(
-      "logout-dropdown-show"
-    );
+    if (dropDown) {
+      dropDown.classList.remove(
+        "logout-dropdown-show"
+      );
+    }
 
   }, 180);
 };
@@ -119,146 +125,13 @@ document.addEventListener(
         "logout-dropdown-show"
       );
     }
-
   }
 );
 
 
-// ========================================
-// NAVBAR SCROLL BEHAVIOUR
-// ========================================
-
-const navbar = document.querySelector(
-  "#navbar"
-);
-
-
-// ------------------------------------------------
-// IMPORTANT THRESHOLDS
-// ------------------------------------------------
-//
-// FULL NAVBAR:
-// 0 - 20px
-//
-// CAPSULE:
-// 60px+
-//
-// BETWEEN 20px AND 60px:
-// Keep current state.
-//
-// This gap prevents flickering.
-// ------------------------------------------------
-
-const TOP_THRESHOLD = 20;
-
-const CAPSULE_THRESHOLD = 60;
-
-
-let navbarIsScrolled = false;
-
-let ticking = false;
-
-
-const updateNavbar = () => {
-
-  if (!navbar) {
-
-    ticking = false;
-
-    return;
-  }
-
-
-  const currentScroll =
-    window.scrollY || window.pageYOffset;
-
-
-  // ======================================
-  // RETURN TO FULL NAVBAR
-  // ======================================
-
-  if (
-    currentScroll <= TOP_THRESHOLD &&
-    navbarIsScrolled
-  ) {
-
-    navbarIsScrolled = false;
-
-    navbar.classList.remove(
-      "navbar-scrolled"
-    );
-
-    navbar.classList.remove(
-      "navbar-hidden"
-    );
-  }
-
-
-  // ======================================
-  // CHANGE TO CAPSULE
-  // ======================================
-
-  else if (
-    currentScroll >= CAPSULE_THRESHOLD &&
-    !navbarIsScrolled
-  ) {
-
-    navbarIsScrolled = true;
-
-    navbar.classList.add(
-      "navbar-scrolled"
-    );
-
-    navbar.classList.remove(
-      "navbar-hidden"
-    );
-
-
-    // Close account dropdown
-    dropDown?.classList.remove(
-      "logout-dropdown-show"
-    );
-  }
-
-
-  ticking = false;
-};
-
-
-// ========================================
-// SCROLL LISTENER
-// ========================================
-
-window.addEventListener(
-  "scroll",
-  () => {
-
-    if (!ticking) {
-
-      window.requestAnimationFrame(
-        updateNavbar
-      );
-
-      ticking = true;
-    }
-
-  },
-  {
-    passive: true
-  }
-);
-
-
-// ========================================
-// INITIAL NAVBAR STATE
-// ========================================
-
-updateNavbar();
-
-
-// ========================================
-// LOGOUT
-// ========================================
+/* =========================================================
+   LOGOUT
+   ========================================================= */
 
 if (logoutBtn) {
 
@@ -284,29 +157,143 @@ if (logoutBtn) {
           }
         );
 
-
         if (!response.ok) {
-
           throw new Error(
             "Logout failed"
           );
         }
 
-
         window.location.href = "/";
 
-      }
-
-      catch (error) {
+      } catch (error) {
 
         console.error(
           "Logout error:",
           error
         );
-
       }
-
     }
   );
-
 }
+
+
+/* =========================================================
+   NAVBAR SCROLL
+   ========================================================= */
+
+/*
+   0 - 20px
+   Full navbar
+
+   20 - 60px
+   Previous state maintained
+   This prevents flickering
+
+   60px+
+   Glass capsule
+*/
+
+const TOP_THRESHOLD = 20;
+const CAPSULE_THRESHOLD = 60;
+
+let navbarIsScrolled = false;
+let ticking = false;
+
+
+const updateNavbar = () => {
+
+  if (!navbar) {
+    ticking = false;
+    return;
+  }
+
+  const currentScroll =
+    window.scrollY ||
+    window.pageYOffset ||
+    0;
+
+
+  /* =========================
+     FULL NAVBAR
+     ========================= */
+
+  if (
+    currentScroll <= TOP_THRESHOLD &&
+    navbarIsScrolled
+  ) {
+
+    navbarIsScrolled = false;
+
+    navbar.classList.remove(
+      "navbar-scrolled"
+    );
+
+    navbar.classList.remove(
+      "navbar-hidden"
+    );
+  }
+
+
+  /* =========================
+     GLASS CAPSULE
+     ========================= */
+
+  else if (
+    currentScroll >= CAPSULE_THRESHOLD &&
+    !navbarIsScrolled
+  ) {
+
+    navbarIsScrolled = true;
+
+    navbar.classList.add(
+      "navbar-scrolled"
+    );
+
+    navbar.classList.remove(
+      "navbar-hidden"
+    );
+
+    /* Close account dropdown
+       when navbar becomes capsule */
+
+    if (dropDown) {
+      dropDown.classList.remove(
+        "logout-dropdown-show"
+      );
+    }
+  }
+
+
+  ticking = false;
+};
+
+
+/* =========================================================
+   SCROLL EVENT
+   ========================================================= */
+
+window.addEventListener(
+  "scroll",
+  () => {
+
+    if (!ticking) {
+
+      window.requestAnimationFrame(
+        updateNavbar
+      );
+
+      ticking = true;
+    }
+
+  },
+  {
+    passive: true,
+  }
+);
+
+
+/* =========================================================
+   INITIAL STATE
+   ========================================================= */
+
+updateNavbar();
