@@ -11,14 +11,17 @@
     href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
     rel="stylesheet"
   >
+
   <link
     href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap"
     rel="stylesheet"
   >
+
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css"
   >
+
   <link
     rel="stylesheet"
     href="{{ url_for('static', filename='css/index.css') }}"
@@ -33,23 +36,40 @@
   <div id="body-div" data-scroll-container>
 
     {% block navbar %}
-    <header>
-      <nav>
-        <div id="floating-nav">
-          <div id="navbar">
 
-            <div id="nav-left">
-              <a href="{{ url_for('landingPage') }}">Kisan Mitra</a>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Main navigation">
+
+        <div id="floating-nav">
+
+          <div id="navbar" class="site-navbar">
+
+            <!-- LEFT SIDE -->
+            <div id="nav-left" class="nav-left">
+              <a href="{{ url_for('landingPage') }}">
+                Kisan Mitra
+              </a>
             </div>
 
-            <div id="nav-right">
+
+            <!-- RIGHT SIDE -->
+            <div id="nav-right" class="nav-right">
+
               <ul>
-                <li>
-                  <a href="{{ url_for('motivePage') }}">Our Motive</a>
+
+                <!-- OUR MOTIVE -->
+                <li id="nav-motive">
+                  <a href="{{ url_for('motivePage') }}">
+                    Our Motive
+                  </a>
                 </li>
 
+
+                <!-- ACCOUNT -->
                 <li id="account-menu">
+
                   {% if user_var %}
+
                   {% set avatar = profile_image | default(
                     'uploads/frontend/default-profile.svg', true
                   ) %}
@@ -67,37 +87,74 @@
                     >
                   </button>
 
+
                   <div class="logout-dropdown">
-                    <a href="{{ url_for('profile') }}" class="dropdown-user">
-                      <strong>{{ profile_name | default(username) }}</strong>
-                      <small>Profile</small>
+
+                    <a
+                      href="{{ url_for('profile') }}"
+                      class="dropdown-user"
+                    >
+                      <strong>
+                        {{ profile_name | default(username) }}
+                      </strong>
+
+                      <small>
+                        Profile
+                      </small>
                     </a>
 
-                    <a href="{{ url_for('upload') }}">Upload</a>
+                    <a href="{{ url_for('upload') }}">
+                      Upload
+                    </a>
 
-                    <button type="button" id="logout-btn">Logout</button>
+                    <button
+                      type="button"
+                      id="logout-btn"
+                    >
+                      Logout
+                    </button>
+
                   </div>
 
+
                   {% else %}
-                  <a href="{{ url_for('account_page') }}" id="user_name">
+
+                  <a
+                    href="{{ url_for('account_page') }}"
+                    id="user_name"
+                  >
                     Sign up/Log In
                   </a>
+
                   {% endif %}
+
                 </li>
+
               </ul>
+
             </div>
 
           </div>
+
         </div>
+
       </nav>
     </header>
+
     {% endblock %}
 
+
     <main>
+
       {% block content %}
 
-      <section id="hero-section" data-scroll-section>
+      <section
+        id="hero-section"
+        data-scroll-section
+      >
+
         <div class="heading">
+
           <div>
             <span data-scroll data-scroll-speed="0.5">K</span>
             <span data-scroll data-scroll-speed="0.51">i</span>
@@ -112,79 +169,125 @@
             <span data-scroll data-scroll-speed="0.8">a</span>
           </div>
 
-          <p>Helping farmers protect their <em style="color: wheat">crops</em>.</p>
+          <p>
+            Helping farmers protect their
+            <em style="color: wheat">crops</em>.
+          </p>
+
         </div>
+
       </section>
 
+
       <section class="motive-cta">
-        <span class="motive-cta-label">OUR MOTIVE</span>
+
+        <span class="motive-cta-label">
+          OUR MOTIVE
+        </span>
 
         <h2>
           Built for farmers.
           <span>Guided by purpose.</span>
         </h2>
 
-        <a href="{{ url_for('motivePage') }}" class="motive-cta-btn">
-          Explore our motive <span>↗</span>
+        <a
+          href="{{ url_for('motivePage') }}"
+          class="motive-cta-btn"
+        >
+          Explore our motive
+          <span>↗</span>
         </a>
+
       </section>
 
-        {% endblock %}
-      </main>
+      {% endblock %}
+
+    </main>
 
 
-      <!-- FOOTER -->
+    <!-- FOOTER -->
 
-{% block footer %}
-<footer class="site-footer">
-  <div class="footer-content">
+    {% block footer %}
 
-    <div class="footer-brand">
-      <h2>Kisan Mitr</h2>
+    <footer class="site-footer">
 
-      <p>
-        Helping farmers protect their crops with better information
-        and smarter decisions.
-      </p>
-    </div>
+      <div class="footer-content">
 
-    <div class="footer-links">
-      <h3>Quick Links</h3>
+        <div class="footer-brand">
 
-      <a href="{{ url_for('landingPage') }}">Home</a>
-      <a href="{{ url_for('motivePage') }}">Our Motive</a>
-    </div>
+          <h2>
+            Kisan Mitr
+          </h2>
 
-    <div class="footer-project">
-      <h3>Project</h3>
+          <p>
+            Helping farmers protect their crops with better information
+            and smarter decisions.
+          </p>
 
-      <p>
-        Built with the aim of supporting farmers.
-      </p>
+        </div>
 
-      <a
-        href="https://github.com/ashutoshdebug/Kisan-Mitr"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        GitHub Repository ↗
-      </a>
-    </div>
+
+        <div class="footer-links">
+
+          <h3>
+            Quick Links
+          </h3>
+
+          <a href="{{ url_for('landingPage') }}">
+            Home
+          </a>
+
+          <a href="{{ url_for('motivePage') }}">
+            Our Motive
+          </a>
+
+        </div>
+
+
+        <div class="footer-project">
+
+          <h3>
+            Project
+          </h3>
+
+          <p>
+            Built with the aim of supporting farmers.
+          </p>
+
+          <a
+            href="https://github.com/ashutoshdebug/Kisan-Mitr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub Repository ↗
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="footer-bottom">
+
+        <p>
+          © 2026 Kisan Mitr. Built for farmers.
+        </p>
+
+      </div>
+
+    </footer>
+
+    {% endblock %}
+
 
   </div>
 
-  <div class="footer-bottom">
-    <p>© 2026 Kisan Mitr. Built for farmers.</p>
-  </div>
-</footer>
-{% endblock %}
-    </div>
-
-  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
+
   <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
-    {% block jsscript %}{% endblock %}
-  </body>
+  {% block jsscript %}{% endblock %}
+
+</body>
 </html>
