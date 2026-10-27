@@ -38,7 +38,7 @@ def register_acquire_page(app):
         static_path = os.path.join(app.root_path, "static")
         user_image = os.path.relpath(user_image, static_path).replace("\\", "/")
 
-        print("User image path:", user_image)
+        # print("User image path:", user_image)
 
         if request.method == "POST":
 
@@ -89,7 +89,7 @@ def register_acquire_page(app):
                     result = json.load(file)
                     
             except (OSError, TypeError,  json.JSONDecodeError) as err:
-                print("JSON open err:", err)
+                # print("JSON open err:", err)
                 return False
 
             return render_template(
