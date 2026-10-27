@@ -16,17 +16,22 @@ class dbHandler:
     
     def __init__(self):
         self.host = os.getenv("db_host")
-        # print("Host:", self.host)
         self.user = os.getenv("db_user")
         self.password = os.getenv("db_password")
         self.database = os.getenv("database")
+        
         self.login_successful = False
+        
         self.username = None
+        
         self.imagePath = None
         self.resultPath = None
+        
         self.user_already_exist = False
         self.user_not_exist = False
         self.profile_data = None
+
+        # print("Host:", self.host)
         # self.username_folder = None
         # print("Init database:", self.database)
 
@@ -48,11 +53,14 @@ class dbHandler:
 
         except sql.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print("Something is wrong with your user name or password")
+                # print("Something is wrong with your user name or password")
+                return None
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                print("Database does not exist")
+                # print("Database does not exist")
+                return None
             else:
-                print("Error", err)
+                # print("Error", err)
+                return None
 
             return None
 
@@ -95,7 +103,7 @@ class dbHandler:
         self.username = None
         self.user_not_exist = False
         if not password or not email:
-            print("No email and password are provided to verify the user")
+            # print("No email and password are provided to verify the user")
             return False
 
         con = self.connection()
@@ -149,7 +157,8 @@ class dbHandler:
             # return db_password_hash
 
         except sql.Error as err:
-            print("Error:", err)
+            # print("Error:", err)
+            return False
 
         finally:
             if cursor is not None:
@@ -158,7 +167,7 @@ class dbHandler:
 
     def addFolderPath(self, username, path):
         if not path or not username:
-            print("No path or username found!")
+            # print("No path or username found!")
             return False
 
         con = self.connection()
@@ -203,7 +212,7 @@ class dbHandler:
             return True
 
         except sql.Error as err:
-            print("Add image SQL error:", err)
+            # print("Add image SQL error:", err)
             return False
 
         finally:
@@ -232,7 +241,7 @@ class dbHandler:
             # print("GetImagePath Database data:", data)
 
             if not data:
-                print("No image record found for this user")
+                # print("No image record found for this user")
                 return None
 
             self.imagePath = os.path.join(data[0], "image", data[1])
