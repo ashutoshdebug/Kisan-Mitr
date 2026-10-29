@@ -15,10 +15,10 @@ def register_login_page(app):
                 signup_email = request.form.get("signup_email")
                 signup_password = request.form.get("signup_password")
 
-                print("Signup name:", signup_name)
-                print("Signup username:", signup_username)
-                print("Signup email:", signup_email)
-                print("Signup password", signup_password)
+                # print("Signup name:", signup_name)
+                # print("Signup username:", signup_username)
+                # print("Signup email:", signup_email)
+                # print("Signup password", signup_password)
 
                 databaseHandler.userRegistration(signup_name, signup_username, signup_email, signup_password)
 
@@ -31,8 +31,8 @@ def register_login_page(app):
                 login_email = request.form.get("login_email")
                 login_password = request.form.get("login_password")
 
-                print("Login email:", login_email)
-                print("Login password:", login_password)
+                # print("Login email:", login_email)
+                # print("Login password:", login_password)
 
                 databaseHandler.verifyUser(login_password, login_email)
 
