@@ -39,7 +39,7 @@ class visionModel:
 
         mime_type, _ = mimetypes.guess_type(image)
 
-        print(prompt)
+        # print(prompt)
 
         interaction = client.interactions.create(
             model="gemini-3.6-flash",
