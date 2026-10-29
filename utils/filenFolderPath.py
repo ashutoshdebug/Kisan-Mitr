@@ -25,7 +25,7 @@ class fileFolderPath:
             self.folder_path = None
             # exist = False
             if not username:
-                print("Folder creation failed: No username supplied")
+                # print("Folder creation failed: No username supplied")
                 return False
             
             folder_name = username
@@ -40,7 +40,7 @@ class fileFolderPath:
             # self.pfp_custom = self.user_profile_pfp_folder / "pfp_custom"
     
             try:
-                print("Create folder username:", self.sanitize_name)
+                # print("Create folder username:", self.sanitize_name)
     
                 if self.path.exists():
                     if self.image_folder.exists() and self.result_folder.exists() and self.user_profile_pfp_folder.exists():
@@ -75,10 +75,12 @@ class fileFolderPath:
                     # print("Folder doesn't exist:", exist)
             
             except OSError as err:
-                print("Create folder filesystem error:", err)
+                # print("Create folder filesystem error:", err)
+                return None
     
             except Exception as err:
-                print("Unexpected error:", err)
+                # print("Unexpected error:", err)
+                return None
 
     def dateTimeStamp(self):
         now = datetime.now()
@@ -86,12 +88,12 @@ class fileFolderPath:
         return self.formatted_string
 
     def fileSave(self, file):
-        print("fileSave path:",self.image_folder)
+        # print("fileSave path:",self.image_folder)
         fileSavePath = Path(self.image_folder)
         for item in fileSavePath.iterdir():
             # fileSavePath.unlink(missing_ok = True)
             if item.is_file():
-                print("File exists")
+                # print("File exists")
                 item.unlink()
                 
         filename = secure_filename(file.filename)
@@ -99,7 +101,7 @@ class fileFolderPath:
         self.new_name = (f"{name}_{self.dateTimeStamp()}{extension}")
         file_path = os.path.join(self.image_folder, self.new_name)
         file.save(file_path)
-        print("File name:", file)
+        # print("File name:", file)
         # databaseHandler.addImageName(databaseHandler.username_folder, new_name)
 
     def saveJsonFile(self, result):
@@ -111,7 +113,7 @@ class fileFolderPath:
                 return True
 
         except (OSError, TypeError) as err:
-            print("JSON save error:", err)
+            # print("JSON save error:", err)
             return False
 
 
@@ -202,5 +204,5 @@ class fileFolderPath:
             return "uploads/frontend/default-profile.svg"
 
         except OSError as err:
-            print("Get PFP error:", err)
+            # print("Get PFP error:", err)
             return "uploads/frontend/default-profile.svg"
