@@ -33,7 +33,7 @@ def register_profile_page(app):
                         }), 200
 
                     except OSError as err:
-                        print("Remove PFP error:", err)
+                        # print("Remove PFP error:", err)
 
                         return jsonify({
                             "status": "error"

@@ -25,7 +25,7 @@ def register_upload_page(app):
             file = request.files["fileInput"]
 
             if file.filename == "":
-                print("No selected file")
+                # print("No selected file")
                 return redirect(request.url)
 
             if file:
