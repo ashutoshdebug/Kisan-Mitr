@@ -1,1 +1,14 @@
 {% extends "index.html" %}
+
+{% block subtitle %}Oops! something went wrong{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/error.css') }}">
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+Opps, unable to generate result, try again later!
+<script src="{{ url_for('static', filename='js/error.js') }}"></script>
+{% endblock content %}
