@@ -13,6 +13,7 @@ from routes.profile import register_profile_page
 from routes.results import register_result_page
 from routes.acquire import register_acquire_page
 from routes.upload import register_upload_page
+from routes.errorPage import register_error_page
 
 
 load_dotenv()  # To load env secrets
@@ -40,3 +41,4 @@ register_profile_page(app)
 register_result_page(app)
 register_acquire_page(app)
 register_upload_page(app)
+register_error_page(app)
