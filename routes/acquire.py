@@ -83,7 +83,10 @@ def register_acquire_page(app):
             # print("AI Result:")
 
             if result is None:
-                return render_template("acquireInfo.html", user=user, user_image = user_image, user_var = user_var, profile_image=profile_image,profile_name = profile_data[0],error="Unable to generate a valid diagnosis.", account_or_upload="upload",)
+                # return render_template("acquireInfo.html", user=user, user_image = user_image, user_var = user_var, profile_image=profile_image,profile_name = profile_data[0],error="Unable to generate a valid diagnosis.", account_or_upload="upload",)
+                
+                session["allow_error_page"] = True
+                return render_template("errorpage.html")
 
             folderHandler.saveJsonFile(vision_model.result)
             databaseHandler.addResultName(username, folderHandler.result_file)
@@ -95,7 +98,9 @@ def register_acquire_page(app):
                     
             except (OSError, TypeError,  json.JSONDecodeError) as err:
                 # print("JSON open err:", err)
-                return False
+                
+                session["allow_error_page"] = True
+                return render_template("errorpage.html")
 
             return render_template(
                 "result.html", user=user, user_image=user_image, result=result, user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload = "upload"
