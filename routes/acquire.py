@@ -72,7 +72,8 @@ def register_acquire_page(app):
                     return render_template(
                                 "result.html", user=user, user_image=user_image, result=result, user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload = "upload"
                     )
-                except FileNotFoundError as err:
+                except Exception as err:
+                    session["allow_error_page"] = True
                     return render_template("errorpage.html")
 
 

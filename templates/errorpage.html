@@ -9,6 +9,20 @@
 {% block navbar %}{% endblock %}
 
 {% block content %}
-Opps, unable to generate result, try again later!
+<div id="errorhero">
+    <div id="errorcontent">
+        <div id="errortitle">
+            Oops, unable to generate result, try again later!
+        </div>
+        <br>
+        
+<span>
+    Redirecting you to
+    <a href="{{ url_for('landingPage') }}">Home</a>
+    in <strong id="countdown">10</strong> seconds...
+</span>
+
+    </div>
+</div>
 <script src="{{ url_for('static', filename='js/error.js') }}"></script>
 {% endblock content %}

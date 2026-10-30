@@ -1,0 +1,28 @@
+#errorhero {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 2vw;
+}
+
+#errortitle {
+    color: white;
+}
+
+span {
+    font-size: 1vw;
+    color: white;
+}
+
+span a {
+    text-decoration: underline;
+    color: white;
+}
+
+strong {
+    color: white;;
+}
