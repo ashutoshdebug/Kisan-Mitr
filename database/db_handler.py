@@ -128,17 +128,11 @@ class dbHandler:
 
             db_password_hash = data[1]
 
-            if isinstance(db_password_hash, str):
-                db_password_hash = db_password_hash.encode("utf-8")
-
-            is_match = bcrypt.checkpw(password.encode("utf-8"), db_password_hash)
+            is_match = self.password_hash.checkPassword(password, db_password_hash)
             if is_match:
-
-                # self.username_folder = data[0]
                 
                 self.username = data[0]
 
-                # self.createFolder(self.username_folder)
                 # print("User exist!")
                 # print("Data:", data[1])
                 

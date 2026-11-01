@@ -12,3 +12,12 @@ class PasswordHash:
         hashPassword = bcrypt.hashpw(passwordBytes, salt)
 
         return hashPassword
+
+    def checkPassword(self, password, return_pass):
+        returnPass = return_pass
+        if isinstance(returnPass, str):
+            returnPass = returnPass.encode("utf-8")
+
+        is_match = bcrypt.checkpw(password.encode("utf-8"), returnPass)
+
+        return is_match
