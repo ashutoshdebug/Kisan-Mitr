@@ -12,6 +12,12 @@ The system combines a **Flask web application**, **MySQL persistence**, **local 
 
 ---
 
+## Our Contributors
+<a href="https://github.com/ashutoshdebug/Kisan-Mitr/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ashutoshdebug/Kisan-Mitr" />
+</a>
+
+
 ## Features
 
 ### Image-based crop analysis
