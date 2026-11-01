@@ -118,18 +118,19 @@ body {
     padding: 0 22px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     background: #e6ecd8;
     border-bottom: 2px solid #cbd4bd;
+    text-align: center;
 }
 
-.header-action {
+/* .header-action {
     width: 25px;
     color: #172319;
     font-family: Arial, sans-serif;
     font-size: 25px;
     text-align: center;
-}
+} */
 
 .header-title {
     display: flex;
