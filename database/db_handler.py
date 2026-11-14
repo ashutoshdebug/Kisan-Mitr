@@ -1,8 +1,6 @@
 import mysql.connector as sql
 from mysql.connector import errorcode
 import os
-from pathlib import Path
-import bcrypt
 from utils.password_hash import PasswordHash
 from dotenv import load_dotenv
 

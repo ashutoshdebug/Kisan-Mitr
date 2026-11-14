@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, Blueprint, session, jsonify, redirect, url_for
+from flask import request, render_template, session, jsonify, redirect, url_for
 from database.db_handler import dbHandler
 from utils.filenFolderPath import fileFolderPath
 

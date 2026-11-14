@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session, url_for
+from flask import redirect, render_template, session, url_for
 
 def register_error_page(app):
 

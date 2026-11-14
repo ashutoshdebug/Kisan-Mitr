@@ -4,7 +4,6 @@ from pathlib import Path
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from database.db_handler import dbHandler
-import shutil
 
 databaseHandler = dbHandler()
 
