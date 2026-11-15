@@ -1,6 +1,6 @@
 import os
 import json
-from flask import request, render_template, Blueprint, session, jsonify, redirect, url_for
+from flask import request, render_template, session, redirect, url_for
 from database.db_handler import dbHandler
 from utils.filenFolderPath import fileFolderPath
 from engine.vision_model import visionModel
