@@ -25,19 +25,19 @@
     box-shadow: none;
 }
 
-.profile-image-section {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-}
-
+.profile-image-section,
 .profile-image-area {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.profile-image-section {
+    border: none;
+}
+
+.profile-image-area {
     transform: translateY(-25px);
 }
 

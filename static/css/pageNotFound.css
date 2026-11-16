@@ -1,9 +1,5 @@
 body {
-  background-image: url("../uploads/frontend/kisan_bg.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: url("../uploads/frontend/kisan_bg.jpg") center / cover no-repeat fixed;
   min-height: 100vh;
   /* border-radius: 0.2vw; */
 }

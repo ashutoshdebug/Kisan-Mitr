@@ -384,8 +384,6 @@ nav,
    ========================================================= */
 
 #navbar.navbar-scrolled #nav-left {
-  width: auto;
-
   grid-column: auto;
 
   padding: 0 2px;
@@ -594,34 +592,19 @@ main {
 @media (max-width: 600px) {
 
   #navbar {
-    width: 92%;
-
     height: 54px;
     min-height: 54px;
     max-height: 54px;
 
     padding: 4px 10px;
-
-    grid-template-columns: 1fr 1fr 1fr;
-
-    border-radius: 999px;
   }
 
   #navbar #nav-left a {
     font-size: 15px;
   }
 
-  #nav-motive {
-    left: 50%;
-    top: 50%;
-  }
-
   #nav-motive a {
     font-size: 11px;
-  }
-
-  #navbar #nav-right {
-    justify-content: flex-end;
   }
 
   #navbar #nav-right ul {
@@ -643,8 +626,6 @@ main {
   }
 
   #navbar.navbar-scrolled {
-    width: auto;
-
     height: 44px;
     min-height: 44px;
     max-height: 44px;

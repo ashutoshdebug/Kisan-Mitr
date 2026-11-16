@@ -350,7 +350,6 @@ body {
     }
 
     .info-card {
-        width: 520px;
         max-width: 100%;
     }
 }
@@ -379,7 +378,6 @@ body {
 
         border-radius: 18px;
 
-        box-shadow: none;
     }
 
     .form-grid {

@@ -298,10 +298,6 @@
         height: 370px;
     }
 
-    .auth-card.register-mode {
-        height: 560px;
-    }
-
     .auth-options {
         gap: 9px;
     }
