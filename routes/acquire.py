@@ -5,12 +5,14 @@ from database.db_handler import dbHandler
 from utils.filenFolderPath import fileFolderPath
 from engine.vision_model import visionModel
 from engine.dataAcquisition import dataAcquision
+from development_assets.development_toggle import DevelopmentPhase
 
 def register_acquire_page(app):
     databaseHandler = dbHandler()
     folderHandler = fileFolderPath()
     vision_model = visionModel()
     dataAcquire = dataAcquision()
+    developmentPhase = DevelopmentPhase()
 
     @app.route("/acquire", methods=["GET", "POST"])
     def acquire():
@@ -67,11 +69,9 @@ def register_acquire_page(app):
 
             if in_development:
                 try:
-                    with open("development_assets/result.json", "r", encoding="utf-8") as file:
-                        result = json.load(file)
-                    return render_template(
-                                "result.html", user=user, user_image=user_image, result=result, user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload = "upload"
-                    )
+                    result_file = developmentPhase.developmentResult()
+                    return render_template("result.html", user=user, user_image=user_image, result=result_file, user_var = user_var, profile_image=profile_image, profile_name = profile_data[0], account_or_upload = "upload")
+
                 except Exception as err:
                     session["allow_error_page"] = True
                     return render_template("errorpage.html")
