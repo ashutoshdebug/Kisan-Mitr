@@ -498,18 +498,25 @@ When the AI response cannot be parsed as valid JSON, the application returns the
 ```text
 ├── database/
 │   ├── __init__.py
-│   └── db_handler.py
+│   ├── db_handler.py
+│   └── db_handler.pyi
 ├── deprecated_assets/
 │   └── deprecated_app.py
 ├── development_assets/
+│   ├── __init__.py
+│   ├── development_toggle.py
+│   ├── development_toggle.pyi
 │   └── result.json
 ├── engine/
 │   ├── __init__.py
 │   ├── dataAcquisition.py
-│   └── vision_model.py
+│   ├── dataAcquisition.pyi
+│   ├── vision_model.py
+│   └── vision_model.pyi
 ├── routes/
 │   ├── __init__.py
 │   ├── acquire.py
+│   ├── errorPage.py
 │   ├── landing.py
 │   ├── login.py
 │   ├── logout.py
@@ -521,6 +528,7 @@ When the AI response cannot be parsed as valid JSON, the application returns the
 ├── static/
 │   ├── css/
 │   │   ├── acquireInfo.css
+│   │   ├── error.css
 │   │   ├── index.css
 │   │   ├── login.css
 │   │   ├── motive.css
@@ -530,6 +538,7 @@ When the AI response cannot be parsed as valid JSON, the application returns the
 │   │   └── upload.css
 │   ├── js/
 │   │   ├── acquireInfo.js
+│   │   ├── error.js
 │   │   ├── index.js
 │   │   ├── login.js
 │   │   ├── profile.js
@@ -549,6 +558,7 @@ When the AI response cannot be parsed as valid JSON, the application returns the
 │       └── __init__.py
 ├── templates/
 │   ├── acquireInfo.html
+│   ├── errorpage.html
 │   ├── index.html
 │   ├── login.html
 │   ├── motive.html
@@ -559,7 +569,9 @@ When the AI response cannot be parsed as valid JSON, the application returns the
 ├── utils/
 │   ├── __init__.py
 │   ├── filenFolderPath.py
-│   └── password_hash.py
+│   ├── filenFolderPath.pyi
+│   ├── password_hash.py
+│   └── password_hash.pyi
 ├── .env.example
 ├── .gitignore
 ├── app.py
